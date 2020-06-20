@@ -1,35 +1,10 @@
-.classNav {
-  position: relative;
-  z-index: 1;
-}
 .nav {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 18px;
-  color: white;
+  color: #385a66;
   font-weight: 400;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
 }
 .logo {
   font-family: "Cinzel", serif;
-}
-.frontText {
-  position: relative;
-  z-index: 1;
-}
-.picture {
-  background-image: url(../images/jumbotron.jpg);
-  background-size: cover;
-  height: 640px;
-  margin-top: -95px;
-  background-position-y: -100px;
-  position: relative;
-}
-.picture::after {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 80%;
-  background-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-  position: absolute;
-  bottom: 0;
+  color: #f14c59;
 }

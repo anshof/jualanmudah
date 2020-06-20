@@ -1,41 +1,50 @@
-import React from "react";
+import React, { Component } from "react";
 
-import { MDBBox } from "mdbreact";
+import { MDBBox, MDBCol, MDBRow } from "mdbreact";
 
-import Navbar from "../components/Navbar";
+import { BrowserRouter as Router } from "react-router-dom";
+
 import "../css/style.css";
+import Navbar from "../components/Navbar";
 
-class Home extends React.Component {
+class Home extends Component {
+  state = {
+    isOpen: false,
+  };
+
+  toggleCollapse = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  };
   render() {
     return (
-      <MDBBox>
+      <Router>
         <Navbar />
-        <MDBBox>
-          <MDBBox className="picture">
-            <MDBBox className="frontText">
-              <p
-                className="text-white text-center"
+        <MDBRow
+          style={{
+            margin: "0px 15px",
+          }}
+        >
+          <MDBCol size="4" className="d-flex align-items-center pl-5">
+            <MDBBox style={{ color: "#1b2e35" }} className="text-left pl-5">
+              <h1
                 style={{
-                  paddingTop: "240px",
-                  fontSize: "60px",
-                  fontFamily: "Montserrat",
-                  textShadow: "1px 1px 1px rgba(0, 0, 0, 0.8)",
-                  fontWeight: "200",
+                  fontFamily: "Source Sans Pro",
+                  fontWeight: "700",
                 }}
+                className="text-capitalize"
               >
-                Get work done <span style={{ fontWeight: "500" }}>faster</span>
-                <br /> and <span style={{ fontWeight: "500" }}>
-                  better
-                </span>{" "}
-                with us
+                easier, faster
+              </h1>
+              <p style={{ fontWeight: "400", color: "#385a66" }}>
+                Connect you and your customer with easier ways and faster steps
               </p>
               <MDBBox
                 className="btn text-uppercase my-0 py-1"
                 style={{
                   boxShadow: "none",
-                  fontSize: "20px",
-                  fontFamily: "Montserrat",
-                  backgroundColor: "#f49d37",
+                  fontSize: "18px",
+                  fontFamily: "Source Sans Pro",
+                  backgroundColor: "#f14c59",
                   color: "white",
                   borderRadius: "20px",
                 }}
@@ -43,9 +52,34 @@ class Home extends React.Component {
                 Start now
               </MDBBox>
             </MDBBox>
+          </MDBCol>
+          <MDBCol size="8">
+            <img
+              src={require("../images/front.jpg")}
+              alt="front"
+              style={{ width: "800px" }}
+            />
+          </MDBCol>
+        </MDBRow>
+        {/* <MDBBox
+          style={{
+            margin: "0 auto",
+            width: "300px",
+            height: "50px",
+            backgroundColor: "pink",
+          }}
+        >
+          <MDBBox>
+            <MDBRow>
+              <MDBCol size="4">
+
+              </MDBCol>
+              <MDBCol size="4"></MDBCol>
+              <MDBCol size="4"></MDBCol>
+            </MDBRow>
           </MDBBox>
-        </MDBBox>
-      </MDBBox>
+        </MDBBox> */}
+      </Router>
     );
   }
 }
