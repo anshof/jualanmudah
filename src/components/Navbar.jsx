@@ -14,7 +14,12 @@ import "../css/style.css";
 
 const Navbar = () => {
   return (
-    <MDBNavbar color="transparent" expand="md" style={{ boxShadow: "none" }}>
+    <MDBNavbar
+      className="navbar"
+      color="transparent"
+      expand="md"
+      style={{ boxShadow: "none" }}
+    >
       <MDBContainer>
         <MDBNavbarBrand className="d-flex align-items-center justify-content-center">
           <strong
