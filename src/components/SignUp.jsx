@@ -13,31 +13,38 @@ import {
 class SignUp extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      modal2: false,
+      modal3: false
+    };
 
     this.toggle = this.toggle.bind(this);
   }
 
-  state = {
-    modal: false,
-  };
 
-  toggle(){
+  // toggle(){
+  //   this.setState({
+  //     modal: !this.state.modal,
+  //   });
+  // };
+  toggle = nr => () => {
+    let modalNumber = 'modal' + nr
     this.setState({
-      modal: !this.state.modal,
+      [modalNumber]: !this.state[modalNumber]
     });
-  };
+  }
 
   render() {
 
-// const SignIn = (props) => {
+// function SignUp({ props }) {
     return (
       <MDBContainer>
 
     {/* Nanti dihapus kalau jadi component */}
-        <div onClick={this.toggle} style={{cursor:"pointer"}}>
+        <div onClick={this.toggle(2)} style={{cursor:"pointer"}}>
           Sign Up
         </div>
-        <MDBModal isOpen={this.state.modal} toggle={this.toggle} size="md">
+        <MDBModal isOpen={this.state.modal} toggle={this.toggle(2)} size="md" centered>
     {/* Nanti dihapus kalau jadi component */}
           <MDBCard>
             <MDBCardBody className="mx-4">
@@ -82,7 +89,6 @@ class SignUp extends Component {
                 type="text"
                 containerClass="mb-0"
               />
-              
               <MDBInput
                 name="country"
                 label="Your country"

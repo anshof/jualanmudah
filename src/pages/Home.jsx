@@ -2,13 +2,13 @@ import React from "react";
 
 import { MDBBox } from "mdbreact";
 
-import NavbarPage from "../components/NavbarPage";
+import SignUp from "../components/SignUp";
 
 class Home extends React.Component {
   render() {
     return (
       <MDBBox>
-        <NavbarPage />
+        <SignUp />
         <p>Hello world</p>
       </MDBBox>
     );
