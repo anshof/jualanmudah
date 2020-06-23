@@ -1,7 +1,6 @@
 import React from "react";
 
 import {
-  MDBBox,
   MDBNavbar,
   MDBNavbarBrand,
   MDBNavbarNav,
@@ -20,7 +19,7 @@ const Navbar = () => {
       expand="md"
       style={{ boxShadow: "none" }}
     >
-      <MDBContainer>
+      <MDBContainer style={{ padding: "0 0" }}>
         <MDBNavbarBrand className="d-flex align-items-center justify-content-center">
           <strong
             className="logo"
@@ -37,17 +36,29 @@ const Navbar = () => {
           </MDBNavItem>
           <MDBNavItem>
             <MDBNavLink to="#!" className="nav ml-3 text-uppercase">
-              Features
+              Dashboard
             </MDBNavLink>
           </MDBNavItem>
           <MDBNavItem>
             <MDBNavLink to="#!" className="nav ml-3 text-uppercase">
-              About
+              Databases
             </MDBNavLink>
           </MDBNavItem>
           <MDBNavItem>
             <MDBNavLink to="#!" className="ml-3 ">
-              <MDBBox
+              <img
+                src={
+                  "https://emmawatson2017.files.wordpress.com/2017/01/emma-watson-harry-potter-movies-wallpapers-hd-wallpaper-high.jpg"
+                }
+                alt="pict"
+                style={{
+                  height: "40px",
+                  width: "40px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+              />
+              {/* <MDBBox
                 className="btn text-uppercase my-0 py-1"
                 style={{
                   fontFamily: "Source Sans Pro",
@@ -59,7 +70,7 @@ const Navbar = () => {
                 }}
               >
                 Login
-              </MDBBox>
+              </MDBBox> */}
             </MDBNavLink>
           </MDBNavItem>
         </MDBNavbarNav>
