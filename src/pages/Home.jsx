@@ -1,24 +1,44 @@
 import React, { Component } from "react";
-
-import { MDBBox, MDBCol, MDBRow, MDBContainer } from "mdbreact";
+import { Link } from "react-router-dom";
+import { MDBBox, MDBCol, MDBRow, MDBContainer, MDBModal } from "mdbreact";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
 import "../css/style.css";
 import Navbar from "../components/Navbar";
+import SignIn from "../components/SignIn";
 
 class Home extends Component {
-  state = {
-    isOpen: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+      modalSignin: false,
+      modalSignup: false,
+    };
+    this.toggleCollapse = this.toggleCollapse.bind(this);
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggleCollapse() {
+    this.setState({ isOpen: !this.state.isOpen });
+  }
+
+  toggle = (key) => () => {
+    let modalKey = "modal" + key;
+    this.setState({
+      [modalKey]: !this.state[modalKey],
+    });
   };
 
-  toggleCollapse = () => {
-    this.setState({ isOpen: !this.state.isOpen });
-  };
   render() {
     return (
       <Router>
-        <Navbar />
+        <Navbar
+          toggle={(key) => this.toggle(key)}
+          modalSignin={this.state.modalSignin}
+          modalSignup={this.state.modalSignup}
+        />
         <MDBRow
           style={{
             margin: "0px 15px",
@@ -49,6 +69,7 @@ class Home extends Component {
                   color: "white",
                   borderRadius: "20px",
                 }}
+                onClick={this.toggle("Signin")}
               >
                 Start now
               </MDBBox>
@@ -288,6 +309,17 @@ class Home extends Component {
                   >
                     Start now
                   </MDBBox>
+                  <MDBModal
+                    isOpen={this.modalSignin}
+                    toggle={
+                      this.toggle("Signup")
+                        ? this.toggle("Signup") & this.toggle("Signin")
+                        : this.toggle("Signin")
+                    }
+                    size="md"
+                  >
+                    <SignIn />
+                  </MDBModal>
                 </MDBBox>
               </MDBCol>
             </MDBRow>
@@ -329,29 +361,29 @@ class Home extends Component {
                 <h6 className="font-weight-bold">Social Media</h6>
                 <MDBBox className="d-flex">
                   <h4 className="mb-0 pr-2">
-                    <a href="/#">
-                      <i class="text-white fab fa-facebook-square"></i>
-                    </a>
+                    <Link to="/#">
+                      <i className="text-white fab fa-facebook-square"></i>
+                    </Link>
                   </h4>
                   <h4 className="my-0 pr-2">
-                    <a href="/#">
-                      <i class="text-white fab fa-instagram-square"></i>
-                    </a>
+                    <Link to="/#">
+                      <i className="text-white fab fa-instagram-square"></i>
+                    </Link>
                   </h4>
                   <h4 className="my-0 pr-2">
-                    <a href="/#">
-                      <i class="text-white fab fa-youtube-square"></i>
-                    </a>
+                    <Link to="/#">
+                      <i className="text-white fab fa-youtube-square"></i>
+                    </Link>
                   </h4>
                   <h4 className="my-0 pr-2">
-                    <a href="/#">
-                      <i class="text-white fab fa-twitter-square"></i>
-                    </a>
+                    <Link to="/#">
+                      <i className="text-white fab fa-twitter-square"></i>
+                    </Link>
                   </h4>
                   <h4 className="my-0 pr-2">
-                    <a href="/#">
-                      <i class="text-white fab fa-linkedin-square"></i>
-                    </a>
+                    <Link to="/#">
+                      <i className="text-white fab fa-linkedin-square"></i>
+                    </Link>
                   </h4>
                 </MDBBox>
               </MDBCol>
