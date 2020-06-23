@@ -1,0 +1,23 @@
+html, body{
+  font-family: "Source Sans Pro", sans-serif !important;
+}
+
+.nav {
+  font-size: 18px;
+  color: #385a66;
+  font-weight: 400;
+}
+.logo {
+  font-family: "Cinzel", serif;
+  color: #f14c59;
+}
+.signin-button .btn-default, .signup-button .btn-default{
+  background-color: #f14c59 !important;
+}
+.navbar .modal-dialog .modal-content {
+  border-radius: 20px !important;
+  cursor: default;
+}
+.signin .modal-dialog .modal-content {
+  transition: none !important;
+}
