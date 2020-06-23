@@ -1,4 +1,5 @@
 import React from "react";
+import "../css/style.css";
 
 import {
   MDBBox,
@@ -8,13 +9,14 @@ import {
   MDBNavLink,
   MDBNavItem,
   MDBContainer,
+  MDBModal,
 } from "mdbreact";
 
-import "../css/style.css";
+import SignIn from "./SignIn";
 
-const Navbar = () => {
+const Navbar = (props) => {
   return (
-    <MDBNavbar color="transparent" expand="md" style={{ boxShadow: "none" }}>
+    <MDBNavbar color="transparent" expand="md" style={{ boxShadow: "none" }} className="navbar">
       <MDBContainer>
         <MDBNavbarBrand className="d-flex align-items-center justify-content-center">
           <strong
@@ -41,7 +43,7 @@ const Navbar = () => {
             </MDBNavLink>
           </MDBNavItem>
           <MDBNavItem>
-            <MDBNavLink to="#!" className="ml-3 ">
+            <MDBNavLink to="" className="ml-3 ">
               <MDBBox
                 className="btn text-uppercase my-0 py-1"
                 style={{
@@ -52,9 +54,20 @@ const Navbar = () => {
                   color: "white",
                   borderRadius: "20px",
                 }}
+                onClick={props.toggle("Signin")}
               >
                 Login
               </MDBBox>
+              <MDBModal
+                isOpen={props.modalSignin}
+                toggle={props.toggle("Signup") ? props.toggle("Signup") & props.toggle("Signin") : props.toggle("Signin")}
+                size="md"
+              >
+                <SignIn
+                  toggle={props.toggle}
+                  modalSignup={props.modalSignup}
+                />
+              </MDBModal>
             </MDBNavLink>
           </MDBNavItem>
         </MDBNavbarNav>

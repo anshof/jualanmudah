@@ -1,148 +1,101 @@
-import React, { Component } from "react";
+import React from "react";
 import {
-  MDBContainer,
   MDBBtn,
-  MDBModal,
   MDBModalFooter,
   MDBInput,
-  MDBCard,
   MDBCardBody,
+  MDBIcon,
+  MDBRow,
 } from "mdbreact";
 
-
-class SignUp extends Component {
-  constructor(props) {
-    super(props);
-
-    this.toggle = this.toggle.bind(this);
-  }
-
-  state = {
-    modal: false,
-  };
-
-  toggle(){
-    this.setState({
-      modal: !this.state.modal,
-    });
-  };
-
-  render() {
-
-// const SignIn = (props) => {
-    return (
-      <MDBContainer>
-
-    {/* Nanti dihapus kalau jadi component */}
-        <div onClick={this.toggle} style={{cursor:"pointer"}}>
-          Sign Up
+function SignUp(props) {
+  console.log("cek props di signup", props);
+  return (
+    <div className="signup">
+      <MDBRow
+        style={{
+          justifyContent: "end",
+          marginTop: "15px",
+          marginRight: "20px",
+        }}
+      >
+        <MDBIcon
+          icon="times"
+          onClick={props.toggle("Signup")}
+          style={{ cursor: "pointer", color: "#9e9e9e" }}
+        />
+      </MDBRow>
+      <MDBCardBody className="mx-4">
+        <div className="text-center">
+          <h3 className="dark-grey-text mb-3" style={{ fontWeight: "600" }}>
+            Sign up
+          </h3>
         </div>
-        <MDBModal isOpen={this.state.modal} toggle={this.toggle} size="md">
-    {/* Nanti dihapus kalau jadi component */}
-          <MDBCard>
-            <MDBCardBody className="mx-4">
-              <div className="text-center">
-                <h3 className="dark-grey-text mb-5">
-                  <strong>Sign up</strong>
-                </h3>
-              </div>
-              <MDBInput
-                name="nickname"
-                label="Your username"
-                group
-                type="text"
-                containerClass="mb-0"
-              />
-              <MDBInput
-                name="email"
-                label="Your email"
-                group
-                type="email"
-                validate
-                error="wrong"
-                success="right"
-              />
-              <MDBInput
-                name="password"
-                label="Your password"
-                group
-                type="password"
-                validate
-                containerClass="mb-0"
-              />
-              <div className="text-center">
-                <h4 className="dark-grey-text ">
-                  <strong>Your Biodata</strong>
-                </h4>
-              </div>
-              <MDBInput
-                name="name"
-                label="Your full name"
-                group
-                type="text"
-                containerClass="mb-0"
-              />
-              
-              <MDBInput
-                name="country"
-                label="Your country"
-                group
-                type="text"
-                validate
-                containerClass="mb-0"
-              />
-              <MDBInput
-                name="state"
-                label="Your state"
-                group
-                type="text"
-                validate
-                containerClass="mb-0"
-              />
-              <MDBInput
-                name="city"
-                label="Your city"
-                group
-                type="text"
-                validate
-                containerClass="mb-0"
-              />
-              <MDBInput
-                name="zip"
-                label="zip"
-                group
-                type="text"
-                validate
-                containerClass="mb-0"
-              />
-              <div className="text-center mb-3">
-                <MDBBtn
-                  type="button"
-                  gradient="young-passion"
-                  rounded
-                  className="btn-block z-depth-1a"
-                >
-                  Sign up
-                </MDBBtn>
-              </div>
-            </MDBCardBody>
-            <MDBModalFooter className="mx-5 pt-3 mb-1">
-              <p className="font-small grey-text d-flex justify-content-end">
-                Have an account?
-                <a href="#!" className="red-text ml-1">
-                  Sign in
-                </a>
-              </p>
-            </MDBModalFooter>
-          </MDBCard>
-
-    {/* Nanti dihapus kalau jadi component */}
-        </MDBModal>
-    {/* Nanti dihapus kalau jadi component */}
-
-      </MDBContainer>
-    );
-  }
+        <MDBInput
+          name="nickname"
+          label="Your username"
+          group
+          type="text"
+          containerClass="mb-0"
+        />
+        <MDBInput
+          name="email"
+          label="Your email"
+          group
+          type="email"
+          // validate
+          error="wrong"
+          success="right"
+          containerClass="mb-0"
+        />
+        <MDBInput
+          name="password"
+          label="Your password"
+          group
+          type="password"
+          validate
+          containerClass="mb-0"
+        />
+        <MDBInput
+          name="name"
+          label="Your full name"
+          group
+          type="text"
+          containerClass="mb-0"
+        />
+        <MDBInput
+          name="address"
+          label="Your full address"
+          group
+          type="text"
+          containerClass="mb-0"
+        />
+        <MDBInput
+          name="position"
+          label="Your position"
+          group
+          type="text"
+          containerClass="mb-0"
+        />
+        <div className="text-center signup-button">
+          <MDBBtn type="button" rounded className="btn-block z-depth-1a">
+            Sign up
+          </MDBBtn>
+        </div>
+      </MDBCardBody>
+      <MDBModalFooter className="mx-5 pt-3 mb-1">
+        <p className="font-small grey-text d-flex justify-content-end">
+          Have an account?
+          <div
+            className="red-text ml-1"
+            onClick={props.toggle("Signup")}
+          >
+            Sign in
+          </div>
+        </p>
+      </MDBModalFooter>
+    </div>
+  );
 }
 
 export default SignUp;
