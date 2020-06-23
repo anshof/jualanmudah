@@ -16,7 +16,12 @@ import SignIn from "./SignIn";
 
 const Navbar = (props) => {
   return (
-    <MDBNavbar color="transparent" expand="md" style={{ boxShadow: "none" }} className="navbar">
+    <MDBNavbar
+      color="transparent"
+      expand="md"
+      style={{ boxShadow: "none" }}
+      className="navbar"
+    >
       <MDBContainer>
         <MDBNavbarBrand className="d-flex align-items-center justify-content-center">
           <strong
@@ -42,34 +47,42 @@ const Navbar = (props) => {
               About
             </MDBNavLink>
           </MDBNavItem>
-          <MDBNavItem>
-            <MDBNavLink to="" className="ml-3 ">
-              <MDBBox
-                className="btn text-uppercase my-0 py-1"
-                style={{
-                  fontFamily: "Source Sans Pro",
-                  fontSize: "18px",
-                  boxShadow: "none",
-                  backgroundColor: "#f14c59",
-                  color: "white",
-                  borderRadius: "20px",
-                }}
-                onClick={props.toggle("Signin")}
-              >
-                Login
-              </MDBBox>
-              <MDBModal
-                isOpen={props.modalSignin}
-                toggle={props.toggle("Signup") ? props.toggle("Signup") & props.toggle("Signin") : props.toggle("Signin")}
-                size="md"
-              >
-                <SignIn
-                  toggle={props.toggle}
-                  modalSignup={props.modalSignup}
-                />
-              </MDBModal>
-            </MDBNavLink>
-          </MDBNavItem>
+          {props.isLogin ? (
+            false
+          ) : (
+            <MDBNavItem>
+              <MDBNavLink to="" className="ml-3 ">
+                <MDBBox
+                  className="btn text-uppercase my-0 py-1"
+                  style={{
+                    fontFamily: "Source Sans Pro",
+                    fontSize: "18px",
+                    boxShadow: "none",
+                    backgroundColor: "#f14c59",
+                    color: "white",
+                    borderRadius: "20px",
+                  }}
+                  onClick={props.toggle("Signin")}
+                >
+                  Login
+                </MDBBox>
+                <MDBModal
+                  isOpen={props.modalSignin}
+                  toggle={
+                    props.toggle("Signup")
+                      ? props.toggle("Signup") & props.toggle("Signin")
+                      : props.toggle("Signin")
+                  }
+                  size="md"
+                >
+                  <SignIn
+                    toggle={props.toggle}
+                    modalSignup={props.modalSignup}
+                  />
+                </MDBModal>
+              </MDBNavLink>
+            </MDBNavItem>
+          )}
         </MDBNavbarNav>
       </MDBContainer>
     </MDBNavbar>
