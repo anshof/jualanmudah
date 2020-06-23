@@ -43,7 +43,7 @@ function SignUp(props) {
           label="Your email"
           group
           type="email"
-          validate
+          // validate
           error="wrong"
           success="right"
           containerClass="mb-0"
