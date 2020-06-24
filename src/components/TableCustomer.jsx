@@ -1,6 +1,6 @@
-import React, {Fragment} from "react";
+import React from "react";
 
-import { MDBBox, MDBRow, MDBCol } from "mdbreact";
+import { MDBRow, MDBCol } from "mdbreact";
 
 import "../css/style.css";
 import { Route } from "react-router-dom";
