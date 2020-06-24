@@ -3,13 +3,12 @@ import React from "react";
 import "./App.css";
 
 import MainRoutes from "./routes/MainRoutes";
-import Dashboard from "./pages/Dashboard";
-import DatabasePage from "./pages/Database";
+import Database from "./pages/Database";
 
 function App() {
   return (
     <div className="App">
-      <Dashboard />
+      <Database />
       {/* <DatabasePage /> */}
       {/* <MainRoutes /> */}
     </div>

@@ -1,533 +1,512 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import { CSVReader } from 'react-papaparse'
+import { BrowserRouter as Router } from "react-router-dom";
 
-import { MDBDataTable, MDBContainer } from "mdbreact";
+import {
+  MDBBox,
+  MDBRow,
+  MDBCol,
+  MDBBtn,
+  MDBIcon,
+  MDBFormInline,
+} from "mdbreact";
+
 import Navbar from "../components/Navbar";
+import Table from "../components/TableCustomer";
+import PictName from "../components/PictName";
+import Pagination from "../components/Pagination"
+import "../css/style.css";
 
-class DatabasePage extends Component {
+class Database extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLogin: true,
     };
-    this.data = {
-      columns: [
-        {
-          label: "Name",
-          field: "name",
-          sort: "asc",
-          width: 150,
-        },
-        {
-          label: "Position",
-          field: "position",
-          sort: "asc",
-          width: 270,
-        },
-        {
-          label: "Office",
-          field: "office",
-          sort: "asc",
-          width: 200,
-        },
-        {
-          label: "Age",
-          field: "age",
-          sort: "asc",
-          width: 100,
-        },
-        {
-          label: "Start date",
-          field: "date",
-          sort: "asc",
-          width: 150,
-        },
-        {
-          label: "Salary",
-          field: "salary",
-          sort: "asc",
-          width: 100,
-        },
-      ],
-      rows: [
-        {
-          name: "Tiger Nixon",
-          position: "System Architect",
-          office: "Edinburgh",
-          age: "61",
-          date: "2011/04/25",
-          salary: "$320",
-        },
-        {
-          name: "Garrett Winters",
-          position: "Accountant",
-          office: "Tokyo",
-          age: "63",
-          date: "2011/07/25",
-          salary: "$170",
-        },
-        {
-          name: "Ashton Cox",
-          position: "Junior Technical Author",
-          office: "San Francisco",
-          age: "66",
-          date: "2009/01/12",
-          salary: "$86",
-        },
-        {
-          name: "Cedric Kelly",
-          position: "Senior Javascript Developer",
-          office: "Edinburgh",
-          age: "22",
-          date: "2012/03/29",
-          salary: "$433",
-        },
-        {
-          name: "Airi Satou",
-          position: "Accountant",
-          office: "Tokyo",
-          age: "33",
-          date: "2008/11/28",
-          salary: "$162",
-        },
-        {
-          name: "Brielle Williamson",
-          position: "Integration Specialist",
-          office: "New York",
-          age: "61",
-          date: "2012/12/02",
-          salary: "$372",
-        },
-        {
-          name: "Herrod Chandler",
-          position: "Sales Assistant",
-          office: "San Francisco",
-          age: "59",
-          date: "2012/08/06",
-          salary: "$137",
-        },
-        {
-          name: "Rhona Davidson",
-          position: "Integration Specialist",
-          office: "Tokyo",
-          age: "55",
-          date: "2010/10/14",
-          salary: "$327",
-        },
-        {
-          name: "Colleen Hurst",
-          position: "Javascript Developer",
-          office: "San Francisco",
-          age: "39",
-          date: "2009/09/15",
-          salary: "$205",
-        },
-        {
-          name: "Sonya Frost",
-          position: "Software Engineer",
-          office: "Edinburgh",
-          age: "23",
-          date: "2008/12/13",
-          salary: "$103",
-        },
-        {
-          name: "Jena Gaines",
-          position: "Office Manager",
-          office: "London",
-          age: "30",
-          date: "2008/12/19",
-          salary: "$90",
-        },
-        {
-          name: "Quinn Flynn",
-          position: "Support Lead",
-          office: "Edinburgh",
-          age: "22",
-          date: "2013/03/03",
-          salary: "$342",
-        },
-        {
-          name: "Charde Marshall",
-          position: "Regional Director",
-          office: "San Francisco",
-          age: "36",
-          date: "2008/10/16",
-          salary: "$470",
-        },
-        {
-          name: "Haley Kennedy",
-          position: "Senior Marketing Designer",
-          office: "London",
-          age: "43",
-          date: "2012/12/18",
-          salary: "$313",
-        },
-        {
-          name: "Tatyana Fitzpatrick",
-          position: "Regional Director",
-          office: "London",
-          age: "19",
-          date: "2010/03/17",
-          salary: "$385",
-        },
-        {
-          name: "Michael Silva",
-          position: "Marketing Designer",
-          office: "London",
-          age: "66",
-          date: "2012/11/27",
-          salary: "$198",
-        },
-        {
-          name: "Paul Byrd",
-          position: "Chief Financial Officer (CFO)",
-          office: "New York",
-          age: "64",
-          date: "2010/06/09",
-          salary: "$725",
-        },
-        {
-          name: "Gloria Little",
-          position: "Systems Administrator",
-          office: "New York",
-          age: "59",
-          date: "2009/04/10",
-          salary: "$237",
-        },
-        {
-          name: "Bradley Greer",
-          position: "Software Engineer",
-          office: "London",
-          age: "41",
-          date: "2012/10/13",
-          salary: "$132",
-        },
-        {
-          name: "Dai Rios",
-          position: "Personnel Lead",
-          office: "Edinburgh",
-          age: "35",
-          date: "2012/09/26",
-          salary: "$217",
-        },
-        {
-          name: "Jenette Caldwell",
-          position: "Development Lead",
-          office: "New York",
-          age: "30",
-          date: "2011/09/03",
-          salary: "$345",
-        },
-        {
-          name: "Yuri Berry",
-          position: "Chief Marketing Officer (CMO)",
-          office: "New York",
-          age: "40",
-          date: "2009/06/25",
-          salary: "$675",
-        },
-        {
-          name: "Caesar Vance",
-          position: "Pre-Sales Support",
-          office: "New York",
-          age: "21",
-          date: "2011/12/12",
-          salary: "$106",
-        },
-        {
-          name: "Doris Wilder",
-          position: "Sales Assistant",
-          office: "Sidney",
-          age: "23",
-          date: "2010/09/20",
-          salary: "$85",
-        },
-        {
-          name: "Angelica Ramos",
-          position: "Chief Executive Officer (CEO)",
-          office: "London",
-          age: "47",
-          date: "2009/10/09",
-          salary: "$1",
-        },
-        {
-          name: "Gavin Joyce",
-          position: "Developer",
-          office: "Edinburgh",
-          age: "42",
-          date: "2010/12/22",
-          salary: "$92",
-        },
-        {
-          name: "Jennifer Chang",
-          position: "Regional Director",
-          office: "Singapore",
-          age: "28",
-          date: "2010/11/14",
-          salary: "$357",
-        },
-        {
-          name: "Brenden Wagner",
-          position: "Software Engineer",
-          office: "San Francisco",
-          age: "28",
-          date: "2011/06/07",
-          salary: "$206",
-        },
-        {
-          name: "Fiona Green",
-          position: "Chief Operating Officer (COO)",
-          office: "San Francisco",
-          age: "48",
-          date: "2010/03/11",
-          salary: "$850",
-        },
-        {
-          name: "Shou Itou",
-          position: "Regional Marketing",
-          office: "Tokyo",
-          age: "20",
-          date: "2011/08/14",
-          salary: "$163",
-        },
-        {
-          name: "Michelle House",
-          position: "Integration Specialist",
-          office: "Sidney",
-          age: "37",
-          date: "2011/06/02",
-          salary: "$95",
-        },
-        {
-          name: "Suki Burks",
-          position: "Developer",
-          office: "London",
-          age: "53",
-          date: "2009/10/22",
-          salary: "$114",
-        },
-        {
-          name: "Prescott Bartlett",
-          position: "Technical Author",
-          office: "London",
-          age: "27",
-          date: "2011/05/07",
-          salary: "$145",
-        },
-        {
-          name: "Gavin Cortez",
-          position: "Team Leader",
-          office: "San Francisco",
-          age: "22",
-          date: "2008/10/26",
-          salary: "$235",
-        },
-        {
-          name: "Martena Mccray",
-          position: "Post-Sales support",
-          office: "Edinburgh",
-          age: "46",
-          date: "2011/03/09",
-          salary: "$324",
-        },
-        {
-          name: "Unity Butler",
-          position: "Marketing Designer",
-          office: "San Francisco",
-          age: "47",
-          date: "2009/12/09",
-          salary: "$85",
-        },
-        {
-          name: "Howard Hatfield",
-          position: "Office Manager",
-          office: "San Francisco",
-          age: "51",
-          date: "2008/12/16",
-          salary: "$164",
-        },
-        {
-          name: "Hope Fuentes",
-          position: "Secretary",
-          office: "San Francisco",
-          age: "41",
-          date: "2010/02/12",
-          salary: "$109",
-        },
-        {
-          name: "Vivian Harrell",
-          position: "Financial Controller",
-          office: "San Francisco",
-          age: "62",
-          date: "2009/02/14",
-          salary: "$452",
-        },
-        {
-          name: "Timothy Mooney",
-          position: "Office Manager",
-          office: "London",
-          age: "37",
-          date: "2008/12/11",
-          salary: "$136",
-        },
-        {
-          name: "Jackson Bradshaw",
-          position: "Director",
-          office: "New York",
-          age: "65",
-          date: "2008/09/26",
-          salary: "$645",
-        },
-        {
-          name: "Olivia Liang",
-          position: "Support Engineer",
-          office: "Singapore",
-          age: "64",
-          date: "2011/02/03",
-          salary: "$234",
-        },
-        {
-          name: "Bruno Nash",
-          position: "Software Engineer",
-          office: "London",
-          age: "38",
-          date: "2011/05/03",
-          salary: "$163",
-        },
-        {
-          name: "Sakura Yamamoto",
-          position: "Support Engineer",
-          office: "Tokyo",
-          age: "37",
-          date: "2009/08/19",
-          salary: "$139",
-        },
-        {
-          name: "Thor Walton",
-          position: "Developer",
-          office: "New York",
-          age: "61",
-          date: "2013/08/11",
-          salary: "$98",
-        },
-        {
-          name: "Finn Camacho",
-          position: "Support Engineer",
-          office: "San Francisco",
-          age: "47",
-          date: "2009/07/07",
-          salary: "$87",
-        },
-        {
-          name: "Serge Baldwin",
-          position: "Data Coordinator",
-          office: "Singapore",
-          age: "64",
-          date: "2012/04/09",
-          salary: "$138",
-        },
-        {
-          name: "Zenaida Frank",
-          position: "Software Engineer",
-          office: "New York",
-          age: "63",
-          date: "2010/01/04",
-          salary: "$125",
-        },
-        {
-          name: "Zorita Serrano",
-          position: "Software Engineer",
-          office: "San Francisco",
-          age: "56",
-          date: "2012/06/01",
-          salary: "$115",
-        },
-        {
-          name: "Jennifer Acosta",
-          position: "Junior Javascript Developer",
-          office: "Edinburgh",
-          age: "43",
-          date: "2013/02/01",
-          salary: "$75",
-        },
-        {
-          name: "Cara Stevens",
-          position: "Sales Assistant",
-          office: "New York",
-          age: "46",
-          date: "2011/12/06",
-          salary: "$145",
-        },
-        {
-          name: "Hermione Butler",
-          position: "Regional Director",
-          office: "London",
-          age: "47",
-          date: "2011/03/21",
-          salary: "$356",
-        },
-        {
-          name: "Lael Greer",
-          position: "Systems Administrator",
-          office: "London",
-          age: "21",
-          date: "2009/02/27",
-          salary: "$103",
-        },
-        {
-          name: "Jonas Alexander",
-          position: "Developer",
-          office: "San Francisco",
-          age: "30",
-          date: "2010/07/14",
-          salary: "$86",
-        },
-        {
-          name: "Shad Decker",
-          position: "Regional Director",
-          office: "Edinburgh",
-          age: "51",
-          date: "2008/11/13",
-          salary: "$183",
-        },
-        {
-          name: "Michael Bruce",
-          position: "Javascript Developer",
-          office: "Singapore",
-          age: "29",
-          date: "2011/06/27",
-          salary: "$183",
-        },
-        {
-          name: "Donna Snider",
-          position: "Customer Support",
-          office: "New York",
-          age: "27",
-          date: "2011/01/25",
-          salary: "$112",
-        },
-      ],
-    };
+    this.data = [
+      {
+        name: "Tiger Nixon",
+        email: "System Architect",
+        phone: "$320",
+        bod: "2011/04/25",
+        address: "61",
+        company: "Edinburgh",
+      },
+      {
+        name: "Garrett Winters",
+        email: "Accountant",
+        company: "Tokyo",
+        address: "63",
+        bod: "2011/07/25",
+        phone: "$170",
+      },
+      {
+        name: "Ashton Cox",
+        email: "Junior Technical Author",
+        company: "San Francisco",
+        address: "66",
+        bod: "2009/01/12",
+        phone: "$86",
+      },
+      {
+        name: "Cedric Kelly",
+        email: "Senior Javascript Developer",
+        company: "Edinburgh",
+        address: "22",
+        bod: "2012/03/29",
+        phone: "$433",
+      },
+      {
+        name: "Airi Satou",
+        email: "Accountant",
+        company: "Tokyo",
+        address: "33",
+        bod: "2008/11/28",
+        phone: "$162",
+      },
+      {
+        name: "Brielle Williamson",
+        email: "Integration Specialist",
+        company: "New York",
+        address: "61",
+        bod: "2012/12/02",
+        phone: "$372",
+      },
+      {
+        name: "Herrod Chandler",
+        email: "Sales Assistant",
+        company: "San Francisco",
+        address: "59",
+        bod: "2012/08/06",
+        phone: "$137",
+      },
+      {
+        name: "Rhona Davidson",
+        email: "Integration Specialist",
+        company: "Tokyo",
+        address: "55",
+        bod: "2010/10/14",
+        phone: "$327",
+      },
+      {
+        name: "Colleen Hurst",
+        email: "Javascript Developer",
+        company: "San Francisco",
+        address: "39",
+        bod: "2009/09/15",
+        phone: "$205",
+      },
+      {
+        name: "Sonya Frost",
+        email: "Software Engineer",
+        company: "Edinburgh",
+        address: "23",
+        bod: "2008/12/13",
+        phone: "$103",
+      },
+      {
+        name: "Jena Gaines",
+        email: "company Manaddressr",
+        company: "London",
+        address: "30",
+        bod: "2008/12/19",
+        phone: "$90",
+      },
+      {
+        name: "Quinn Flynn",
+        email: "Support Lead",
+        company: "Edinburgh",
+        address: "22",
+        bod: "2013/03/03",
+        phone: "$342",
+      },
+      {
+        name: "Charde Marshall",
+        email: "Regional Director",
+        company: "San Francisco",
+        address: "36",
+        bod: "2008/10/16",
+        phone: "$470",
+      },
+      {
+        name: "Haley Kennedy",
+        email: "Senior Marketing Designer",
+        company: "London",
+        address: "43",
+        bod: "2012/12/18",
+        phone: "$313",
+      },
+      {
+        name: "Tatyana Fitzpatrick",
+        email: "Regional Director",
+        company: "London",
+        address: "19",
+        bod: "2010/03/17",
+        phone: "$385",
+      },
+      {
+        name: "Michael Silva",
+        email: "Marketing Designer",
+        company: "London",
+        address: "66",
+        bod: "2012/11/27",
+        phone: "$198",
+      },
+      {
+        name: "Paul Byrd",
+        email: "Chief Financial companyr (CFO)",
+        company: "New York",
+        address: "64",
+        bod: "2010/06/09",
+        phone: "$725",
+      },
+      {
+        name: "Gloria Little",
+        email: "Systems Administrator",
+        company: "New York",
+        address: "59",
+        bod: "2009/04/10",
+        phone: "$237",
+      },
+      {
+        name: "Bradley Greer",
+        email: "Software Engineer",
+        company: "London",
+        address: "41",
+        bod: "2012/10/13",
+        phone: "$132",
+      },
+      {
+        name: "Dai Rios",
+        email: "Personnel Lead",
+        company: "Edinburgh",
+        address: "35",
+        bod: "2012/09/26",
+        phone: "$217",
+      },
+      {
+        name: "Jenette Caldwell",
+        email: "Development Lead",
+        company: "New York",
+        address: "30",
+        bod: "2011/09/03",
+        phone: "$345",
+      },
+      {
+        name: "Yuri Berry",
+        email: "Chief Marketing companyr (CMO)",
+        company: "New York",
+        address: "40",
+        bod: "2009/06/25",
+        phone: "$675",
+      },
+    ];
   }
-
   render() {
     return (
       <Router>
-        <Navbar isLogin={this.state.isLogin} />
-        <div style={{ backgroundColor: "rgb(241, 76, 89)" }}>
-          <MDBContainer>
-            <MDBDataTable
-              striped
-              bordered
-              small
-              data={this.data}
-              style={{ backgroundColor: "white", marginTop: "20px" }}
-            />
-          </MDBContainer>
-        </div>
+        <MDBBox style={{ fontFamily: "Source Sans Pro" }}>
+          <Navbar
+            isLogin={this.state.isLogin}
+            fontColor={"white"}
+            backNav={"rgb(241, 76, 89)"}
+            style={{ position: "fixed" }}
+          />
+          <MDBBox style={{ backgroundColor: "#f7f7f7" }}>
+            <MDBRow style={{ paddingTop: "100px" }}>
+              <MDBCol
+                size="6"
+                style={{
+                  marginTop: "auto",
+                }}
+              >
+                <h3
+                  className="text-left ml-5"
+                  style={{
+                    fontWeight: "600",
+                    color: "#192e35",
+                  }}
+                >
+                  Database
+                </h3>
+              </MDBCol>
+
+              <MDBCol
+                size="3"
+                style={{ display: "flex", justifyContent: "end" }}
+              >
+                <MDBRow>
+                  {/* <MDBCol size="6"> */}
+                  <MDBBtn
+                    color="transparent"
+                    style={{
+                      backgroundColor: "#f14c59",
+                      color: "white",
+                      boxShadow: "none",
+                      borderRadius: "40px",
+                      fontSize: "14px",
+                      padding: ".50rem 1rem",
+                    }}
+                    className="text-capitalize"
+                  >
+                    <i class="fas fa-plus mr-1"></i> New broadcast
+                  </MDBBtn>
+                  {/* </MDBCol> */}
+                  {/* <MDBCol size="6"> */}
+                  <MDBBtn
+                    color="transparent"
+                    style={{
+                      backgroundColor: "#f14c59",
+                      color: "white",
+                      boxShadow: "none",
+                      borderRadius: "40px",
+                      fontSize: "14px",
+                      padding: ".50rem 1rem",
+                    }}
+                    className="text-capitalize"
+                  >
+                    <i class="fas fa-download mr-1"></i> Download Form
+                  </MDBBtn>
+                  {/* </MDBCol> */}
+                </MDBRow>
+              </MDBCol>
+
+              <MDBCol size="3">
+                <MDBFormInline className="md-form" style={{ margin: "0px" }}>
+                  <MDBIcon icon="search" />
+                  <input
+                    className="form-control form-control-sm ml-2 w-75"
+                    type="text"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                </MDBFormInline>
+              </MDBCol>
+            </MDBRow>
+            <MDBRow
+              style={{
+                margin: "25px 25px 0 25px",
+              }}
+            >
+              <MDBCol size="3">
+                <MDBBox
+                  style={{
+                    borderRadius: "20px",
+                    padding: "30px 20px",
+                    boxShadow: "0 0 10px #e1e1e1",
+                    backgroundColor: "white",
+                  }}
+                  className="text-left pt-4"
+                >
+                  <PictName />
+                  <MDBBox className="text-center">
+                    <MDBBtn
+                      color="transparent"
+                      style={{
+                        backgroundColor: "#f14c59",
+                        color: "white",
+                        boxShadow: "none",
+                        borderRadius: "40px",
+                        fontSize: "16px",
+                      }}
+                      className="text-capitalize"
+                    >
+                      <i class="fas fa-plus-circle mr-1"></i> New Database
+                    </MDBBtn>
+                  </MDBBox>
+                  <hr />
+                  <MDBBox className="pl-3">
+                    <p
+                      className="mb-1"
+                      style={{
+                        fontSize: "18px",
+                        fontWeight: "600",
+                        color: "#192e35",
+                      }}
+                    >
+                      All segments
+                    </p>
+                    <a href="#!" style={{ color: "#192e35" }}>
+                      <p className="py-0 my-0" style={{ fontSize: "16px" }}>
+                        Woman
+                      </p>
+                    </a>
+                    <a href="#!" style={{ color: "#192e35" }}>
+                      <p className="py-0 my-0" style={{ fontSize: "16px" }}>
+                        Man
+                      </p>
+                    </a>
+                  </MDBBox>
+                </MDBBox>
+              </MDBCol>
+              <MDBCol size="9">
+                <MDBRow
+                  className="text-uppercase mb-1"
+                  style={{ fontWeight: "700", color: "rgb(241, 76, 89)" }}
+                >
+                  <MDBCol
+                    size="2"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <MDBRow>
+                      <MDBCol className="pr-2">
+                        <div className="mt-1">Name</div>
+                      </MDBCol>
+
+                      <MDBCol>
+                        <MDBRow>
+                          <MDBIcon icon="caret-up" />
+                        </MDBRow>
+
+                        <MDBRow>
+                          <MDBIcon icon="caret-down" />
+                        </MDBRow>
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBCol>
+                  <MDBCol
+                    size="2"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <MDBRow
+                      style={{ justifyContent: "center", marginBottom: "10px" }}
+                    >
+                      <MDBCol className="pr-2">
+                        <div className="text-center d-flex align-items-center mt-1">
+                          Email
+                        </div>
+                      </MDBCol>
+                      <MDBCol>
+                        <MDBRow>
+                          <MDBIcon icon="caret-up" />
+                        </MDBRow>
+
+                        <MDBRow>
+                          <MDBIcon icon="caret-down" />
+                        </MDBRow>
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBCol>
+                  <MDBCol
+                    size="2"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <MDBRow>
+                      <MDBCol className="pr-2">
+                        <div className="text-center d-flex align-items-center mt-1">
+                          Phone
+                        </div>
+                      </MDBCol>
+                      <MDBCol>
+                        <MDBRow>
+                          <MDBIcon icon="caret-up" />
+                        </MDBRow>
+
+                        <MDBRow>
+                          <MDBIcon icon="caret-down" />
+                        </MDBRow>
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBCol>
+                  <MDBCol
+                    size="2"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <MDBRow>
+                      <MDBCol className="pr-2">
+                        <div className="text-center d-flex align-items-center mt-1">
+                          BoD
+                        </div>
+                      </MDBCol>
+                      <MDBCol>
+                        <MDBRow>
+                          <MDBIcon icon="caret-up" />
+                        </MDBRow>
+
+                        <MDBRow>
+                          <MDBIcon icon="caret-down" />
+                        </MDBRow>
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBCol>
+                  <MDBCol
+                    size="2"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <MDBRow>
+                      <MDBCol className="pr-2">
+                        <div className="text-center d-flex align-items-center mt-1">
+                          Address
+                        </div>
+                      </MDBCol>
+                      <MDBCol>
+                        <MDBRow>
+                          <MDBIcon icon="caret-up" />
+                        </MDBRow>
+
+                        <MDBRow>
+                          <MDBIcon icon="caret-down" />
+                        </MDBRow>
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBCol>
+                  <MDBCol
+                    size="2"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <MDBRow>
+                      <MDBCol className="pr-2">
+                        <div className="text-center d-flex align-items-center mt-1">
+                          Company
+                        </div>
+                      </MDBCol>
+                      <MDBCol>
+                        <MDBRow>
+                          <MDBIcon icon="caret-up" />
+                        </MDBRow>
+
+                        <MDBRow>
+                          <MDBIcon icon="caret-down" />
+                        </MDBRow>
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBCol>
+                </MDBRow>
+                <Table data={this.data} />
+                <MDBRow>
+                  <MDBCol style={{marginTop:"15px"}}>
+                    <Pagination />
+                  </MDBCol>
+                </MDBRow>
+              </MDBCol>
+            </MDBRow>
+          </MDBBox>
+        </MDBBox>
       </Router>
     );
   }
 }
-export default DatabasePage;
+export default Database;
