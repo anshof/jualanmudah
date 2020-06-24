@@ -21,3 +21,6 @@ html, body{
 .signin .modal-dialog .modal-content {
   transition: none !important;
 }
+.page-item.active .page-link{
+  background-color: rgb(241, 76, 89) !important;
+}
