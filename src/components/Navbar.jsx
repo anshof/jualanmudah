@@ -20,7 +20,7 @@ const Navbar = (props) => {
       expand="md"
       style={{
         boxShadow: "none",
-        backgroundColor: props.backNav ? props.backNav : "#f14c59",
+        backgroundColor: props.backNav ? props.backNav : "white",
         position: "fixed",
         zIndex: "10",
         minWidth: "100%",

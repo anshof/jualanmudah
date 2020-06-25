@@ -34,14 +34,17 @@ class Home extends Component {
     return (
       <Router>
         <Navbar
-          toggle={(key) => this.toggle(key)}
           isLogin={this.state.isLogin}
+          toggle={(key) => this.toggle(key)}
           modalSignin={this.state.modalSignin}
           modalSignup={this.state.modalSignup}
+          // backNav={"white"}
+          // fontColor={"rgb(241, 76, 89)"}
         />
         <MDBRow
           style={{
             margin: "0px 15px",
+            paddingTop: "75px"
           }}
         >
           <MDBCol size="4" className="d-flex align-items-center pl-5">

@@ -8,12 +8,16 @@ import {
   MDBBtn,
   MDBIcon,
   MDBFormInline,
+  MDBModal,
 } from "mdbreact";
 
 import Navbar from "../components/Navbar";
 import Table from "../components/TableCustomer";
 import PictName from "../components/PictName";
-import Pagination from "../components/Pagination"
+import Pagination from "../components/Pagination";
+import NewDatabase from "../components/NewDatabaseModal";
+import DownloadFormDatabase from "../components/DownloadFormModal"
+
 import "../css/style.css";
 
 class Database extends Component {
@@ -21,7 +25,10 @@ class Database extends Component {
     super(props);
     this.state = {
       isLogin: true,
+      modalFormDatabase: false,
+      modalNewDatabase: false,
     };
+    this.toggle = this.toggle.bind(this);
     this.data = [
       {
         name: "Tiger Nixon",
@@ -70,137 +77,15 @@ class Database extends Component {
         address: "61",
         bod: "2012/12/02",
         phone: "$372",
-      },
-      {
-        name: "Herrod Chandler",
-        email: "Sales Assistant",
-        company: "San Francisco",
-        address: "59",
-        bod: "2012/08/06",
-        phone: "$137",
-      },
-      {
-        name: "Rhona Davidson",
-        email: "Integration Specialist",
-        company: "Tokyo",
-        address: "55",
-        bod: "2010/10/14",
-        phone: "$327",
-      },
-      {
-        name: "Colleen Hurst",
-        email: "Javascript Developer",
-        company: "San Francisco",
-        address: "39",
-        bod: "2009/09/15",
-        phone: "$205",
-      },
-      {
-        name: "Sonya Frost",
-        email: "Software Engineer",
-        company: "Edinburgh",
-        address: "23",
-        bod: "2008/12/13",
-        phone: "$103",
-      },
-      {
-        name: "Jena Gaines",
-        email: "company Manaddressr",
-        company: "London",
-        address: "30",
-        bod: "2008/12/19",
-        phone: "$90",
-      },
-      {
-        name: "Quinn Flynn",
-        email: "Support Lead",
-        company: "Edinburgh",
-        address: "22",
-        bod: "2013/03/03",
-        phone: "$342",
-      },
-      {
-        name: "Charde Marshall",
-        email: "Regional Director",
-        company: "San Francisco",
-        address: "36",
-        bod: "2008/10/16",
-        phone: "$470",
-      },
-      {
-        name: "Haley Kennedy",
-        email: "Senior Marketing Designer",
-        company: "London",
-        address: "43",
-        bod: "2012/12/18",
-        phone: "$313",
-      },
-      {
-        name: "Tatyana Fitzpatrick",
-        email: "Regional Director",
-        company: "London",
-        address: "19",
-        bod: "2010/03/17",
-        phone: "$385",
-      },
-      {
-        name: "Michael Silva",
-        email: "Marketing Designer",
-        company: "London",
-        address: "66",
-        bod: "2012/11/27",
-        phone: "$198",
-      },
-      {
-        name: "Paul Byrd",
-        email: "Chief Financial companyr (CFO)",
-        company: "New York",
-        address: "64",
-        bod: "2010/06/09",
-        phone: "$725",
-      },
-      {
-        name: "Gloria Little",
-        email: "Systems Administrator",
-        company: "New York",
-        address: "59",
-        bod: "2009/04/10",
-        phone: "$237",
-      },
-      {
-        name: "Bradley Greer",
-        email: "Software Engineer",
-        company: "London",
-        address: "41",
-        bod: "2012/10/13",
-        phone: "$132",
-      },
-      {
-        name: "Dai Rios",
-        email: "Personnel Lead",
-        company: "Edinburgh",
-        address: "35",
-        bod: "2012/09/26",
-        phone: "$217",
-      },
-      {
-        name: "Jenette Caldwell",
-        email: "Development Lead",
-        company: "New York",
-        address: "30",
-        bod: "2011/09/03",
-        phone: "$345",
-      },
-      {
-        name: "Yuri Berry",
-        email: "Chief Marketing companyr (CMO)",
-        company: "New York",
-        address: "40",
-        bod: "2009/06/25",
-        phone: "$675",
-      },
+      }
     ];
   }
+  toggle = (key) => () => {
+    let modalKey = "modal" + key;
+    this.setState({
+      [modalKey]: !this.state[modalKey],
+    });
+  };
   render() {
     return (
       <Router>
@@ -235,7 +120,6 @@ class Database extends Component {
                 style={{ display: "flex", justifyContent: "end" }}
               >
                 <MDBRow>
-                  {/* <MDBCol size="6"> */}
                   <MDBBtn
                     color="transparent"
                     style={{
@@ -245,13 +129,21 @@ class Database extends Component {
                       borderRadius: "40px",
                       fontSize: "14px",
                       padding: ".50rem 1rem",
+                      minWidth:"150px"
                     }}
                     className="text-capitalize"
+                    onClick={this.toggle("NewDatabase")}
                   >
-                    <i class="fas fa-plus mr-1"></i> New broadcast
+                      <i class="fas fa-plus-circle mr-1"></i> New Database
+                  
                   </MDBBtn>
-                  {/* </MDBCol> */}
-                  {/* <MDBCol size="6"> */}
+                  <MDBModal
+                    isOpen={this.state.modalNewDatabase}
+                    toggle={this.toggle("NewDatabase")}
+                    size="md"
+                  >
+                    <NewDatabase toggle={this.toggle} />
+                  </MDBModal>
                   <MDBBtn
                     color="transparent"
                     style={{
@@ -261,18 +153,26 @@ class Database extends Component {
                       borderRadius: "40px",
                       fontSize: "14px",
                       padding: ".50rem 1rem",
+                      minWidth:"150px"
                     }}
                     className="text-capitalize"
+                    onClick={this.toggle("FormDatabase")}
                   >
                     <i class="fas fa-download mr-1"></i> Download Form
                   </MDBBtn>
-                  {/* </MDBCol> */}
+                  <MDBModal
+                    isOpen={this.state.modalFormDatabase}
+                    toggle={this.toggle("FormDatabase")}
+                    size="md"
+                  >
+                    <DownloadFormDatabase toggle={this.toggle} />
+                  </MDBModal>
                 </MDBRow>
               </MDBCol>
 
               <MDBCol size="3">
                 <MDBFormInline className="md-form" style={{ margin: "0px" }}>
-                  <MDBIcon icon="search" />
+                  <MDBIcon style={{cursor:"pointer"}}icon="search" />
                   <input
                     className="form-control form-control-sm ml-2 w-75"
                     type="text"
@@ -310,7 +210,7 @@ class Database extends Component {
                       }}
                       className="text-capitalize"
                     >
-                      <i class="fas fa-plus-circle mr-1"></i> New Database
+                    <i class="fas fa-plus mr-1"></i> New Broadcast
                     </MDBBtn>
                   </MDBBox>
                   <hr />
@@ -358,11 +258,11 @@ class Database extends Component {
 
                       <MDBCol>
                         <MDBRow>
-                          <MDBIcon icon="caret-up" />
+                          <MDBIcon style={{cursor:"pointer"}}icon="caret-up" />
                         </MDBRow>
 
                         <MDBRow>
-                          <MDBIcon icon="caret-down" />
+                          <MDBIcon style={{cursor:"pointer"}}icon="caret-down" />
                         </MDBRow>
                       </MDBCol>
                     </MDBRow>
@@ -385,11 +285,11 @@ class Database extends Component {
                       </MDBCol>
                       <MDBCol>
                         <MDBRow>
-                          <MDBIcon icon="caret-up" />
+                          <MDBIcon style={{cursor:"pointer"}}icon="caret-up" />
                         </MDBRow>
 
                         <MDBRow>
-                          <MDBIcon icon="caret-down" />
+                          <MDBIcon style={{cursor:"pointer"}}icon="caret-down" />
                         </MDBRow>
                       </MDBCol>
                     </MDBRow>
@@ -410,11 +310,11 @@ class Database extends Component {
                       </MDBCol>
                       <MDBCol>
                         <MDBRow>
-                          <MDBIcon icon="caret-up" />
+                          <MDBIcon style={{cursor:"pointer"}}icon="caret-up" />
                         </MDBRow>
 
                         <MDBRow>
-                          <MDBIcon icon="caret-down" />
+                          <MDBIcon style={{cursor:"pointer"}}icon="caret-down" />
                         </MDBRow>
                       </MDBCol>
                     </MDBRow>
@@ -435,11 +335,11 @@ class Database extends Component {
                       </MDBCol>
                       <MDBCol>
                         <MDBRow>
-                          <MDBIcon icon="caret-up" />
+                          <MDBIcon style={{cursor:"pointer"}}icon="caret-up" />
                         </MDBRow>
 
                         <MDBRow>
-                          <MDBIcon icon="caret-down" />
+                          <MDBIcon style={{cursor:"pointer"}}icon="caret-down" />
                         </MDBRow>
                       </MDBCol>
                     </MDBRow>
@@ -460,11 +360,11 @@ class Database extends Component {
                       </MDBCol>
                       <MDBCol>
                         <MDBRow>
-                          <MDBIcon icon="caret-up" />
+                          <MDBIcon style={{cursor:"pointer"}}icon="caret-up" />
                         </MDBRow>
 
                         <MDBRow>
-                          <MDBIcon icon="caret-down" />
+                          <MDBIcon style={{cursor:"pointer"}}icon="caret-down" />
                         </MDBRow>
                       </MDBCol>
                     </MDBRow>
@@ -485,11 +385,11 @@ class Database extends Component {
                       </MDBCol>
                       <MDBCol>
                         <MDBRow>
-                          <MDBIcon icon="caret-up" />
+                          <MDBIcon style={{cursor:"pointer"}}icon="caret-up" />
                         </MDBRow>
 
                         <MDBRow>
-                          <MDBIcon icon="caret-down" />
+                          <MDBIcon style={{cursor:"pointer"}}icon="caret-down" />
                         </MDBRow>
                       </MDBCol>
                     </MDBRow>
@@ -497,7 +397,7 @@ class Database extends Component {
                 </MDBRow>
                 <Table data={this.data} />
                 <MDBRow>
-                  <MDBCol style={{marginTop:"15px"}}>
+                  <MDBCol style={{ marginTop: "15px" }}>
                     <Pagination />
                   </MDBCol>
                 </MDBRow>
