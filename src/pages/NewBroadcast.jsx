@@ -7,6 +7,8 @@ import Navbar from "../components/Navbar";
 import "../css/style.css";
 import Recipient from "../components/Recipient";
 import ContentEmail from "../components/ContentEmail";
+import ContentWa from "../components/ContentWa";
+import PreviewEmail from "../components/PreviewEmail";
 
 class NewBroadcast extends Component {
   render() {
@@ -22,7 +24,9 @@ class NewBroadcast extends Component {
             Create new broadcast
           </h3>
           {/* <Recipient /> */}
-          <ContentEmail />
+          {/* <ContentEmail /> */}
+          {/* <ContentWa /> */}
+          <PreviewEmail />
         </MDBBox>
       </MDBBox>
     );

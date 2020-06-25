@@ -1,18 +1,9 @@
 import React from "react";
 
 import "../css/style.css";
-import {
-  MDBBox,
-  MDBRow,
-  MDBCol,
-  MDBDropdown,
-  MDBDropdownToggle,
-  MDBDropdownMenu,
-  MDBDropdownItem,
-  MDBBtn,
-} from "mdbreact";
+import { MDBBox, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 
-const ContentEmail = () => {
+const ContentWa = () => {
   return (
     <MDBBox>
       <MDBRow
@@ -88,117 +79,35 @@ const ContentEmail = () => {
         <MDBCol size="8">
           <MDBBox className="py-3">
             <MDBBox className="form-group text-left ml-5">
-              <label htmlFor="emailsubject">
-                <p className="text-left mb-0" style={{ fontWeight: "400" }}>
-                  Email subject
-                </p>
-              </label>
-              <input
-                type="text"
-                className="form-control w-100"
-                id="emailsubject"
-                placeholder="email subject"
-              />
-            </MDBBox>
-            <MDBBox className="form-group text-left ml-5">
               <label htmlFor="emailcontent">
                 <p className="text-left mb-0" style={{ fontWeight: "400" }}>
-                  Email content
+                  Whatsapp content
                 </p>
               </label>
               <MDBBox className="">
                 <MDBBox
                   className="w-100 d-flex align-items-center"
-                  style={{ height: "75px", backgroundColor: "#c0c0c0" }}
+                  style={{ height: "50px", backgroundColor: "#c0c0c0" }}
                 >
                   <MDBBox>
                     <MDBBox className="d-flex justify-content-start">
-                      <MDBBox className="ml-0 pl-0 d-flex align-items-center">
-                        {/* format */}
-                        <MDBDropdown>
-                          <MDBDropdownToggle
-                            caret
-                            className="text-capitalize py-0 pl-0 pr-3 border-right"
-                            color="transparent"
-                            style={{ boxShadow: "none", fontSize: "15px" }}
-                          >
-                            Format
-                          </MDBDropdownToggle>
-                          <MDBDropdownMenu basic>
-                            <MDBDropdownItem>email@domain.com</MDBDropdownItem>
-                            <MDBDropdownItem divider />
-                            <MDBDropdownItem>081234567891</MDBDropdownItem>
-                          </MDBDropdownMenu>
-                        </MDBDropdown>
-                        {/* akhir format */}
-                        {/* font */}
-                        <MDBDropdown>
-                          <MDBDropdownToggle
-                            caret
-                            className="text-capitalize py-0 pl-0 pr-3 border-right"
-                            color="transparent"
-                            style={{ boxShadow: "none", fontSize: "15px" }}
-                          >
-                            Font
-                          </MDBDropdownToggle>
-                          <MDBDropdownMenu basic>
-                            <MDBDropdownItem>Times New Roman</MDBDropdownItem>
-                            <MDBDropdownItem divider />
-                            <MDBDropdownItem>081234567891</MDBDropdownItem>
-                          </MDBDropdownMenu>
-                        </MDBDropdown>
-                        {/* akhir font */}
-                        {/* size */}
-                        <MDBDropdown>
-                          <MDBDropdownToggle
-                            caret
-                            className="text-capitalize py-0 pl-0 pr-3 border-right"
-                            color="transparent"
-                            style={{ boxShadow: "none", fontSize: "15px" }}
-                          >
-                            Size
-                          </MDBDropdownToggle>
-                          <MDBDropdownMenu basic>
-                            <MDBDropdownItem>Times New Roman</MDBDropdownItem>
-                            <MDBDropdownItem divider />
-                            <MDBDropdownItem>081234567891</MDBDropdownItem>
-                          </MDBDropdownMenu>
-                        </MDBDropdown>
-                        {/* akhir size */}
-                        <i class="fas fa-bold mr-3"></i>
+                      <MDBBox className="pl-0 pt-0 d-flex align-items-center">
+                        <i class="fas fa-bold mx-3"></i>
                         <i class="fas fa-italic mr-3"></i>
                         <i class="fas fa-underline mr-3"></i>
                         <i class="fas fa-strikethrough mr-3"></i>
-                        <i class="fas fa-list-ul mr-3"></i>
-                        <i class="fas fa-quote-right mr-3"></i>
-                        <i class="fas fa-align-left mr-3"></i>
-                        <i class="fas fa-align-center mr-3"></i>
-                        <i class="fas fa-align-right mr-3"></i>
-                        <i class="fas fa-align-justify mr-3"></i>
+                        <MDBBox>
+                          <MDBBtn
+                            color="transparent"
+                            className="border p-2 ml-0 text-capitalize text-white"
+                            style={{ boxShadow: "none" }}
+                          >
+                            <i class="far fa-image mr-1"></i>
+                            Image
+                          </MDBBtn>
+                        </MDBBox>
                       </MDBBox>
                     </MDBBox>
-                    <MDBBox>
-                      <MDBBtn
-                        color="transparent"
-                        className="border p-1 ml-2 text-capitalize text-white"
-                        style={{ boxShadow: "none" }}
-                      >
-                        <i class="far fa-image mr-1"></i>
-                        Image
-                      </MDBBtn>
-                    </MDBBox>
-                  </MDBBox>
-                  <MDBBox className="border-left">
-                    <MDBBtn
-                      style={{
-                        boxShadow: "none",
-                        backgroundColor: "#a13034",
-                      }}
-                      color="transparent"
-                      className="text-white text-capitalize p-2 ml-3"
-                    >
-                      Email builder
-                    </MDBBtn>
                   </MDBBox>
                 </MDBBox>
                 <textarea
@@ -269,4 +178,4 @@ const ContentEmail = () => {
     </MDBBox>
   );
 };
-export default ContentEmail;
+export default ContentWa;
