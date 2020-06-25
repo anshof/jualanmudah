@@ -8,3 +8,16 @@
   font-family: "Cinzel", serif;
   color: #f14c59;
 }
+.boxNewBro {
+  font-size: 16px;
+  font-weight: 600;
+}
+.circleNewBro {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+.custom-control-input:focus {
+  border-color: #f47522;
+  box-shadow: 2px 2px 10px #f47522;
+}
