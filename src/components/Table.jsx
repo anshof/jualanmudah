@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MDBBox, MDBRow, MDBCol } from "mdbreact";
+import { MDBRow, MDBCol } from "mdbreact";
 
 import "../css/style.css";
 
@@ -15,26 +15,19 @@ const Table = () => {
         fontWeight: "500",
       }}
     >
-      <MDBCol size="3">
-        <span className="text-center">Info produk terbaru</span>
+      <MDBCol size="4">
+        <span className="text-center">Ana Shofiya Kurniawati</span>
       </MDBCol>
       <MDBCol size="2">
-        <span className="text-center">0/0</span>
+        <span className="text-center">1</span>
       </MDBCol>
       <MDBCol size="2">
-        <span className="text-center">0%</span>
+        <span className="text-center">
+          <i class="far fa-trash-alt"></i>
+        </span>
       </MDBCol>
-      <MDBCol size="2">
-        <MDBBox
-          className="w-100"
-          style={{ backgroundColor: "#4C59F0", borderRadius: "40px" }}
-        >
-          <span className="text-center text-uppercase text-white py-1">
-            Running
-          </span>
-        </MDBBox>
-      </MDBCol>
-      <MDBCol size="3">
+
+      <MDBCol size="4">
         <span className="text-center">20 Januari 2020 - 08:30</span>
       </MDBCol>
     </MDBRow>

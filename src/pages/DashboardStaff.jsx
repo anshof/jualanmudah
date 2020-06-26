@@ -79,20 +79,17 @@ class DashboardStaff extends Component {
             </MDBCol>
             <MDBCol size="9">
               <MDBRow className="text-uppercase" style={{ fontWeight: "500" }}>
-                <MDBCol size="3">
-                  <p className="text-center">Title</p>
+                <MDBCol size="4">
+                  <p className="text-center">Name</p>
                 </MDBCol>
                 <MDBCol size="2">
-                  <p className="text-center">Sent / recipient</p>
+                  <p className="text-center">Broadcast</p>
                 </MDBCol>
                 <MDBCol size="2">
-                  <p className="text-center">Open rate</p>
+                  <p className="text-center">Delete</p>
                 </MDBCol>
-                <MDBCol size="2">
-                  <p className="text-center">Status</p>
-                </MDBCol>
-                <MDBCol size="3">
-                  <p className="text-center">Send at</p>
+                <MDBCol size="4">
+                  <p className="text-center">Created at</p>
                 </MDBCol>
               </MDBRow>
               <Table />
