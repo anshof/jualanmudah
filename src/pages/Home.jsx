@@ -1,8 +1,13 @@
 import React, { Component } from "react";
+<<<<<<< HEAD
 
 import { Link } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { MDBBox, MDBCol, MDBRow, MDBContainer, MDBModal } from "mdbreact";
+=======
+import { MDBBox, MDBCol, MDBRow, MDBContainer, MDBModal } from "mdbreact";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+>>>>>>> bb77cbe90b80782e76d570eb82fc9069f63838f6
 
 import "../css/style.css";
 import Navbar from "../components/Navbar";
@@ -12,6 +17,10 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+<<<<<<< HEAD
+=======
+      isLogin: false,
+>>>>>>> bb77cbe90b80782e76d570eb82fc9069f63838f6
       isOpen: false,
       modalSignin: false,
       modalSignup: false,
@@ -34,6 +43,7 @@ class Home extends Component {
   render() {
     return (
       <Router>
+<<<<<<< HEAD
         <MDBBox style={{ position: "relative" }}>
           <MDBBox className="home" style={{ position: "absolute" }}></MDBBox>
           <Navbar
@@ -75,6 +85,50 @@ class Home extends Component {
                 >
                   Start now
                 </MDBBox>
+=======
+        <Navbar
+          isLogin={this.state.isLogin}
+          toggle={(key) => this.toggle(key)}
+          modalSignin={this.state.modalSignin}
+          modalSignup={this.state.modalSignup}
+          // backNav={"white"}
+          // fontColor={"rgb(241, 76, 89)"}
+        />
+        <MDBRow
+          style={{
+            margin: "0px 15px",
+            paddingTop: "75px"
+          }}
+        >
+          <MDBCol size="4" className="d-flex align-items-center pl-5">
+            <MDBBox style={{ color: "#1b2e35" }} className="text-left pl-5">
+              <h1
+                style={{
+                  fontFamily: "Source Sans Pro",
+                  fontWeight: "700",
+                }}
+                className="text-capitalize"
+              >
+                help you <br /> boost your <br /> revenue
+              </h1>
+              <p style={{ fontWeight: "400", color: "#385a66" }}>
+                Increasing your revenue by connecting you to your customer in a
+                better, easier and faster way.
+              </p>
+              <MDBBox
+                className="btn text-uppercase my-0 py-1"
+                style={{
+                  boxShadow: "none",
+                  fontSize: "18px",
+                  fontFamily: "Source Sans Pro",
+                  backgroundColor: "#f14c59",
+                  color: "white",
+                  borderRadius: "20px",
+                }}
+                onClick={this.toggle("Signin")}
+              >
+                Start now
+>>>>>>> bb77cbe90b80782e76d570eb82fc9069f63838f6
               </MDBBox>
             </MDBCol>
             <MDBCol size="8" className="noPadMar">
@@ -345,9 +399,26 @@ class Home extends Component {
                       <SignIn />
                     </MDBModal>
                   </MDBBox>
+<<<<<<< HEAD
                 </MDBCol>
               </MDBRow>
             </MDBBox>
+=======
+                  <MDBModal
+                    isOpen={this.modalSignin}
+                    toggle={
+                      this.toggle("Signup")
+                        ? this.toggle("Signup") & this.toggle("Signin")
+                        : this.toggle("Signin")
+                    }
+                    size="md"
+                  >
+                    <SignIn />
+                  </MDBModal>
+                </MDBBox>
+              </MDBCol>
+            </MDBRow>
+>>>>>>> bb77cbe90b80782e76d570eb82fc9069f63838f6
           </MDBBox>
           {/* akhir started */}
           {/* footer */}
@@ -416,6 +487,89 @@ class Home extends Component {
           </MDBBox>
           {/* akhir copyright */}
         </MDBBox>
+<<<<<<< HEAD
+=======
+        {/* akhir started */}
+        {/* footer */}
+        <MDBBox
+          className="text-left py-5"
+          style={{
+            backgroundColor: "#f14c59",
+            color: "white",
+            fontFamily: "Source Sans Pro",
+          }}
+        >
+          <MDBContainer>
+            <MDBRow>
+              <MDBCol size="3">
+                <h6 className="font-weight-bold">Menu</h6>
+                <h6 className="mb-0">Home</h6>
+                <h6 className="my-0">Features</h6>
+                <h6 className="my-0">About</h6>
+              </MDBCol>
+              <MDBCol size="3">
+                <h6 className="font-weight-bold">Features</h6>
+                <h6 className="mb-0">Email broadcast</h6>
+                <h6 className="my-0">Email tracker</h6>
+                <h6 className="my-0">WhatsApp broadcast</h6>
+              </MDBCol>
+              <MDBCol size="3">
+                <h6 className="font-weight-bold">Alterra Academy</h6>
+                <h6 className="mb-0">
+                  Jalan Raya Tidar No. 23, Karangbesuki,
+                  <br /> Kec. Sukun, Kota Malang, <br />
+                  Jawa Timur 65146
+                </h6>
+              </MDBCol>
+              <MDBCol size="3">
+                <h6 className="font-weight-bold">Social Media</h6>
+                <MDBBox className="d-flex">
+                  <h4 className="mb-0 pr-2">
+                    <Link to="/#">
+                      <i className="text-white fab fa-facebook-square"></i>
+                    </Link>
+                  </h4>
+                  <h4 className="my-0 pr-2">
+                    <Link to="/#">
+                      <i className="text-white fab fa-instagram-square"></i>
+                    </Link>
+                  </h4>
+                  <h4 className="my-0 pr-2">
+                    <Link to="/#">
+                      <i className="text-white fab fa-youtube-square"></i>
+                    </Link>
+                  </h4>
+                  <h4 className="my-0 pr-2">
+                    <Link to="/#">
+                      <i className="text-white fab fa-twitter-square"></i>
+                    </Link>
+                  </h4>
+                  <h4 className="my-0 pr-2">
+                    <Link to="/#">
+                      <i className="text-white fab fa-linkedin-square"></i>
+                    </Link>
+                  </h4>
+                </MDBBox>
+              </MDBCol>
+            </MDBRow>
+          </MDBContainer>
+        </MDBBox>
+        {/* akhir footer */}
+        {/* copyright */}
+        <MDBBox
+          className="py-3"
+          style={{
+            backgroundColor: "#a02f33",
+            fontFamily: "Source Sans Pro",
+            color: "white",
+          }}
+        >
+          <span className="text-center">
+            Copyright &#169; 2020 JUALAN.MUDAH. All Rights Reserved.
+          </span>
+        </MDBBox>
+        {/* akhir copyright */}
+>>>>>>> bb77cbe90b80782e76d570eb82fc9069f63838f6
       </Router>
     );
   }

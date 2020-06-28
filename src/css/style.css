@@ -1,18 +1,33 @@
+<<<<<<< HEAD
 html,
 body {
   font-family: "Source Sans Pro", sans-serif !important;
 }
 /* navbar */
+=======
+html, body{
+  font-family: "Source Sans Pro", sans-serif !important;
+}
+/* .navbar{
+  -webkit-box-shadow: 0px 1px 3px 0px rgb(241, 76, 89) !important;
+-moz-box-shadow: 0px 1px 3px 0px rgb(241, 76, 89) !important;
+box-shadow: 0px 1px 3px 0px rgb(241, 76, 89) !important;
+} */
+>>>>>>> bb77cbe90b80782e76d570eb82fc9069f63838f6
 .nav {
   font-size: 18px;
   color: #212e35;
   font-weight: 400;
+<<<<<<< HEAD
   text-transform: uppercase;
 }
 .navbar,
 .pictTeam {
   position: absolute;
   z-index: 2;
+=======
+  
+>>>>>>> bb77cbe90b80782e76d570eb82fc9069f63838f6
 }
 .logo {
   font-family: "Cinzel", serif;
@@ -115,4 +130,20 @@ body {
   color: white;
   text-align: center;
 }
+<<<<<<< HEAD
 /* akhir home */
+=======
+.signin-button .btn-default, .signup-button .btn-default{
+  background-color: #f14c59 !important;
+}
+.navbar .modal-dialog .modal-content {
+  border-radius: 20px !important;
+  cursor: default;
+}
+.signin .modal-dialog .modal-content {
+  transition: none !important;
+}
+.page-item.active .page-link{
+  background-color: rgb(241, 76, 89) !important;
+}
+>>>>>>> bb77cbe90b80782e76d570eb82fc9069f63838f6
