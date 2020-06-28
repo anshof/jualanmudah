@@ -26,7 +26,6 @@ const Navbar = (props) => {
         zIndex: "10",
         minWidth: "100%",
       }}
-      className="navbar"
     >
       <MDBContainer>
         <MDBNavbarBrand className="d-flex align-items-center justify-content-center">

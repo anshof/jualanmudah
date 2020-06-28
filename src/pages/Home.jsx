@@ -43,12 +43,12 @@ class Home extends Component {
         />
         <MDBRow
           style={{
-            margin: "0px 15px",
-            paddingTop: "75px"
+            margin: "0",
+            position: "relative",
           }}
         >
-          <MDBCol size="4" className="d-flex align-items-center pl-5">
-            <MDBBox style={{ color: "#1b2e35" }} className="text-left pl-5">
+          <MDBCol size="4" className="d-flex align-items-center pl-5 mt-5">
+            <MDBBox style={{ color: "#1b2e35" }} className="box text-left pl-5">
               <h1
                 style={{
                   fontFamily: "Source Sans Pro",
@@ -78,9 +78,9 @@ class Home extends Component {
               </MDBBox>
             </MDBBox>
           </MDBCol>
-          <MDBCol size="8">
+          <MDBCol size="8" className="mt-5">
             <img
-              src={require("../images/Statistics.jpg")}
+              src={require("../images/stat.png")}
               alt="front"
               style={{ width: "800px" }}
             />
@@ -107,65 +107,80 @@ class Home extends Component {
         >
           <MDBBox
             style={{
-              fontFamily: "Source Sans Pro",
               color: "#385a66",
             }}
           >
-            <h2
+            <h1
               style={{ fontWeight: "600", color: "#1b2e35" }}
-              className="mb-4"
+              className="mb-5"
             >
               What we <span style={{ color: "#f14c59" }}>have</span>?
-            </h2>
+            </h1>
             <MDBRow>
-              <MDBCol size="4">
-                <img
-                  src={require("../images/front.jpg")}
-                  alt="email"
-                  style={{ width: "300px" }}
-                />
-                <h5
-                  className="py-0 my-0"
-                  style={{ fontWeight: "600", color: "#1b2e35" }}
-                >
-                  Broadcast email
-                </h5>
-                <p>
-                  Sending email to dozens customer <br /> easily.
-                </p>
+              <MDBCol
+                size="4"
+                className="d-flex justify-content-center align-items-center"
+              >
+                <MDBBox className="feature py-5">
+                  <img
+                    className="noPadMar"
+                    src={require("../images/front.jpg")}
+                    alt="email"
+                    style={{ width: "280px" }}
+                  />
+                  <h5
+                    className="noPadMar"
+                    style={{ fontWeight: "600", color: "#1b2e35" }}
+                  >
+                    Broadcast email
+                  </h5>
+                  <p className="noPadMar">
+                    Sending email to dozens customer <br /> easily.
+                  </p>
+                </MDBBox>
               </MDBCol>
-              <MDBCol size="4">
-                <img
-                  src={require("../images/checklist.jpg")}
-                  alt="email"
-                  style={{ height: "200px" }}
-                />
-                <h5
-                  className="py-0 my-0"
-                  style={{ fontWeight: "600", color: "#1b2e35" }}
-                >
-                  Email tracker
-                </h5>
-                <p>
-                  You'll know when your customers <br /> see your campaign.
-                </p>
+              <MDBCol
+                size="4"
+                className="d-flex justify-content-center align-items-center"
+              >
+                <MDBBox className="feature py-5">
+                  <img
+                    src={require("../images/checklist.jpg")}
+                    alt="email"
+                    style={{ height: "200px" }}
+                  />
+                  <h5
+                    className="noPadMar"
+                    style={{ fontWeight: "600", color: "#1b2e35" }}
+                  >
+                    Email tracker
+                  </h5>
+                  <p>
+                    You'll know when your customers <br /> see your campaign.
+                  </p>
+                </MDBBox>
               </MDBCol>
-              <MDBCol size="4">
-                <img
-                  src={require("../images/wa.jpg")}
-                  alt="email"
-                  style={{ width: "300px" }}
-                />
-                <h5
-                  className="py-0 my-0"
-                  style={{ fontWeight: "600", color: "#1b2e35" }}
-                >
-                  Broadcast WhatsApp
-                </h5>
-                <p>
-                  Get closer to your customer through <br />
-                  broadcast WhatsApp.
-                </p>
+              <MDBCol
+                size="4"
+                className="d-flex justify-content-center align-items-center"
+              >
+                <MDBBox className="feature py-5">
+                  <img
+                    src={require("../images/wa.jpg")}
+                    alt="email"
+                    style={{ width: "300px" }}
+                  />
+                  <h5
+                    className="noPadMar"
+                    style={{ fontWeight: "600", color: "#1b2e35" }}
+                  >
+                    Broadcast WhatsApp
+                  </h5>
+                  <p>
+                    Get closer to your customer through <br />
+                    broadcast WhatsApp.
+                  </p>
+                </MDBBox>
               </MDBCol>
             </MDBRow>
           </MDBBox>
@@ -176,37 +191,38 @@ class Home extends Component {
           style={{
             margin: "100px auto",
             padding: "20px 0",
+            position: "relative",
           }}
         >
+          <MDBBox className="profile"></MDBBox>
           <MDBBox
             style={{
-              fontFamily: "Source Sans Pro",
               color: "#385a66",
             }}
           >
-            <h3
+            <h1
               style={{ fontWeight: "600", color: "#1b2e35" }}
-              className="mb-4"
+              className="mb-5"
             >
               Who are <span style={{ color: "#f14c59" }}>we</span>?
-            </h3>
+            </h1>
             <MDBRow
               style={{
                 margin: "0px 15px",
               }}
             >
-              <MDBCol size="6" className="text-right">
+              <MDBCol size="6" className="text-right pictTeam">
                 <img
-                  src={require("../images/team.jpg")}
+                  src={require("../images/pana.png")}
                   alt="profile"
-                  style={{ width: "400px" }}
+                  style={{ width: "600px" }}
                 />
               </MDBCol>
               <MDBCol size="6" className="text-left d-flex align-items-center">
                 <MDBBox>
-                  <h4 style={{ fontWeight: "600", color: "#f14c59" }}>
+                  <h3 style={{ fontWeight: "600", color: "#f14c59" }}>
                     Jualan Mudah
-                  </h4>
+                  </h3>
                   <p>
                     There are many ways you can approach your customers. We
                     provide
@@ -227,8 +243,10 @@ class Home extends Component {
           style={{
             margin: "100px auto",
             padding: "20px 0",
+            position: "relative",
           }}
         >
+          <MDBBox className="secure"></MDBBox>
           <MDBBox
             style={{
               fontFamily: "Source Sans Pro",
@@ -241,24 +259,21 @@ class Home extends Component {
               }}
             >
               <MDBCol
-                size="6"
+                size="5"
                 className="d-flex justify-content-end align-items-center"
               >
-                <MDBBox>
-                  <h4
-                    className="text-right"
-                    style={{ fontWeight: "600", color: "#1b2e35" }}
-                  >
+                <MDBBox className="text-right">
+                  <h2 style={{ fontWeight: "600", color: "#1b2e35" }}>
                     Don't Worry!!!!
-                  </h4>
+                  </h2>
                   <p>We'll keep your data save. </p>
                 </MDBBox>
               </MDBCol>
-              <MDBCol size="6" className="text-left">
+              <MDBCol size="7" className="text-left box">
                 <img
-                  src={require("../images/save.jpg")}
+                  src={require("../images/security.png")}
                   alt="profile"
-                  style={{ width: "400px" }}
+                  style={{ width: "600px" }}
                 />
               </MDBCol>
             </MDBRow>
@@ -268,49 +283,63 @@ class Home extends Component {
         {/* started */}
         <MDBBox
           style={{
-            margin: "100px auto",
-            padding: "20px 0",
+            margin: "100px auto 0 auto",
+            padding: "20px 0 0 0",
+            position: "relative",
           }}
         >
+          <MDBBox className="start"></MDBBox>
           <MDBBox
             style={{
-              fontFamily: "Source Sans Pro",
               color: "#385a66",
             }}
           >
             <MDBRow
+              className="pt-3"
               style={{
-                margin: "0px 15px",
+                margin: "25px 15px",
               }}
             >
-              <MDBCol size="6" className="text-right">
+              <MDBCol size="7" className="text-right box">
                 <img
-                  src={require("../images/goingUp.jpg")}
+                  src={require("../images/launch.png")}
                   alt="profile"
-                  style={{ width: "400px" }}
+                  style={{ width: "600px" }}
                 />
               </MDBCol>
-              <MDBCol size="6" className="text-left d-flex align-items-center">
+              <MDBCol size="5" className="text-left d-flex align-items-center">
                 <MDBBox>
-                  <h4 style={{ fontWeight: "600", color: "#1b2e35" }}>
-                    Getting started is easy
-                  </h4>
-                  <p>
-                    Manage your campaign, customers and sales. Grow your
-                    audience.
-                  </p>
-                  <MDBBox
-                    className="btn text-uppercase my-0 py-1"
-                    style={{
-                      boxShadow: "none",
-                      fontSize: "18px",
-                      fontFamily: "Source Sans Pro",
-                      backgroundColor: "#f14c59",
-                      color: "white",
-                      borderRadius: "20px",
-                    }}
-                  >
-                    Start now
+                  <MDBBox className="box">
+                    <h4 style={{ fontWeight: "600", color: "#1b2e35" }}>
+                      Getting started is easy
+                    </h4>
+                    <p>
+                      Manage your campaign, customers and sales. Grow your
+                      audience.
+                    </p>
+                    <MDBBox
+                      className="btn text-uppercase my-0 py-2"
+                      style={{
+                        boxShadow: "none",
+                        fontSize: "18px",
+                        backgroundColor: "#f14c59",
+                        color: "white",
+                        borderRadius: "20px",
+                      }}
+                    >
+                      Start now
+                    </MDBBox>
+                    <MDBModal
+                      isOpen={this.modalSignin}
+                      toggle={
+                        this.toggle("Signup")
+                          ? this.toggle("Signup") & this.toggle("Signin")
+                          : this.toggle("Signin")
+                      }
+                      size="md"
+                    >
+                      <SignIn />
+                    </MDBModal>
                   </MDBBox>
                   <MDBModal
                     isOpen={this.modalSignin}
@@ -327,87 +356,73 @@ class Home extends Component {
               </MDBCol>
             </MDBRow>
           </MDBBox>
+          {/* akhir started */}
+          {/* footer */}
+          <MDBBox className="footer ">
+            <MDBContainer>
+              <MDBRow>
+                <MDBCol size="3">
+                  <h6 className="font-weight-bold">Menu</h6>
+                  <h6 className="mb-0">Home</h6>
+                  <h6 className="my-0">Features</h6>
+                  <h6 className="my-0">About</h6>
+                </MDBCol>
+                <MDBCol size="3">
+                  <h6 className="font-weight-bold">Features</h6>
+                  <h6 className="mb-0">Email broadcast</h6>
+                  <h6 className="my-0">Email tracker</h6>
+                  <h6 className="my-0">WhatsApp broadcast</h6>
+                </MDBCol>
+                <MDBCol size="3">
+                  <h6 className="font-weight-bold">Alterra Academy</h6>
+                  <h6 className="mb-0">
+                    Jalan Raya Tidar No. 23, Karangbesuki,
+                    <br /> Kec. Sukun, Kota Malang, <br />
+                    Jawa Timur 65146
+                  </h6>
+                </MDBCol>
+                <MDBCol size="3">
+                  <h6 className="font-weight-bold">Social Media</h6>
+                  <MDBBox className="d-flex">
+                    <h4 className="mb-0 pr-2">
+                      <Link to="/#">
+                        <i className="text-white fab fa-facebook-square"></i>
+                      </Link>
+                    </h4>
+                    <h4 className="my-0 pr-2">
+                      <Link to="/#">
+                        <i className="text-white fab fa-instagram-square"></i>
+                      </Link>
+                    </h4>
+                    <h4 className="my-0 pr-2">
+                      <Link to="/#">
+                        <i className="text-white fab fa-youtube-square"></i>
+                      </Link>
+                    </h4>
+                    <h4 className="my-0 pr-2">
+                      <Link to="/#">
+                        <i className="text-white fab fa-twitter-square"></i>
+                      </Link>
+                    </h4>
+                    <h4 className="my-0 pr-2">
+                      <Link to="/#">
+                        <i className="text-white fab fa-linkedin-square"></i>
+                      </Link>
+                    </h4>
+                  </MDBBox>
+                </MDBCol>
+              </MDBRow>
+            </MDBContainer>
+          </MDBBox>
+          {/* akhir footer */}
+          {/* copyright */}
+          <MDBBox className="py-3 copy">
+            <span>
+              Copyright &#169; 2020 JUALAN.MUDAH. All Rights Reserved.
+            </span>
+          </MDBBox>
+          {/* akhir copyright */}
         </MDBBox>
-        {/* akhir started */}
-        {/* footer */}
-        <MDBBox
-          className="text-left py-5"
-          style={{
-            backgroundColor: "#f14c59",
-            color: "white",
-            fontFamily: "Source Sans Pro",
-          }}
-        >
-          <MDBContainer>
-            <MDBRow>
-              <MDBCol size="3">
-                <h6 className="font-weight-bold">Menu</h6>
-                <h6 className="mb-0">Home</h6>
-                <h6 className="my-0">Features</h6>
-                <h6 className="my-0">About</h6>
-              </MDBCol>
-              <MDBCol size="3">
-                <h6 className="font-weight-bold">Features</h6>
-                <h6 className="mb-0">Email broadcast</h6>
-                <h6 className="my-0">Email tracker</h6>
-                <h6 className="my-0">WhatsApp broadcast</h6>
-              </MDBCol>
-              <MDBCol size="3">
-                <h6 className="font-weight-bold">Alterra Academy</h6>
-                <h6 className="mb-0">
-                  Jalan Raya Tidar No. 23, Karangbesuki,
-                  <br /> Kec. Sukun, Kota Malang, <br />
-                  Jawa Timur 65146
-                </h6>
-              </MDBCol>
-              <MDBCol size="3">
-                <h6 className="font-weight-bold">Social Media</h6>
-                <MDBBox className="d-flex">
-                  <h4 className="mb-0 pr-2">
-                    <Link to="/#">
-                      <i className="text-white fab fa-facebook-square"></i>
-                    </Link>
-                  </h4>
-                  <h4 className="my-0 pr-2">
-                    <Link to="/#">
-                      <i className="text-white fab fa-instagram-square"></i>
-                    </Link>
-                  </h4>
-                  <h4 className="my-0 pr-2">
-                    <Link to="/#">
-                      <i className="text-white fab fa-youtube-square"></i>
-                    </Link>
-                  </h4>
-                  <h4 className="my-0 pr-2">
-                    <Link to="/#">
-                      <i className="text-white fab fa-twitter-square"></i>
-                    </Link>
-                  </h4>
-                  <h4 className="my-0 pr-2">
-                    <Link to="/#">
-                      <i className="text-white fab fa-linkedin-square"></i>
-                    </Link>
-                  </h4>
-                </MDBBox>
-              </MDBCol>
-            </MDBRow>
-          </MDBContainer>
-        </MDBBox>
-        {/* akhir footer */}
-        {/* copyright */}
-        <MDBBox
-          className="py-3"
-          style={{
-            backgroundColor: "#a02f33",
-            fontFamily: "Source Sans Pro",
-            color: "white",
-          }}
-        >
-          <span className="text-center">
-            Copyright &#169; 2020 JUALAN.MUDAH. All Rights Reserved.
-          </span>
-        </MDBBox>
-        {/* akhir copyright */}
       </Router>
     );
   }
