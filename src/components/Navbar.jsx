@@ -16,7 +16,12 @@ import SignIn from "./SignIn";
 
 const Navbar = (props) => {
   return (
-    <MDBNavbar color="transparent" expand="md" style={{ boxShadow: "none" }} className="navbar">
+    <MDBNavbar
+      color="transparent"
+      expand="md"
+      style={{ boxShadow: "none" }}
+      className="navbar"
+    >
       <MDBContainer>
         <MDBNavbarBrand className="d-flex align-items-center justify-content-center">
           <strong
@@ -66,18 +71,18 @@ const Navbar = (props) => {
                   color: "white",
                   borderRadius: "20px",
                 }}
-                onClick={props.toggle("Signin")}
+                // onClick={props.toggle("Signin")}
               >
                 Login
               </MDBBox>
               <MDBModal
-                isOpen={props.modalSignin}
-                toggle={props.toggle("Signup") ? props.toggle("Signup") & props.toggle("Signin") : props.toggle("Signin")}
+                // isOpen={props.modalSignin}
+                // toggle={props.toggle("Signup") ? props.toggle("Signup") & props.toggle("Signin") : props.toggle("Signin")}
                 size="md"
               >
                 <SignIn
-                  toggle={props.toggle}
-                  modalSignup={props.modalSignup}
+                // toggle={props.toggle}
+                // modalSignup={props.modalSignup}
                 />
               </MDBModal>
             </MDBNavLink>

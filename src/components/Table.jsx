@@ -15,6 +15,19 @@ const Table = () => {
         fontWeight: "500",
       }}
     >
+      <MDBCol size="4">
+        <span className="text-center">Ana Shofiya Kurniawati</span>
+      </MDBCol>
+      <MDBCol size="2">
+        <span className="text-center">1</span>
+      </MDBCol>
+      <MDBCol size="2">
+        <span className="text-center">
+          <i class="far fa-trash-alt"></i>
+        </span>
+      </MDBCol>
+
+      <MDBCol size="4">
       <MDBCol size="3">
         <span className="text-center">Info produk terbaru</span>
       </MDBCol>
