@@ -13,7 +13,6 @@ import {
 import SignUp from "./SignUp";
 
 function SignIn(props) {
-  console.log("cek props", props);
   return (
     <div className="signin">
     <MDBRow style={{justifyContent:"end", marginTop:"15px", marginRight:"20px"}}>
