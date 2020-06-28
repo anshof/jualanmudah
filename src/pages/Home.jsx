@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { MDBBox, MDBCol, MDBRow, MDBContainer, MDBModal } from "mdbreact";
-
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 import "../css/style.css";
 import Navbar from "../components/Navbar";
@@ -12,6 +10,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLogin: false,
       isOpen: false,
       modalSignin: false,
       modalSignup: false,
@@ -35,13 +34,17 @@ class Home extends Component {
     return (
       <Router>
         <Navbar
+          isLogin={this.state.isLogin}
           toggle={(key) => this.toggle(key)}
           modalSignin={this.state.modalSignin}
           modalSignup={this.state.modalSignup}
+          // backNav={"white"}
+          // fontColor={"rgb(241, 76, 89)"}
         />
         <MDBRow
           style={{
             margin: "0px 15px",
+            paddingTop: "75px"
           }}
         >
           <MDBCol size="4" className="d-flex align-items-center pl-5">

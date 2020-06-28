@@ -16,19 +16,36 @@ import SignIn from "./SignIn";
 
 const Navbar = (props) => {
   return (
-    <MDBNavbar color="transparent" expand="md" style={{ boxShadow: "none" }} className="navbar">
+    <MDBNavbar
+      expand="md"
+      style={{
+        boxShadow: "none",
+        backgroundColor: props.backNav ? props.backNav : "white",
+        position: "fixed",
+        zIndex: "10",
+        minWidth: "100%",
+      }}
+      className="navbar"
+    >
       <MDBContainer>
         <MDBNavbarBrand className="d-flex align-items-center justify-content-center">
           <strong
             className="logo"
-            style={{ fontSize: "32px", color: "#f14c59" }}
+            style={{
+              fontSize: "32px",
+              color: props.fontColor ? props.fontColor : "#f14c59",
+            }}
           >
             JM
           </strong>
         </MDBNavbarBrand>
         <MDBNavbarNav right className="d-flex align-items-center">
           <MDBNavItem active>
-            <MDBNavLink to="#!" className="nav text-uppercase">
+            <MDBNavLink
+              to="#!"
+              className="nav text-uppercase"
+              style={{ color: props.fontColor ? props.fontColor : "#f14c59" }}
+            >
               Home
             </MDBNavLink>
           </MDBNavItem>
