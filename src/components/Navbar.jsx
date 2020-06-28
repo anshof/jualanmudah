@@ -19,37 +19,62 @@ const Navbar = (props) => {
     <MDBNavbar
       color="transparent"
       expand="md"
-      style={{ boxShadow: "none" }}
+      style={{
+        boxShadow: "none",
+        backgroundColor: props.backNav ? props.backNav : "white",
+        position: "fixed",
+        zIndex: "10",
+        minWidth: "100%",
+      }}
       className="navbar"
     >
       <MDBContainer>
         <MDBNavbarBrand className="d-flex align-items-center justify-content-center">
           <strong
             className="logo"
-            style={{ fontSize: "32px", color: "#f14c59" }}
+            style={{
+              fontSize: "32px",
+              color: props.fontColor ? props.fontColor : "#f14c59",
+            }}
           >
             JM
           </strong>
         </MDBNavbarBrand>
         <MDBNavbarNav right className="d-flex align-items-center">
           <MDBNavItem active>
-            <MDBNavLink to="#!" className="nav text-uppercase">
+            <MDBNavLink
+              to="#!"
+              className="nav text-uppercase"
+              style={{ color: props.fontColor ? props.fontColor : "#f14c59" }}
+            >
               Home
             </MDBNavLink>
           </MDBNavItem>
           <MDBNavItem>
             <MDBNavLink to="#!" className="nav ml-3 text-uppercase">
-              Features
+              Dashboard
             </MDBNavLink>
           </MDBNavItem>
           <MDBNavItem>
             <MDBNavLink to="#!" className="nav ml-3 text-uppercase">
-              About
+              Databases
             </MDBNavLink>
           </MDBNavItem>
           <MDBNavItem>
-            <MDBNavLink to="" className="ml-3 ">
-              <MDBBox
+            <MDBNavLink to="#!" className="ml-3 ">
+              <img
+                src={
+                  "https://emmawatson2017.files.wordpress.com/2017/01/emma-watson-harry-potter-movies-wallpapers-hd-wallpaper-high.jpg"
+                }
+                alt="pict"
+                style={{
+                  height: "40px",
+                  width: "40px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+              />
+              {/* <MDBBox
                 className="btn text-uppercase my-0 py-1"
                 style={{
                   fontFamily: "Source Sans Pro",
@@ -73,6 +98,9 @@ const Navbar = (props) => {
                 // modalSignup={props.modalSignup}
                 />
               </MDBModal>
+              >
+                Login
+              </MDBBox> */}
             </MDBNavLink>
           </MDBNavItem>
         </MDBNavbarNav>
