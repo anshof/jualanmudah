@@ -7,28 +7,30 @@ import {
   MDBModal,
   MDBModalBody,
   MDBIcon,
-  MDBRow
+  MDBRow,
 } from "mdbreact";
 
 import SignUp from "./SignUp";
 
 function SignIn(props) {
-  console.log("cek props", props);
   return (
     <div className="signin">
-    <MDBRow style={{justifyContent:"end", marginTop:"15px", marginRight:"20px"}}>
-      <MDBIcon
-        icon="times"
-        onClick={props.toggle("Signin")}
-        style={{ cursor: "pointer", color:"#9e9e9e"}}
-      />
+      <MDBRow
+        style={{
+          justifyContent: "end",
+          marginTop: "15px",
+          marginRight: "20px",
+        }}
+      >
+        <MDBIcon
+          icon="times"
+          onClick={props.toggle("Signin")}
+          style={{ cursor: "pointer", color: "#9e9e9e" }}
+        />
       </MDBRow>
       <MDBModalBody className="signin-modal mx-4">
         <div className="text-center">
-          <h3
-            className="dark-grey-text mb-3"
-            style={{ fontWeight: "600" }}
-          >
+          <h3 className="dark-grey-text mb-3" style={{ fontWeight: "600" }}>
             Sign in
           </h3>
         </div>
@@ -76,7 +78,7 @@ function SignIn(props) {
           size="md"
           backdrop={false}
         >
-          <SignUp toggle={props.toggle}/>
+          <SignUp toggle={props.toggle} />
         </MDBModal>
       </MDBModalFooter>
     </div>
