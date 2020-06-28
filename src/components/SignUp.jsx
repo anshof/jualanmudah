@@ -86,10 +86,7 @@ function SignUp(props) {
       <MDBModalFooter className="mx-5 pt-3 mb-1">
         <p className="font-small grey-text d-flex justify-content-end">
           Have an account?
-          <div
-            className="red-text ml-1"
-            onClick={props.toggle("Signup")}
-          >
+          <div className="red-text ml-1" onClick={props.toggle("Signup")}>
             Sign in
           </div>
         </p>
