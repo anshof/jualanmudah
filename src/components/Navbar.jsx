@@ -1,25 +1,23 @@
 import React from "react";
+import "../css/style.css";
 
 import {
+  MDBBox,
   MDBNavbar,
   MDBNavbarBrand,
   MDBNavbarNav,
   MDBNavLink,
   MDBNavItem,
   MDBContainer,
+  MDBModal,
 } from "mdbreact";
 
-import "../css/style.css";
+import SignIn from "./SignIn";
 
-const Navbar = () => {
+const Navbar = (props) => {
   return (
-    <MDBNavbar
-      className="navbar"
-      color="transparent"
-      expand="md"
-      style={{ boxShadow: "none" }}
-    >
-      <MDBContainer style={{ padding: "0 0" }}>
+    <MDBNavbar color="transparent" expand="md" style={{ boxShadow: "none" }} className="navbar">
+      <MDBContainer>
         <MDBNavbarBrand className="d-flex align-items-center justify-content-center">
           <strong
             className="logo"
