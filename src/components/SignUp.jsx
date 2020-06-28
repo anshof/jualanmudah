@@ -43,11 +43,7 @@ function SignUp(props) {
           label="Your email"
           group
           type="email"
-<<<<<<< HEAD
-          validate
-=======
           // validate
->>>>>>> bb77cbe90b80782e76d570eb82fc9069f63838f6
           error="wrong"
           success="right"
           containerClass="mb-0"
@@ -90,14 +86,7 @@ function SignUp(props) {
       <MDBModalFooter className="mx-5 pt-3 mb-1">
         <p className="font-small grey-text d-flex justify-content-end">
           Have an account?
-<<<<<<< HEAD
           <div className="red-text ml-1" onClick={props.toggle("Signup")}>
-=======
-          <div
-            className="red-text ml-1"
-            onClick={props.toggle("Signup")}
-          >
->>>>>>> bb77cbe90b80782e76d570eb82fc9069f63838f6
             Sign in
           </div>
         </p>
