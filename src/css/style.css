@@ -21,3 +21,6 @@ html, body{
 .signin .modal-dialog .modal-content {
   transition: none !important;
 }
+.jONywb .blockbuilder-branding{
+  display: none !important;
+}
