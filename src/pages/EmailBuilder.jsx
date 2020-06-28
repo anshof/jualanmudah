@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, useRef } from "react";
 import EmailEditor from "react-email-editor";
 import { BrowserRouter as Router } from "react-router-dom";
 import { render } from "react-dom";
-
+import sample from '../components/sample.json'
 import { MDBBox, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 
 import Navbar from "../components/Navbar";
@@ -14,18 +14,38 @@ class App extends Component {
     super(props);
     this.state = {
       isLogin: true,
+      mailDesign : "",
+      mailHtml : ""
     };
     this.exportHtml = this.exportHtml.bind(this);
+    this.saveDesign = this.saveDesign.bind(this);
+    this.onDesignLoad = this.onDesignLoad.bind(this);
+    this.onLoad = this.onLoad.bind(this);
   }
 
-  exportHtml(){
-    this.editor.exportHtml((data) => {
-      const { design, html } = data;
-      console.log("exportHtml", html);
+  exportHtml = ()=>{
+    this.editor.exportHtml((html) => {
+      this.setState({ mailHtml: html });
+      alert('Design exported');
     });
   };
 
+  saveDesign = () => {
+    this.editor.saveDesign((design) => {
+      this.setState({ mailDesign: design });
+      alert('Design JSON has been saved');
+    });
+  };
 
+  onDesignLoad = (data) => {
+    console.log('onDesignLoad', data);
+  };
+
+  onLoad = () => {
+    this.editor.addEventListener('onDesignLoad', this.onDesignLoad);
+    this.editor.loadDesign(sample);
+  };
+  
   render() {
     return (
       <Router>
@@ -39,7 +59,7 @@ class App extends Component {
           <MDBBox style={{ backgroundColor: "#f7f7f7" }}>
             <MDBRow style={{ paddingTop: "100px" }}>
               <MDBCol
-                size="6"
+                size="8"
                 style={{
                   marginTop: "auto",
                 }}
@@ -53,6 +73,50 @@ class App extends Component {
                 >
                   Email Builder
                 </h3>
+              </MDBCol>
+
+              <MDBCol
+                size="3"
+                style={{ display: "flex", justifyContent: "end" }}
+              >
+                <MDBRow>
+                  <MDBBtn
+                    color="transparent"
+                    style={{
+                      backgroundColor: "#f14c59",
+                      color: "white",
+                      boxShadow: "none",
+                      borderRadius: "40px",
+                      fontSize: "14px",
+                      padding: ".50rem 1rem",
+                      minWidth:"150px"
+                    }}
+                    className="text-capitalize"
+                    onClick={this.exportHtml}
+                  >
+                    <i class="fas fa-download mr-1"></i> Export HTML
+                  </MDBBtn>
+                  <MDBBtn
+                    color="transparent"
+                    style={{
+                      backgroundColor: "#f14c59",
+                      color: "white",
+                      boxShadow: "none",
+                      borderRadius: "40px",
+                      fontSize: "14px",
+                      padding: ".50rem 1rem",
+                      minWidth:"150px"
+                    }}
+                    className="text-capitalize"
+                    onClick={this.saveDesign}
+                  >
+                    <i class="fas fa-download mr-1"></i> Save Template
+                  </MDBBtn>
+                </MDBRow>
+              </MDBCol>
+
+              <MDBCol size="3">
+                
               </MDBCol>
             </MDBRow>
             <MDBRow
@@ -112,7 +176,8 @@ class App extends Component {
                 </MDBBox>
               </MDBCol>
               <MDBCol size="9" id="email-builder">
-                <EmailEditor ref={(editor) => (this.editor = editor)} />
+                <EmailEditor ref={(editor) => (this.editor = editor)} 
+                onLoad={this.onLoad}/>
                 <MDBRow>
                   <MDBCol style={{ marginTop: "15px" }}></MDBCol>
                 </MDBRow>
