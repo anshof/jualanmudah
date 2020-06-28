@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MDBRow, MDBCol } from "mdbreact";
+import { MDBBox, MDBRow, MDBCol } from "mdbreact";
 
 import "../css/style.css";
 
@@ -28,6 +28,26 @@ const Table = () => {
       </MDBCol>
 
       <MDBCol size="4">
+      <MDBCol size="3">
+        <span className="text-center">Info produk terbaru</span>
+      </MDBCol>
+      <MDBCol size="2">
+        <span className="text-center">0/0</span>
+      </MDBCol>
+      <MDBCol size="2">
+        <span className="text-center">0%</span>
+      </MDBCol>
+      <MDBCol size="2">
+        <MDBBox
+          className="w-100"
+          style={{ backgroundColor: "#4C59F0", borderRadius: "40px" }}
+        >
+          <span className="text-center text-uppercase text-white py-1">
+            Running
+          </span>
+        </MDBBox>
+      </MDBCol>
+      <MDBCol size="3">
         <span className="text-center">20 Januari 2020 - 08:30</span>
       </MDBCol>
     </MDBRow>
