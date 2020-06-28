@@ -9,7 +9,6 @@ import Database from "../pages/Database";
 import DashboardStaff from "../pages/DashboardStaff";
 import Dashboard from "../pages/Dashboard";
 
-
 const MainRoutes = () => {
   return (
     <BrowserRouter>
