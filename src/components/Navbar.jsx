@@ -34,16 +34,28 @@ const Navbar = (props) => {
           </MDBNavItem>
           <MDBNavItem>
             <MDBNavLink to="#!" className="nav ml-3 text-uppercase">
-              Features
+              Dashboard
             </MDBNavLink>
           </MDBNavItem>
           <MDBNavItem>
             <MDBNavLink to="#!" className="nav ml-3 text-uppercase">
-              About
+              Databases
             </MDBNavLink>
           </MDBNavItem>
           <MDBNavItem>
-            <MDBNavLink to="" className="ml-3 ">
+            <MDBNavLink to="#!" className="ml-3 ">
+              <img
+                src={
+                  "https://emmawatson2017.files.wordpress.com/2017/01/emma-watson-harry-potter-movies-wallpapers-hd-wallpaper-high.jpg"
+                }
+                alt="pict"
+                style={{
+                  height: "40px",
+                  width: "40px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+              />
               <MDBBox
                 className="btn text-uppercase my-0 py-1"
                 style={{
