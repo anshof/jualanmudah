@@ -10,8 +10,12 @@ import ContentEmail from "../components/ContentEmail";
 import ContentWa from "../components/ContentWa";
 import PreviewEmail from "../components/PreviewEmail";
 
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 class NewBroadcast extends Component {
-  render() {
+    render() {
     return (
       <MDBBox style={{ fontFamily: "Source Sans Pro" }}>
         <Navbar />
