@@ -138,19 +138,27 @@ const Navbar = (props) => {
                   color: "white",
                   borderRadius: "20px",
                 }}
-                // onClick={props.toggle("Signin")}
               >
-                Login
+                <MDBNavItem>
+                  <MDBNavLink
+                    to="#!"
+                    className="nav ml-3 text-uppercase"
+                    onClick={props.toggle("Signin")}
+                  >
+                    Login
+                  </MDBNavLink>
+                </MDBNavItem>
               </MDBBox>
               <MDBModal
-                // isOpen={props.modalSignin}
-                // toggle={props.toggle("Signup") ? props.toggle("Signup") & props.toggle("Signin") : props.toggle("Signin")}
+                isOpen={props.modalSignin}
+                toggle={
+                  props.toggle("Signup")
+                    ? props.toggle("Signup") & props.toggle("Signin")
+                    : props.toggle("Signin")
+                }
                 size="md"
               >
-                <SignIn
-                // toggle={props.toggle}
-                // modalSignup={props.modalSignup}
-                />
+                <SignIn toggle={props.toggle} modalSignup={props.modalSignup} />
               </MDBModal>
             </MDBNavLink>
           </MDBNavItem>

@@ -50,6 +50,7 @@ const Table = () => {
       <MDBCol size="3">
         <span className="text-center">20 Januari 2020 - 08:30</span>
       </MDBCol>
+      </MDBCol>
     </MDBRow>
   );
 };
