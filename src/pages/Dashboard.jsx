@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { MDBBox, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 
 import Navbar from "../components/Navbar";
-import Table from "../components/TableStaff";
+import Table from "../components/Table";
 
 import "../css/style.css";
 import PictName from "../components/PictName";
