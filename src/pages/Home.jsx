@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { MDBBox, MDBCol, MDBRow, MDBContainer, MDBModal } from "mdbreact";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
@@ -39,11 +38,8 @@ class Home extends Component {
           modalSignin={this.state.modalSignin}
           modalSignup={this.state.modalSignup}
           isLogin={this.state.isLogin}
-          toggle={(key) => this.toggle(key)}
-          modalSignin={this.state.modalSignin}
-          modalSignup={this.state.modalSignup}
-          // backNav={"white"}
-          // fontColor={"rgb(241, 76, 89)"}
+          backNav={"white"}
+          fontColor={"rgb(241, 76, 89)"}
         />
         <MDBRow
           style={{

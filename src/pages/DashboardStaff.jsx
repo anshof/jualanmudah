@@ -3,17 +3,28 @@ import React, { Component } from "react";
 import { MDBBox, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 
 import Navbar from "../components/Navbar";
-import Table from "../components/Table";
+import Table from "../components/TableStaff";
 
 import "../css/style.css";
 import PictName from "../components/PictName";
 
 class DashboardStaff extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLogin: true,
+    };
+  }
+
   render() {
     return (
       <MDBBox style={{ fontFamily: "Source Sans Pro" }}>
-        <Navbar />
-
+       <Navbar
+          isLogin={this.state.isLogin}
+            fontColor={"white"}
+            backNav={"rgb(241, 76, 89)"}
+            style={{ position: "fixed" }}
+        />
         <MDBBox className="py-4" style={{ backgroundColor: "#f7f7f7" }}>
           <h3
             className="text-left ml-5"

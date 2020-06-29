@@ -14,8 +14,13 @@ class NewBroadcast extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLogin: false,
+      isOpen: false,
+      modalSignin: false,
+      modalSignup: false,
       editorState: EditorState.createEmpty(),
     };
+    this.toggle = this.toggle.bind(this);
   }
   onEditorStateChange = (editorState) => {
     // console.log(editorState)
@@ -23,12 +28,22 @@ class NewBroadcast extends Component {
       editorState,
     });
   };
+  toggle = (key) => () => {
+    let modalKey = "modal" + key;
+    this.setState({
+      [modalKey]: !this.state[modalKey],
+    });
+  };
   render() {
     const { editorState } = this.state
     return (
       <MDBBox style={{ fontFamily: "Source Sans Pro" }}>
-        <Navbar />
-
+         <Navbar
+          toggle={(key) => this.toggle(key)}
+          modalSignin={this.state.modalSignin}
+          modalSignup={this.state.modalSignup}
+          isLogin={this.state.isLogin}
+        />
         <MDBBox className="py-4" style={{ backgroundColor: "#f7f7f7" }}>
           <h3
             className="text-left ml-5"
