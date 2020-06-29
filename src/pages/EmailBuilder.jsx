@@ -1,4 +1,4 @@
-import React, { Component, useRef } from "react";
+import React, { Component } from "react";
 import EmailEditor from "react-email-editor";
 import { BrowserRouter as Router } from "react-router-dom";
 import { render } from "react-dom";
