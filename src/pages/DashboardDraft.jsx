@@ -3,20 +3,19 @@ import React, { Component } from "react";
 import { MDBBox, MDBRow, MDBCol, MDBIcon } from "mdbreact";
 
 import Navbar from "../components/Navbar";
-import Table from "../components/TableStaff";
+import TableDraft from "../components/TableDraft";
 
 import "../css/style.css";
 import PictName from "../components/PictName";
 import Pagination from "../components/Pagination";
 
-class DashboardStaff extends Component {
+class DashboardDraft extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLogin: true,
     };
   }
-
   render() {
     return (
       <MDBBox>
@@ -27,7 +26,10 @@ class DashboardStaff extends Component {
           style={{ position: "fixed" }}
         />
         <MDBBox
-          style={{ backgroundColor: "#f7f7f7", padding: "100px 0 1px 0" }}
+          style={{
+            backgroundColor: "#f7f7f7",
+            padding: "100px 0 1px 0",
+          }}
         >
           {/* title */}
           <MDBBox className="d-flex align-items-center mx-5 pb-3">
@@ -39,7 +41,7 @@ class DashboardStaff extends Component {
                 fontSize: "28px",
               }}
             >
-              Dashboard Staff
+              Manage Draft
             </span>
           </MDBBox>
           {/* end title */}
@@ -64,11 +66,12 @@ class DashboardStaff extends Component {
                   margin: "0px",
                 }}
               >
+                {/* title */}
                 <MDBCol
                   size="3"
                   className="d-flex align-items-center justify-content-center"
                 >
-                  <span className="mr-1">Name</span>
+                  <span className="mr-1">Title</span>
                   <MDBIcon
                     style={{
                       cursor: "pointer",
@@ -83,11 +86,13 @@ class DashboardStaff extends Component {
                     icon="caret-down"
                   />
                 </MDBCol>
+                {/* title */}
+                {/* segment */}
                 <MDBCol
                   size="3"
                   className="d-flex align-items-center justify-content-center"
                 >
-                  <span className="mr-1">Broadcast</span>
+                  <span className="mr-1">segment</span>
                   <MDBIcon
                     style={{
                       cursor: "pointer",
@@ -102,12 +107,16 @@ class DashboardStaff extends Component {
                     icon="caret-down"
                   />
                 </MDBCol>
+                {/* end segment */}
+                {/* status */}
                 <MDBCol
                   size="3"
                   className="d-flex align-items-center justify-content-center"
                 >
                   <span className="mr-1">Delete</span>
                 </MDBCol>
+                {/* end status */}
+                {/* created at */}
                 <MDBCol
                   size="3"
                   className="d-flex align-items-center justify-content-center"
@@ -127,8 +136,9 @@ class DashboardStaff extends Component {
                     icon="caret-down"
                   />
                 </MDBCol>
+                {/* end created at */}
               </MDBRow>
-              <Table />
+              <TableDraft />
               <MDBBox className="pt-2 d-flex justify-content-center">
                 <Pagination />
               </MDBBox>
@@ -141,4 +151,4 @@ class DashboardStaff extends Component {
     );
   }
 }
-export default DashboardStaff;
+export default DashboardDraft;

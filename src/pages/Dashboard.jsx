@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 
-import { MDBBox, MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import { MDBBox, MDBRow, MDBCol, MDBIcon } from "mdbreact";
 
 import Navbar from "../components/Navbar";
 import Table from "../components/Table";
 
 import "../css/style.css";
 import PictName from "../components/PictName";
+import Pagination from "../components/Pagination";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -17,98 +18,147 @@ class Dashboard extends Component {
   }
   render() {
     return (
-      <MDBBox style={{ fontFamily: "Source Sans Pro" }}>
-        <Navbar 
+      <MDBBox>
+        <Navbar
           isLogin={this.state.isLogin}
-            fontColor={"white"}
-            backNav={"rgb(241, 76, 89)"}
-            style={{ position: "fixed" }}
+          fontColor={"white"}
+          backNav={"rgb(241, 76, 89)"}
+          style={{ position: "fixed" }}
         />
-
-        <MDBBox className="py-4" style={{ backgroundColor: "#f7f7f7" }}>
-          <h3
-            className="text-left ml-5"
-            style={{ fontWeight: "600", color: "#192e35" }}
-          >
-            Dashboard
-          </h3>
+        <MDBBox
+          style={{
+            backgroundColor: "#f7f7f7",
+            padding: "100px 0 1px 0",
+          }}
+        >
+          {/* title */}
+          <MDBBox className="d-flex align-items-center mx-5 pb-3">
+            <span
+              className="text-left"
+              style={{
+                fontWeight: "600",
+                color: "#192e35",
+                fontSize: "28px",
+              }}
+            >
+              Manage Broadcast
+            </span>
+          </MDBBox>
+          {/* end title */}
+          {/* main row */}
           <MDBRow
             style={{
-              margin: "25px 25px",
+              margin: "20px",
             }}
           >
-            <MDBCol size="3">
-              <MDBBox
-                style={{
-                  borderRadius: "20px",
-                  padding: "30px 20px",
-                  boxShadow: "0 0 10px #e1e1e1",
-                  backgroundColor: "white",
-                }}
-                className="text-left pt-4"
-              >
-                <PictName />
-                <MDBBox className="text-center">
-                  <MDBBtn
-                    color="transparent"
-                    style={{
-                      backgroundColor: "#f14c59",
-                      color: "white",
-                      boxShadow: "none",
-                      borderRadius: "40px",
-                      fontSize: "16px",
-                    }}
-                    className="text-capitalize"
-                  >
-                    <i class="fas fa-plus mr-1"></i> New broadcast
-                  </MDBBtn>
-                </MDBBox>
-                <hr />
-                <MDBBox className="pl-3">
-                  <p
-                    className="mb-1"
-                    style={{
-                      fontSize: "18px",
-                      fontWeight: "600",
-                      color: "#192e35",
-                    }}
-                  >
-                    All segments
-                  </p>
-                  <a href="#!" style={{ color: "#192e35" }}>
-                    <p className="py-0 my-0" style={{ fontSize: "16px" }}>
-                      Woman
-                    </p>
-                  </a>
-                  <a href="#!" style={{ color: "#192e35" }}>
-                    <p className="py-0 my-0" style={{ fontSize: "16px" }}>
-                      Man
-                    </p>
-                  </a>
-                </MDBBox>
-              </MDBBox>
+            {/* side bar */}
+            <MDBCol size="2">
+              <PictName />
             </MDBCol>
-            <MDBCol size="9">
-              <MDBRow className="text-uppercase" style={{ fontWeight: "500" }}>
-                <MDBCol size="3">
-                  <p className="text-center">Title</p>
+            {/* end side bar */}
+            {/* table */}
+            <MDBCol size="10">
+              <MDBRow
+                className="text-uppercase mb-3"
+                style={{
+                  fontWeight: "700",
+                  color: "rgb(241, 76, 89)",
+                  margin: "0px",
+                }}
+              >
+                {/* title */}
+                <MDBCol
+                  size="3"
+                  className="d-flex align-items-center justify-content-center"
+                >
+                  <span className="mr-1">Title</span>
+                  <MDBIcon
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    className="mr-1"
+                    icon="caret-up"
+                  />
+                  <MDBIcon
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    icon="caret-down"
+                  />
                 </MDBCol>
-                <MDBCol size="2">
-                  <p className="text-center">Sent / recipient</p>
+                {/* title */}
+                {/* open rate */}
+                <MDBCol
+                  size="3"
+                  className="d-flex align-items-center justify-content-center"
+                >
+                  <span className="mr-1">Open rate</span>
+                  <MDBIcon
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    className="mr-1"
+                    icon="caret-up"
+                  />
+                  <MDBIcon
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    icon="caret-down"
+                  />
                 </MDBCol>
-                <MDBCol size="2">
-                  <p className="text-center">Open rate</p>
+                {/* end open rate */}
+                {/* status */}
+                <MDBCol
+                  size="3"
+                  className="d-flex align-items-center justify-content-center"
+                >
+                  <span className="mr-1">Status</span>
+                  <MDBIcon
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    className="mr-1"
+                    icon="caret-up"
+                  />
+                  <MDBIcon
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    icon="caret-down"
+                  />
                 </MDBCol>
-                <MDBCol size="2">
-                  <p className="text-center">Status</p>
+                {/* end status */}
+                {/* send at */}
+                <MDBCol
+                  size="3"
+                  className="d-flex align-items-center justify-content-center"
+                >
+                  <span className="mr-1">Send at</span>
+                  <MDBIcon
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    className="mr-1"
+                    icon="caret-up"
+                  />
+                  <MDBIcon
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    icon="caret-down"
+                  />
                 </MDBCol>
-                <MDBCol size="3">
-                  <p className="text-center">Send at</p>
-                </MDBCol>
+                {/* end send at */}
               </MDBRow>
               <Table />
+              <MDBBox className="pt-2 d-flex justify-content-center">
+                <Pagination />
+              </MDBBox>
             </MDBCol>
+            {/* end table */}
           </MDBRow>
+          {/* end main row */}
         </MDBBox>
       </MDBBox>
     );
