@@ -1,6 +1,6 @@
-import React from "react";
+import React, {Fragment} from "react";
 import "../css/style.css";
-
+import { Link } from "react-router-dom";
 import {
   MDBBox,
   MDBNavbar,
@@ -31,26 +31,19 @@ const Navbar = (props) => {
     >
       <MDBContainer>
         <MDBNavbarBrand className="d-flex align-items-center justify-content-center">
-          <strong
-            className="logo"
-            style={{
-              fontSize: "32px",
-              color: props.fontColor ? props.fontColor : "#f14c59",
-            }}
-          >
-            JM
-          </strong>
+          <Link to="/">
+            <strong
+              className="logo"
+              style={{
+                fontSize: "32px",
+                color: props.fontColor ? props.fontColor : "#f14c59",
+              }}
+            >
+              JM
+            </strong>
+          </Link>
         </MDBNavbarBrand>
         <MDBNavbarNav right className="d-flex align-items-center">
-          <MDBNavItem active>
-            <MDBNavLink
-              to="#!"
-              className="nav text-uppercase text-decoration-none"
-              style={{ color: props.fontColor ? props.fontColor : "#f14c59" }}
-            >
-              Home
-            </MDBNavLink>
-          </MDBNavItem>
           <MDBNavItem>
             <MDBNavLink
               to="#!"
@@ -70,6 +63,16 @@ const Navbar = (props) => {
             </MDBNavLink>
           </MDBNavItem>
           {props.isLogin ? (
+            <Fragment>
+            <MDBNavItem>
+            <MDBNavLink
+              to="/dashboard"
+              className="text-decoration-none nav ml-3 text-uppercase text-decoration-none"
+              style={{ color: props.fontColor ? props.fontColor : "#f14c59" }}
+            >
+              dashboard
+            </MDBNavLink>
+          </MDBNavItem>
             <MDBNavItem>
               <MDBNavLink to="#!" className="ml-3 ">
                 <img
@@ -86,11 +89,7 @@ const Navbar = (props) => {
                 />
               </MDBNavLink>
             </MDBNavItem>
-          ) : (
-            false
-          )}
-          {props.isLogin ? (
-            false
+            </Fragment>
           ) : (
             <MDBNavItem>
               <MDBNavLink to="" className="ml-3 ">

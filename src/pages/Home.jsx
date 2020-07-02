@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { MDBBox, MDBCol, MDBRow, MDBContainer, MDBModal } from "mdbreact";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "../css/style.css";
 import Navbar from "../components/Navbar";
@@ -32,7 +32,7 @@ class Home extends Component {
 
   render() {
     return (
-      <Router>
+      <Fragment>
         <Navbar
           toggle={(key) => this.toggle(key)}
           modalSignin={this.state.modalSignin}
@@ -68,6 +68,7 @@ class Home extends Component {
                 Increasing your revenue by connecting you to your customer in a
                 better, easier and faster way.
               </p>
+              <Link to="/signup">
               <MDBBox
                 className="btn text-uppercase my-0 py-2"
                 style={{
@@ -82,6 +83,7 @@ class Home extends Component {
               >
                 Start now
               </MDBBox>
+              </Link>
             </MDBBox>
           </MDBCol>
           <MDBCol size="8" className="mt-5">
@@ -452,7 +454,7 @@ class Home extends Component {
           </MDBBox>
           {/* akhir copyright */}
         </MDBBox>
-      </Router>
+      </Fragment>
     );
   }
 }
