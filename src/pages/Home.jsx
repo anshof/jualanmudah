@@ -1,5 +1,12 @@
 import React, { Component, Fragment } from "react";
-import { MDBBox, MDBCol, MDBRow, MDBContainer, MDBModal } from "mdbreact";
+import {
+  MDBBox,
+  MDBCol,
+  MDBRow,
+  MDBContainer,
+  MDBModal,
+  MDBLink,
+} from "mdbreact";
 import { Link } from "react-router-dom";
 
 import "../css/style.css";
@@ -69,20 +76,20 @@ class Home extends Component {
                 better, easier and faster way.
               </p>
               <Link to="/signup">
-              <MDBBox
-                className="btn text-uppercase my-0 py-2"
-                style={{
-                  boxShadow: "none",
-                  fontSize: "18px",
-                  fontFamily: "Source Sans Pro",
-                  backgroundColor: "#f14c59",
-                  color: "white",
-                  borderRadius: "20px",
-                }}
-                onClick={this.toggle("Signin")}
-              >
-                Start now
-              </MDBBox>
+                <MDBBox
+                  className="btn text-uppercase my-0 py-2"
+                  style={{
+                    boxShadow: "none",
+                    fontSize: "18px",
+                    fontFamily: "Source Sans Pro",
+                    backgroundColor: "#f14c59",
+                    color: "white",
+                    borderRadius: "20px",
+                  }}
+                  onClick={this.toggle("Signin")}
+                >
+                  Start now
+                </MDBBox>
               </Link>
             </MDBBox>
           </MDBCol>
@@ -103,8 +110,8 @@ class Home extends Component {
             color: "#1b2e35",
           }}
         >
-          <h2>"ini quotes buwagus, sumpah sumpah"</h2>
-          <p style={{ fontSize: "18px", color: "#385a66" }}>alula</p>
+          <h2>“Content builds relationships. Relationships are built on trust. Trust drives revenue”</h2>
+          <p style={{ fontSize: "18px", color: "#385a66" }}>- Andrew Davis -</p>
         </MDBBox>
         {/* akhir quote */}
         {/* 3 panel */}
@@ -349,7 +356,8 @@ class Home extends Component {
                     Manage your campaign, customers and sales. <br />
                     Grow your audience.
                   </p>
-                  <MDBBox
+                  <MDBLink
+                    to="/signup"
                     className="btn text-uppercase my-0 py-2"
                     style={{
                       boxShadow: "none",
@@ -357,33 +365,19 @@ class Home extends Component {
                       backgroundColor: "#f14c59",
                       color: "white",
                       borderRadius: "20px",
+                      maxWidth: "160px",
                     }}
                   >
                     Start now
-                  </MDBBox>
+                  </MDBLink>
                   <MDBModal
                     isOpen={this.modalSignin}
-                    toggle={
-                      this.toggle("Signup")
-                        ? this.toggle("Signup") & this.toggle("Signin")
-                        : this.toggle("Signin")
-                    }
+                    toggle={this.toggle("Signin")}
                     size="md"
                   >
                     <SignIn />
                   </MDBModal>
                 </MDBBox>
-                <MDBModal
-                  isOpen={this.modalSignin}
-                  toggle={
-                    this.toggle("Signup")
-                      ? this.toggle("Signup") & this.toggle("Signin")
-                      : this.toggle("Signin")
-                  }
-                  size="md"
-                >
-                  <SignIn />
-                </MDBModal>
               </MDBCol>
             </MDBRow>
           </MDBBox>
