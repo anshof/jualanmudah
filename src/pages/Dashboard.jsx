@@ -3,20 +3,19 @@ import React, { Component } from "react";
 import { MDBBox, MDBRow, MDBCol, MDBIcon } from "mdbreact";
 
 import Navbar from "../components/Navbar";
-import Table from "../components/TableStaff";
+import Table from "../components/Table";
 
 import "../css/style.css";
 import PictName from "../components/PictName";
 import Pagination from "../components/Pagination";
 
-class DashboardStaff extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLogin: true,
     };
   }
-
   render() {
     return (
       <MDBBox>
@@ -27,7 +26,10 @@ class DashboardStaff extends Component {
           style={{ position: "fixed" }}
         />
         <MDBBox
-          style={{ backgroundColor: "#f7f7f7", padding: "100px 0 1px 0" }}
+          style={{
+            backgroundColor: "#f7f7f7",
+            padding: "100px 0 1px 0",
+          }}
         >
           {/* title */}
           <MDBBox className="d-flex align-items-center mx-5 pb-3">
@@ -39,7 +41,7 @@ class DashboardStaff extends Component {
                 fontSize: "28px",
               }}
             >
-              Dashboard Staff
+              Manage Broadcast
             </span>
           </MDBBox>
           {/* end title */}
@@ -64,11 +66,12 @@ class DashboardStaff extends Component {
                   margin: "0px",
                 }}
               >
+                {/* title */}
                 <MDBCol
                   size="3"
                   className="d-flex align-items-center justify-content-center"
                 >
-                  <span className="mr-1">Name</span>
+                  <span className="mr-1">Title</span>
                   <MDBIcon
                     style={{
                       cursor: "pointer",
@@ -83,11 +86,13 @@ class DashboardStaff extends Component {
                     icon="caret-down"
                   />
                 </MDBCol>
+                {/* title */}
+                {/* open rate */}
                 <MDBCol
                   size="3"
                   className="d-flex align-items-center justify-content-center"
                 >
-                  <span className="mr-1">Broadcast</span>
+                  <span className="mr-1">Open rate</span>
                   <MDBIcon
                     style={{
                       cursor: "pointer",
@@ -102,17 +107,13 @@ class DashboardStaff extends Component {
                     icon="caret-down"
                   />
                 </MDBCol>
+                {/* end open rate */}
+                {/* status */}
                 <MDBCol
                   size="3"
                   className="d-flex align-items-center justify-content-center"
                 >
-                  <span className="mr-1">Delete</span>
-                </MDBCol>
-                <MDBCol
-                  size="3"
-                  className="d-flex align-items-center justify-content-center"
-                >
-                  <span className="mr-1">Created at</span>
+                  <span className="mr-1">Status</span>
                   <MDBIcon
                     style={{
                       cursor: "pointer",
@@ -127,6 +128,28 @@ class DashboardStaff extends Component {
                     icon="caret-down"
                   />
                 </MDBCol>
+                {/* end status */}
+                {/* send at */}
+                <MDBCol
+                  size="3"
+                  className="d-flex align-items-center justify-content-center"
+                >
+                  <span className="mr-1">Send at</span>
+                  <MDBIcon
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    className="mr-1"
+                    icon="caret-up"
+                  />
+                  <MDBIcon
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    icon="caret-down"
+                  />
+                </MDBCol>
+                {/* end send at */}
               </MDBRow>
               <Table />
               <MDBBox className="pt-2 d-flex justify-content-center">
@@ -141,4 +164,4 @@ class DashboardStaff extends Component {
     );
   }
 }
-export default DashboardStaff;
+export default Dashboard;
