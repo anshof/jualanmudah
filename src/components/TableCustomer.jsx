@@ -24,22 +24,38 @@ function Table(props) {
           }}
           key={index}
         >
-          <MDBCol size="2" style={{ textAlign: "center" }}>
+          <MDBCol size="2" className="bg-info" style={{ textAlign: "center" }}>
             <span className="pl-1">{truncate(el.name)}</span>
           </MDBCol>
-          <MDBCol size="2" style={{ textAlign: "center" }}>
+          <MDBCol
+            size="2"
+            className="bg-success"
+            style={{ textAlign: "center" }}
+          >
             <span>{truncate(el.email)}</span>
           </MDBCol>
-          <MDBCol size="2" style={{ textAlign: "center" }}>
+          <MDBCol
+            size="2"
+            className="bg-primary"
+            style={{ textAlign: "center" }}
+          >
             <span>{truncate(el.phone)}</span>
           </MDBCol>
-          <MDBCol size="2" style={{ textAlign: "center" }}>
+          <MDBCol
+            size="2"
+            className="bg-danger"
+            style={{ textAlign: "center" }}
+          >
             <span>{truncate(el.bod)}</span>
           </MDBCol>
-          <MDBCol size="2" style={{ textAlign: "center" }}>
+          <MDBCol
+            size="2"
+            className="bg-warning"
+            style={{ textAlign: "center" }}
+          >
             <span>{truncate(el.address)}</span>
           </MDBCol>
-          <MDBCol size="2" style={{ textAlign: "center" }}>
+          <MDBCol size="2" className="bg-info" style={{ textAlign: "center" }}>
             <span className="pl-2">{truncate(el.company)}</span>
           </MDBCol>
         </MDBRow>
