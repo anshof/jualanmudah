@@ -1,30 +1,89 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { MDBBox, MDBRow, MDBCol, MDBIcon } from "mdbreact";
+import {
+  MDBBox,
+  MDBRow,
+  MDBCol,
+  MDBDataTable,
+} from "mdbreact";
 import "../css/style.css";
 
 import Navbar from "../components/Navbar";
-import Table from "../components/Table";
 import PictName from "../components/PictName";
-import Pagination from "../components/Pagination";
 
-import { doLogOut, getUserBio, doRefershSignin } from "../stores/actions/userAction";
+import {
+  doLogOut,
+  getUserBio,
+  doRefershSignin,
+} from "../stores/actions/userAction";
 import { getSendList } from "../stores/actions/mailAction";
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
-  }
+    this.state = {};
+   }
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
     await this.props.getUserBio();
-    this.props.getSendList();
+    await this.props.getSendList();
   };
 
   render() {
+    const data = {
+      columns: [
+        {
+          label: "Title",
+          field: "title",
+          width: 150,
+        },
+        {
+          label: "Open rate",
+          field: "open_rate",
+          width: 270,
+        },
+        {
+          label: "Status",
+          field: "status",
+          width: 150,
+        },
+        {
+          label: "Segment",
+          field: "segment",
+          width: 150,
+        },
+        {
+          label: "Created At",
+          field: "created_at",
+          width: 200,
+        },
+      ],
+      rows: 
+      [
+        ...this.props.mailSendList.map((el, index) => (
+        { key : index,
+          title: el.subject,
+          created_at: el.created_at.slice(0, -9),
+          open_rate: el.open_rate,
+          segment: el.group_customer.name,
+          status: (
+            <MDBBox
+              style={{
+                width: "100%",
+                color: "white",
+                backgroundColor: "green",
+                borderRadius: "40px",
+              }}
+            >
+              SUCCESS
+            </MDBBox>
+          )
+        }
+      ))
+      ],
+    };
+
     if (!localStorage.getItem("isSignin")) {
       return (
         <Redirect
@@ -45,152 +104,54 @@ class Dashboard extends Component {
             logout={() => this.props.doLogOut()}
             bio={this.props.bio}
           />
-          <MDBBox
-            style={{
-              backgroundColor: "#f7f7f7",
-              padding: "100px 0 1px 0",
-            }}
-          >
-            {/* title */}
-            <MDBBox className="d-flex align-items-center mx-5 pb-3">
-              <span
-                className="text-left"
-                style={{
-                  fontWeight: "600",
-                  color: "#192e35",
-                  fontSize: "28px",
-                }}
-              >
-                Manage Broadcast
-              </span>
-            </MDBBox>
-            {/* end title */}
-            {/* main row */}
-            <MDBRow
+         <MDBBox
+          style={{
+            backgroundColor: "#f7f7f7",
+            padding: "100px 0 1px 0",
+          }}
+        >
+          {/* title */}
+          <MDBBox className="d-flex align-items-center mx-5 pb-3">
+            <span
+              className="text-left"
               style={{
-                margin: "20px",
+                fontWeight: "600",
+                color: "#192e35",
+                fontSize: "28px",
               }}
             >
-              {/* side bar */}
-              <MDBCol size="2">
-                <PictName />
-              </MDBCol>
-              {/* end side bar */}
-              {/* table */}
-              <MDBCol size="10">
-                <MDBRow
-                  className="text-uppercase mb-3"
-                  style={{
-                    fontWeight: "700",
-                    color: "rgb(241, 76, 89)",
-                    margin: "0px",
-                  }}
-                >
-                  {/* title */}
-                  <MDBCol
-                    size="3"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Title</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  {/* title */}
-                  {/* open rate */}
-                  <MDBCol
-                    size="3"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Open rate</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  {/* end open rate */}
-                  {/* status */}
-                  <MDBCol
-                    size="3"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Status</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  {/* end status */}
-                  {/* send at */}
-                  <MDBCol
-                    size="3"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Send at</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  {/* end send at */}
-                </MDBRow>
-                {this.props.mailSendList.map((el, index) => {
-                  return (
-                    <Table
-                      key={index}
-                      title={el.subject}
-                      open={el.open_rate}
-                      status={el.status}
-                      sendAt={el.updated_at}
-                    />
-                  );
-                })}
-                <MDBBox className="pt-2 d-flex justify-content-center">
-                  <Pagination />
-                </MDBBox>
-              </MDBCol>
-              {/* end table */}
-            </MDBRow>
-            {/* end main row */}
+              Manage Broadcast
+            </span>
           </MDBBox>
+          {/* end title */}
+          {/* main row */}
+          <MDBRow
+            style={{
+              margin: "20px",
+            }}
+          >
+            {/* side bar */}
+            <MDBCol size="2">
+              <PictName 
+                bio={this.props.bio}
+              />
+            </MDBCol>
+            {/* end side bar */}
+            {/* table */}
+            <MDBCol size="10">
+              <MDBDataTable
+                hover
+                data={data}
+                style={{
+                  backgroundColor: "white",
+                }}
+              />
+            </MDBCol>
+            {/* end table */}
+          </MDBRow>
+          {/* end main row */}
         </MDBBox>
+      </MDBBox>
       );
     }
   }
@@ -205,6 +166,6 @@ const mapDispatchToProps = {
   getUserBio,
   doLogOut,
   getSendList,
-  doRefershSignin
+  doRefershSignin,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

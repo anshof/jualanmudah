@@ -1,20 +1,18 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { MDBBox, MDBRow, MDBCol, MDBIcon } from "mdbreact";
+import { MDBBox, MDBRow, MDBCol, MDBBtn, MDBDataTable } from "mdbreact";
 import { connect } from "react-redux";
 import Navbar from "../components/Navbar";
-import Table from "../components/TableStaff";
 
 import "../css/style.css";
 import PictName from "../components/PictName";
-import Pagination from "../components/Pagination";
 
 import {
   getUserStaffs,
   deleteUserStaff,
   doLogOut,
   getUserBio,
-  doRefershSignin
+  doRefershSignin,
 } from "../stores/actions/userAction";
 
 class DashboardStaff extends Component {
@@ -38,12 +36,59 @@ class DashboardStaff extends Component {
 
   handleDelete = (id) => {
     var result = window.confirm("Are you sure to delete?");
-    if(result){
-      this.props.deleteUserStaff(id)
+    if (result) {
+      this.props.deleteUserStaff(id);
     }
-  }
+  };
 
   render() {
+    const data = {
+      columns: [
+        {
+          label: "Name",
+          field: "name",
+          width: 150,
+          color: "pink",
+        },
+        {
+          label: "Broadcast",
+          field: "broadcast",
+          width: 270,
+        },
+        {
+          label: "Created At",
+          field: "created_at",
+          width: 200,
+        },
+        {
+          label: "Delete",
+          field: "delete",
+          width: 150,
+        },
+      ],
+      rows: [
+        ...this.props.staffs.map((el, index) => ({
+          key: index,
+          name: el.full_name,
+          created_at: el.created_at.slice(0, -9),
+          broadcast: "0",
+          delete: (
+            <MDBBtn
+              color="transparent"
+              size="xs"
+              style={{ boxShadow: "none", padding: "0", margin: "0" }}
+            >
+              <i
+                class="fa fa-trash"
+                aria-hidden="true"
+                onClick={() => this.handleDelete(el.id)}
+                style={{ cursor: "pointer" }}
+              ></i>
+            </MDBBtn>
+          ),
+        })),
+      ],
+    };
     if (!localStorage.getItem("isSignin")) {
       return (
         <Redirect
@@ -62,7 +107,7 @@ class DashboardStaff extends Component {
             backNav={"rgb(241, 76, 89)"}
             style={{ position: "fixed" }}
             logout={() => this.props.doLogOut()}
-          bio={this.props.bio}
+            bio={this.props.bio}
           />
           <MDBBox
             style={{ backgroundColor: "#f7f7f7", padding: "100px 0 1px 0" }}
@@ -89,104 +134,21 @@ class DashboardStaff extends Component {
             >
               {/* side bar */}
               <MDBCol size="2">
-                <PictName />
+                <PictName 
+            bio={this.props.bio}
+
+                />
               </MDBCol>
               {/* end side bar */}
               {/* table */}
               <MDBCol size="10">
-                <MDBRow
-                  className="text-uppercase mb-3"
+                <MDBDataTable
+                  hover
+                  data={data}
                   style={{
-                    fontWeight: "700",
-                    color: "rgb(241, 76, 89)",
-                    margin: "0px",
+                    backgroundColor: "white",
                   }}
-                >
-                  <MDBCol
-                    size="3"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Name</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  <MDBCol
-                    size="3"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Broadcast</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  <MDBCol
-                    size="3"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Delete</span>
-                  </MDBCol>
-                  <MDBCol
-                    size="3"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Created at</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                </MDBRow>
-                {this.props.staffs ? (
-                  <Fragment>
-                    {this.props.staffs.map((el, index) => {
-                      return (
-                        <Table
-                          key={index}
-                          id={el.id}
-                          name={el.full_name}
-                          createdDate={el.created_at}
-                          delete={(id) => this.handleDelete(id)}
-                          staffs={this.props.staffs}
-                        />
-                      );
-                    })}
-                  </Fragment>
-                ) : (
-                  false
-                )}
-                <MDBBox className="pt-2 d-flex justify-content-center">
-                  <Pagination />
-                </MDBBox>
+                />
               </MDBCol>
               {/* end table */}
             </MDBRow>
@@ -208,6 +170,6 @@ const mapDispatchToProps = {
   getUserStaffs,
   deleteUserStaff,
   doLogOut,
-  doRefershSignin
+  doRefershSignin,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardStaff);

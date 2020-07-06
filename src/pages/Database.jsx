@@ -9,17 +9,20 @@ import {
   MDBFormInline,
   MDBModal,
   MDBLink,
+  MDBDataTable,
 } from "mdbreact";
 import "../css/style.css";
 
 import Navbar from "../components/Navbar";
-import Table from "../components/TableCustomer";
 import PictName from "../components/PictName";
-import Pagination from "../components/Pagination";
 import NewDatabase from "../components/NewDatabaseModal";
 import DownloadFormDatabase from "../components/DownloadFormModal";
 
-import { doLogOut, getUserBio,doRefershSignin } from "../stores/actions/userAction";
+import {
+  doLogOut,
+  getUserBio,
+  doRefershSignin,
+} from "../stores/actions/userAction";
 import { getCustomerList } from "../stores/actions/customerAction";
 
 class Database extends Component {
@@ -46,6 +49,52 @@ class Database extends Component {
     });
   };
   render() {
+    const data = {
+      columns: [
+        {
+          label: "Name",
+          field: "name",
+          width: 150,
+          color: "pink",
+        },
+        {
+          label: "Email",
+          field: "email",
+          width: 200,
+        },
+        {
+          label: "BOD",
+          field: "bod",
+          width: 270,
+        },
+        {
+          label: "Address",
+          field: "address",
+          width: 100,
+        },
+        {
+          label: "Phone",
+          field: "phone",
+          width: 150,
+        },
+        {
+          label: "Company",
+          field: "company",
+          width: 100,
+        },
+      ],
+      rows: [
+        ...this.props.customerList.map((el, index) => ({
+          key: index, 
+          name: el.First_name + " " + el.last_name,
+          email: el.email,
+          bod: el.bod.slice(0,-14),
+          address: el.address,
+          phone: el.phone,
+          company: el.company,
+        })),
+      ],
+    };
     if (!localStorage.getItem("isSignin")) {
       return (
         <Redirect
@@ -64,7 +113,7 @@ class Database extends Component {
             backNav={"rgb(241, 76, 89)"}
             style={{ position: "fixed" }}
             logout={() => this.props.doLogOut()}
-          bio={this.props.bio}
+            bio={this.props.bio}
           />
           <MDBBox
             style={{
@@ -157,165 +206,18 @@ class Database extends Component {
             >
               {/* side bar */}
               <MDBCol size="2">
-                <PictName />
+                <PictName bio={this.props.bio} />
               </MDBCol>
               {/* end side bar */}
               {/* table */}
               <MDBCol size="10">
-                {/* title */}
-                <MDBRow
-                  className="text-uppercase mb-3"
+                <MDBDataTable
+                  hover
+                  data={data}
                   style={{
-                    fontWeight: "700",
-                    color: "rgb(241, 76, 89)",
-                    margin: "0px",
+                    backgroundColor: "white",
                   }}
-                >
-                  {/* name */}
-                  <MDBCol
-                    size="2"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Name</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  {/* end name */}
-                  {/* email */}
-                  <MDBCol
-                    size="2"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Email</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  {/* end email */}
-                  {/* phone */}
-                  <MDBCol
-                    size="2"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Phone</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  {/* end phone */}
-                  {/* bod */}
-                  <MDBCol
-                    size="2"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">bod</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  {/* end bod */}
-                  {/* address */}
-                  <MDBCol
-                    size="2"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">address</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  {/* end address */}
-                  {/* company */}
-                  <MDBCol
-                    size="2"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">company</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  {/* end company */}
-                </MDBRow>
-                {/* end title */}
-                {this.props.customerList.map((el, index) => {
-                  return (
-                    <Table
-                      key={index}
-                      id={el.id}
-                      name={String(el.First_name) + " " + String(el.last_name)}
-                      email={el.email}
-                      phone={el.phone}
-                      bod={el.bod}
-                      address={el.address}
-                      company={el.company}
-                    />
-                  );
-                })}
-                <MDBBox className="pt-2 d-flex justify-content-center">
-                  <Pagination />
-                </MDBBox>
+                />
               </MDBCol>
               {/* end table */}
             </MDBRow>
@@ -336,6 +238,6 @@ const mapDispatchToProps = {
   getUserBio,
   getCustomerList,
   doLogOut,
-  doRefershSignin
+  doRefershSignin,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Database);

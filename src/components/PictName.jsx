@@ -4,7 +4,7 @@ import { MDBBox } from "mdbreact";
 
 import "../css/style.css";
 
-const PictName = () => {
+const PictName = (props) => {
   return (
     <MDBBox
       style={{
@@ -21,7 +21,7 @@ const PictName = () => {
           <MDBBox>
             <img
               src={
-                "https://emmawatson2017.files.wordpress.com/2017/01/emma-watson-harry-potter-movies-wallpapers-hd-wallpaper-high.jpg"
+                props.bio.user_image ? props.bio.user_image : require("../images/deafult-profile.jpg")
               }
               alt="pict"
               style={{
@@ -36,13 +36,12 @@ const PictName = () => {
         </MDBBox>
         <p
           className="text-center mb-0 pt-2"
-          style={{ fontSize: "18px", fontWeight: "700", color: "#a13034" }}
+          style={{ fontSize: "18px", fontWeight: "700", color: "#a13034"}}
         >
-          Hermione Granger
+          {props.bio.full_name}
         </p>
-        <p className="text-muted text-center mt-0">hermione@alterra.id</p>
       </MDBBox>
-      <MDBBox className="text-center" style={{ margin: "0", padding: "0" }}>
+      <MDBBox className="text-center" style={{ margin: "0", padding: "0", marginTop:"10px" }}>
       <Link to="/broadcast"> 
         <button
           color="transparent"

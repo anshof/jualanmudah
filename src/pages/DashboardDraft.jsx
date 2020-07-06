@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { MDBBox, MDBRow, MDBCol, MDBIcon } from "mdbreact";
+import { MDBBox, MDBRow, MDBCol, MDBBtn, MDBDataTable } from "mdbreact";
 import "../css/style.css";
 
 import Navbar from "../components/Navbar";
-import Table from "../components/TableDraft";
 import PictName from "../components/PictName";
-import Pagination from "../components/Pagination";
 
-import { doLogOut, getUserBio, doRefershSignin } from "../stores/actions/userAction";
+import {
+  doLogOut,
+  getUserBio,
+  doRefershSignin,
+} from "../stores/actions/userAction";
 import { getDraftList, deleteDraft } from "../stores/actions/mailAction";
 
 class DashboardDraft extends Component {
@@ -28,12 +30,66 @@ class DashboardDraft extends Component {
 
   handleDelete = (id) => {
     var result = window.confirm("Are you sure to delete?");
-    if(result){
-      this.props.deleteDraft(id)
+    if (result) {
+      this.props.deleteDraft(id);
     }
-  }
+  };
 
   render() {
+    const data = {
+      columns: [
+        {
+          label: "Title",
+          field: "title",
+          sort: "asc",
+          width: 150,
+          color: "pink",
+        },
+        {
+          label: "Created At",
+          field: "created_at",
+          sort: "asc",
+          width: 200,
+        },
+        {
+          label: "Segments",
+          field: "segment",
+          sort: "asc",
+          width: 270,
+        },
+        {
+          label: "Delete",
+          field: "delete",
+          sort: "asc",
+          width: 150,
+        },
+      ],
+      rows: [
+        ...this.props.draftList.map((el, index) => ({
+          key: index,
+          title: el.subject ? el.subject : "Unsubjected",
+          created_at: el.created_at.slice(0, -9),
+          segment: el.group_customer.name
+            ? el.group_customer.name
+            : "Unsegmented",
+          delete: (
+            <MDBBtn
+              color="transparent"
+              size="xs"
+              style={{ boxShadow: "none", padding: "0", margin: "0" }}
+            >
+              <i
+                class="fa fa-trash"
+                aria-hidden="true"
+                onClick={() => this.handleDelete(el.id)}
+                style={{ cursor: "pointer" }}
+              ></i>
+            </MDBBtn>
+          ),
+        })),
+      ],
+    };
+
     if (!localStorage.getItem("isSignin")) {
       return (
         <Redirect
@@ -52,7 +108,7 @@ class DashboardDraft extends Component {
             backNav={"rgb(241, 76, 89)"}
             style={{ position: "fixed" }}
             logout={() => this.props.doLogOut()}
-          bio={this.props.bio}
+            bio={this.props.bio}
           />
           <MDBBox
             style={{
@@ -82,108 +138,18 @@ class DashboardDraft extends Component {
             >
               {/* side bar */}
               <MDBCol size="2">
-                <PictName />
+                <PictName bio={this.props.bio} />
               </MDBCol>
               {/* end side bar */}
               {/* table */}
               <MDBCol size="10">
-                <MDBRow
-                  className="text-uppercase mb-3"
+                <MDBDataTable
+                  hover
+                  data={data}
                   style={{
-                    fontWeight: "700",
-                    color: "rgb(241, 76, 89)",
-                    margin: "0px",
+                    backgroundColor: "white",
                   }}
-                >
-                  {/* title */}
-                  <MDBCol
-                    size="3"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Title</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  {/* title */}
-                  {/* segment */}
-                  <MDBCol
-                    size="3"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">segment</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  {/* end segment */}
-                  {/* status */}
-                  <MDBCol
-                    size="3"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Delete</span>
-                  </MDBCol>
-                  {/* end status */}
-                  {/* created at */}
-                  <MDBCol
-                    size="3"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="mr-1">Created at</span>
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="mr-1"
-                      icon="caret-up"
-                    />
-                    <MDBIcon
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      icon="caret-down"
-                    />
-                  </MDBCol>
-                  {/* end created at */}
-                </MDBRow>
-                {this.props.draftList.map((el, index) => {
-                  return (
-                    <Table
-                      key={index}
-                      id={el.id}
-                      subject={el.subject}
-                      content={el.content}
-                      date={el.send_date}
-                      createdAt={el.created_at}
-                      group={el.group_customer}
-                      delete={(id) => this.handleDelete(id)}
-                    />
-                  );
-                })}
-                <MDBBox className="pt-2 d-flex justify-content-center">
-                  <Pagination />
-                </MDBBox>
+                />
               </MDBCol>
               {/* end table */}
             </MDBRow>
@@ -197,7 +163,7 @@ class DashboardDraft extends Component {
 const mapStateToProps = (state) => {
   return {
     bio: state.userState.bio,
-    draftList : state.mailState.mailDraftList
+    draftList: state.mailState.mailDraftList,
   };
 };
 const mapDispatchToProps = {
@@ -205,6 +171,6 @@ const mapDispatchToProps = {
   getDraftList,
   deleteDraft,
   doLogOut,
-  doRefershSignin
+  doRefershSignin,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardDraft);
