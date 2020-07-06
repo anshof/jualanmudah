@@ -611,7 +611,6 @@ class Database extends Component {
                 data={this.data}
                 style={{
                   backgroundColor: "white",
-                  // boxShadow: "0 0 10px #e1e1e1",
                 }}
               />
             </MDBCol>
