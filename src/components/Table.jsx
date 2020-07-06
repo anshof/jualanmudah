@@ -4,7 +4,7 @@ import { MDBBox, MDBRow, MDBCol } from "mdbreact";
 
 import "../css/style.css";
 
-const Table = () => {
+const Table = (props) => {
   return (
     <MDBRow
       className="text-capitalize d-flex align-items-center py-3"
@@ -18,10 +18,10 @@ const Table = () => {
       }}
     >
       <MDBCol size="3" style={{ textAlign: "center" }}>
-        <span className="pl-1">Info produk terbaru</span>
+        <span className="pl-1">{props.title}</span>
       </MDBCol>
       <MDBCol size="3" style={{ textAlign: "center" }}>
-        <span>0%</span>
+        <span>{props.open}%</span>
       </MDBCol>
       <MDBCol size="3" style={{ textAlign: "center" }}>
         <MDBBox
@@ -29,12 +29,12 @@ const Table = () => {
           style={{ backgroundColor: "#1d3354", borderRadius: "40px" }}
         >
           <span className="text-center text-uppercase text-white py-1">
-            Running
+            {props.status}
           </span>
         </MDBBox>
       </MDBCol>
       <MDBCol size="3" style={{ textAlign: "center" }}>
-        <span>20 Januari 2020 - 08:30</span>
+        <span>{props.sendAt.slice(0, -9)}</span>
       </MDBCol>
     </MDBRow>
   );

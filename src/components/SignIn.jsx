@@ -40,7 +40,7 @@ function SignIn(props) {
           group
           type="password"
           validate
-          containerClass="mb-0"
+          containerclassName="mb-0"
         />
         <div className="text-center mb-3 signin-button">
           <MDBBtn

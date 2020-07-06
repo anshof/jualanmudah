@@ -92,17 +92,17 @@ const ContentWa = () => {
                   <MDBBox>
                     <MDBBox className="d-flex justify-content-start">
                       <MDBBox className="pl-0 pt-0 d-flex align-items-center">
-                        <i class="fas fa-bold mx-3"></i>
-                        <i class="fas fa-italic mr-3"></i>
-                        <i class="fas fa-underline mr-3"></i>
-                        <i class="fas fa-strikethrough mr-3"></i>
+                        <i className="fas fa-bold mx-3"></i>
+                        <i className="fas fa-italic mr-3"></i>
+                        <i className="fas fa-underline mr-3"></i>
+                        <i className="fas fa-strikethrough mr-3"></i>
                         <MDBBox>
                           <MDBBtn
                             color="transparent"
                             className="border p-2 ml-0 text-capitalize text-white"
                             style={{ boxShadow: "none" }}
                           >
-                            <i class="far fa-image mr-1"></i>
+                            <i className="far fa-image mr-1"></i>
                             Image
                           </MDBBtn>
                         </MDBBox>
@@ -133,7 +133,7 @@ const ContentWa = () => {
             }}
           >
             <MDBBox>
-              <i class="fas fa-envelope-open-text fa-2x"></i> <br />
+              <i className="fas fa-envelope-open-text fa-2x"></i> <br />
               A/B <br /> testing
             </MDBBox>
           </MDBBox>

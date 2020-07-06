@@ -4,7 +4,7 @@ import { MDBRow, MDBCol } from "mdbreact";
 
 import "../css/style.css";
 
-const Table = () => {
+const Table = (props) => {
   return (
     <MDBRow
       className="text-capitalize d-flex align-items-center py-3"
@@ -18,20 +18,20 @@ const Table = () => {
       }}
     >
       <MDBCol size="3" style={{ textAlign: "center" }}>
-        <span className="pl-1">Ana Shofiya Kurniawati</span>
+        <span className="pl-1">{props.name}</span>
       </MDBCol>
       <MDBCol size="3" style={{ textAlign: "center" }}>
         <span>1</span>
       </MDBCol>
       <MDBCol size="3" style={{ textAlign: "center" }}>
         <span>
-          <i class="far fa-trash-alt"></i>
+          <i className="far fa-trash-alt" onClick={() => props.delete(props.id)} style={{cursor:"pointer"}}></i>
         </span>
       </MDBCol>
       <MDBCol size="3" style={{ textAlign: "center" }}>
-        <span>20 Januari 2020 - 08:30</span>
+        <span>{props.createdDate.slice(0, -9)}</span>
       </MDBCol>
     </MDBRow>
   );
-};
+}
 export default Table;

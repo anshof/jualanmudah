@@ -1,5 +1,5 @@
 import React from "react";
-
+import {Link} from "react-router-dom"
 import { MDBBox } from "mdbreact";
 
 import "../css/style.css";
@@ -43,6 +43,7 @@ const PictName = () => {
         <p className="text-muted text-center mt-0">hermione@alterra.id</p>
       </MDBBox>
       <MDBBox className="text-center" style={{ margin: "0", padding: "0" }}>
+      <Link to="/broadcast"> 
         <button
           color="transparent"
           style={{
@@ -58,8 +59,9 @@ const PictName = () => {
           }}
           className="text-capitalize"
         >
-          <i class="fas fa-plus mr-1"></i> New Broadcast
+          <i className="fas fa-plus mr-1"></i> New Broadcast
         </button>
+        </Link>
       </MDBBox>
       <hr />
       <MDBBox className="pl-3">
@@ -86,7 +88,8 @@ const PictName = () => {
       </MDBBox>
       <hr />
       <MDBBox className="pl-3">
-        <p
+        <Link
+        to="/draft"
           className="mb-1"
           style={{
             fontSize: "18px",
@@ -95,11 +98,12 @@ const PictName = () => {
           }}
         >
           Draft
-        </p>
+        </Link>
       </MDBBox>
       <hr />
       <MDBBox className="pl-3">
-        <p
+        <Link
+        to="/database"
           className="mb-1"
           style={{
             fontSize: "18px",
@@ -108,7 +112,21 @@ const PictName = () => {
           }}
         >
           Database
-        </p>
+        </Link>
+      </MDBBox>
+      <hr />
+      <MDBBox className="pl-3">
+        <Link
+        to="/staff"
+          className="mb-1"
+          style={{
+            fontSize: "18px",
+            fontWeight: "600",
+            color: "#192e35",
+          }}
+        >
+          Staff
+        </Link>
       </MDBBox>
     </MDBBox>
   );

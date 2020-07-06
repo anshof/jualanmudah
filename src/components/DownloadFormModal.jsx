@@ -46,7 +46,7 @@ function DownloadFormDatabase(props) {
           }}
           className="text-capitalize mb-4"
         >
-          <i class="fas fa-download mr-1"></i> Download Blank Form
+          <i className="fas fa-download mr-1"></i> Download Blank Form
           
         </MDBBtn>
 
@@ -65,7 +65,7 @@ function DownloadFormDatabase(props) {
           }}
           className="text-capitalize mb-4"
         >
-          <i class="fas fa-download mr-1"></i> Download Database Form
+          <i className="fas fa-download mr-1"></i> Download Database Form
         </MDBBtn>
       </MDBRow>
         <MDBRow style={{display:"flex", justifyContent:"center"}}>

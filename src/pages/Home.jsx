@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+
 import {
   MDBBox,
   MDBCol,
@@ -13,6 +15,11 @@ import "../css/style.css";
 import Navbar from "../components/Navbar";
 import SignIn from "../components/SignIn";
 
+import {
+  doLogOut,
+  doRefershSignin,
+  getUserBio
+} from "../stores/actions/userAction";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +32,11 @@ class Home extends Component {
     this.toggleCollapse = this.toggleCollapse.bind(this);
     this.toggle = this.toggle.bind(this);
   }
+
+  componentDidMount = async () => {
+    await this.props.doRefershSignin();
+    this.props.getUserBio();
+  };
 
   toggleCollapse() {
     this.setState({ isOpen: !this.state.isOpen });
@@ -47,6 +59,8 @@ class Home extends Component {
           isLogin={this.state.isLogin}
           backNav={"white"}
           fontColor={"rgb(241, 76, 89)"}
+          logout = {() => this.props.doLogOut()}
+          bio={this.props.bio}
         />
         <MDBRow
           style={{
@@ -110,7 +124,10 @@ class Home extends Component {
             color: "#1b2e35",
           }}
         >
-          <h2>“Content builds relationships. Relationships are built on trust. Trust drives revenue”</h2>
+          <h2>
+            “Content builds relationships. Relationships are built on trust.
+            Trust drives revenue”
+          </h2>
           <p style={{ fontSize: "18px", color: "#385a66" }}>- Andrew Davis -</p>
         </MDBBox>
         {/* akhir quote */}
@@ -452,5 +469,16 @@ class Home extends Component {
     );
   }
 }
-
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    bio: state.userState.bio,
+    username: state.userState.username,
+    password: state.userState.password,
+  };
+};
+const mapDispatchToProps = {
+  doLogOut,
+  doRefershSignin,
+  getUserBio
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

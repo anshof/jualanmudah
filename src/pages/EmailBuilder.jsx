@@ -1,12 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import EmailEditor from "react-email-editor";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { render } from "react-dom";
 import { MDBBox, MDBRow, MDBBtn } from "mdbreact";
-
+import {connect} from "react-redux"
 import sample from "../components/sample.json";
 import Navbar from "../components/Navbar";
 import "../css/style.css";
+import { doLogOut, doRefershSignin, getUserBio } from "../stores/actions/userAction";
 
 class App extends Component {
   constructor(props) {
@@ -21,6 +22,11 @@ class App extends Component {
     this.onDesignLoad = this.onDesignLoad.bind(this);
     this.onLoad = this.onLoad.bind(this);
   }
+
+  componentDidMount = async () => {
+    await this.props.doRefershSignin();
+    this.props.getUserBio();
+  };
 
   exportHtml = () => {
     this.editor.exportHtml((html) => {
@@ -47,12 +53,14 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Fragment>
         <Navbar
           isLogin={this.state.isLogin}
           fontColor={"white"}
           backNav={"rgb(241, 76, 89)"}
           style={{ position: "fixed" }}
+          logout = {() => this.props.doLogOut()}
+          bio={this.props.bio}
         />
         <MDBBox
           style={{ backgroundColor: "#f7f7f7", padding: "100px 0 50px 0" }}
@@ -82,7 +90,7 @@ class App extends Component {
                 className="text-capitalize"
                 onClick={this.exportHtml}
               >
-                <i class="fas fa-download mr-1"></i> Export HTML
+                <i className="fas fa-download mr-1"></i> Export HTML
               </MDBBtn>
               <MDBBtn
                 color="transparent"
@@ -98,7 +106,7 @@ class App extends Component {
                 className="text-capitalize"
                 onClick={this.saveDesign}
               >
-                <i class="fas fa-download mr-1"></i> Save Template
+                <i className="fas fa-download mr-1"></i> Save Template
               </MDBBtn>
             </MDBBox>
           </MDBBox>
@@ -115,13 +123,34 @@ class App extends Component {
             />
           </MDBRow>
         </MDBBox>
-      </Router>
+      </Fragment>
     );
   }
 }
 class EmailBuilder extends Component {
   render() {
-    return render(<App />, document.getElementById("root"));
+    if (!localStorage.getItem("isSignin")) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/signin",
+            state: { message: "You must sign in first!" },
+          }}
+        />
+      );
+    }else {
+      return render(<App />, document.getElementById("root"));
+    }
   }
 }
-export default EmailBuilder;
+const mapStateToProps = (state) => {
+  return {
+    bio: state.userState.bio,
+  };
+};
+const mapDispatchToProps = {
+  doLogOut,
+  doRefershSignin,
+  getUserBio
+};
+export default connect(mapStateToProps, mapDispatchToProps)(EmailBuilder);

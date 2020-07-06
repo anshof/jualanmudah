@@ -34,7 +34,7 @@ function NewDatabase(props) {
           </h3>
         </div>
       <DataUploader />
-      <MDBRow style={{display:"flex", justifyContent:"center"}}>
+      <MDBRow style={{display:"flex", justifyContent:"center",marginTop:"20px"}}>
         <MDBBtn
           color="transparent"
           style={{
@@ -43,17 +43,17 @@ function NewDatabase(props) {
             boxShadow: "none",
             borderRadius: "40px",
             fontSize: "16px",
-            minWidth:"260px"
+            minWidth:"260px",
             // padding: ".50rem 1rem",
           }}
           className="text-capitalize mt-3"
         >
-          <i class="fas fa-upload mr-1"></i> Upload New Database
+          <i className="fas fa-upload mr-1"></i> Upload Database
           
         </MDBBtn>
 
         </MDBRow>
-      <MDBRow style={{display:"flex", justifyContent:"center"}}>
+      {/* <MDBRow style={{display:"flex", justifyContent:"center"}}>
           or
       </MDBRow>
         <MDBRow style={{display:"flex", justifyContent:"center"}}>
@@ -70,16 +70,15 @@ function NewDatabase(props) {
           }}
           className="text-capitalize mt-3"
         >
-          <i class="fas fa-plus mr-1"></i> Update Current Database
+          <i className="fas fa-plus mr-1"></i> Update Current Database
         </MDBBtn>
-        </MDBRow>
+        </MDBRow> */}
       </MDBModalBody>
       <MDBModalFooter className="mx-5 pt-3 mb-1">
         <p className="font-small grey-text d-flex justify-content-end">
           We will make sure that your
           <div
             className="red-text mx-1"
-            style={{ cursor: "pointer" }}
           >
             data
           </div>

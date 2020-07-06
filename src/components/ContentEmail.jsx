@@ -165,16 +165,16 @@ const ContentEmail = () => {
                           </MDBDropdownMenu>
                         </MDBDropdown>
                         {/* akhir size */}
-                        <i class="fas fa-bold mr-3"></i>
-                        <i class="fas fa-italic mr-3"></i>
-                        <i class="fas fa-underline mr-3"></i>
-                        <i class="fas fa-strikethrough mr-3"></i>
-                        <i class="fas fa-list-ul mr-3"></i>
-                        <i class="fas fa-quote-right mr-3"></i>
-                        <i class="fas fa-align-left mr-3"></i>
-                        <i class="fas fa-align-center mr-3"></i>
-                        <i class="fas fa-align-right mr-3"></i>
-                        <i class="fas fa-align-justify mr-3"></i>
+                        <i className="fas fa-bold mr-3"></i>
+                        <i className="fas fa-italic mr-3"></i>
+                        <i className="fas fa-underline mr-3"></i>
+                        <i className="fas fa-strikethrough mr-3"></i>
+                        <i className="fas fa-list-ul mr-3"></i>
+                        <i className="fas fa-quote-right mr-3"></i>
+                        <i className="fas fa-align-left mr-3"></i>
+                        <i className="fas fa-align-center mr-3"></i>
+                        <i className="fas fa-align-right mr-3"></i>
+                        <i className="fas fa-align-justify mr-3"></i>
                       </MDBBox>
                     </MDBBox>
                     <MDBBox>
@@ -183,7 +183,7 @@ const ContentEmail = () => {
                         className="border p-1 ml-2 text-capitalize text-white"
                         style={{ boxShadow: "none" }}
                       >
-                        <i class="far fa-image mr-1"></i>
+                        <i className="far fa-image mr-1"></i>
                         Image
                       </MDBBtn>
                     </MDBBox>
@@ -224,7 +224,7 @@ const ContentEmail = () => {
             }}
           >
             <MDBBox>
-              <i class="fas fa-envelope-open-text fa-2x"></i> <br />
+              <i className="fas fa-envelope-open-text fa-2x"></i> <br />
               A/B <br /> testing
             </MDBBox>
           </MDBBox>

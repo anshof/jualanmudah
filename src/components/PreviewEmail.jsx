@@ -165,16 +165,16 @@ const PreviewEmail = () => {
                           </MDBDropdownMenu>
                         </MDBDropdown>
                         {/* akhir size */}
-                        <i class="fas fa-bold mr-3"></i>
-                        <i class="fas fa-italic mr-3"></i>
-                        <i class="fas fa-underline mr-3"></i>
-                        <i class="fas fa-strikethrough mr-3"></i>
-                        <i class="fas fa-list-ul mr-3"></i>
-                        <i class="fas fa-quote-right mr-3"></i>
-                        <i class="fas fa-align-left mr-3"></i>
-                        <i class="fas fa-align-center mr-3"></i>
-                        <i class="fas fa-align-right mr-3"></i>
-                        <i class="fas fa-align-justify mr-3"></i>
+                        <i className="fas fa-bold mr-3"></i>
+                        <i className="fas fa-italic mr-3"></i>
+                        <i className="fas fa-underline mr-3"></i>
+                        <i className="fas fa-strikethrough mr-3"></i>
+                        <i className="fas fa-list-ul mr-3"></i>
+                        <i className="fas fa-quote-right mr-3"></i>
+                        <i className="fas fa-align-left mr-3"></i>
+                        <i className="fas fa-align-center mr-3"></i>
+                        <i className="fas fa-align-right mr-3"></i>
+                        <i className="fas fa-align-justify mr-3"></i>
                       </MDBBox>
                     </MDBBox>
                     <MDBBox>
@@ -183,7 +183,7 @@ const PreviewEmail = () => {
                         className="border p-1 ml-2 text-capitalize text-white"
                         style={{ boxShadow: "none" }}
                       >
-                        <i class="far fa-image mr-1"></i>
+                        <i className="far fa-image mr-1"></i>
                         Image
                       </MDBBtn>
                     </MDBBox>
@@ -229,20 +229,20 @@ const PreviewEmail = () => {
               </MDBBox>
               {/* status */}
               <MDBBox className="d-flex align-items-center mt-3 ml-1">
-                <i class="fas fa-info-circle mr-2"></i>
+                <i className="fas fa-info-circle mr-2"></i>
                 Status : Draft
               </MDBBox>
               {/* akhir status */}
               {/* recipients */}
               <MDBBox className="d-flex align-items-center mt-3 ml-1">
-                <i class="fas fa-users mr-2"></i>4 recipients
+                <i className="fas fa-users mr-2"></i>4 recipients
               </MDBBox>
               {/* akhir recipients */}
               {/* date */}
               <MDBBox className="d-flex align-items-center mt-3 ml-1">
                 <form>
                   <label for="birthday" className="mr-2">
-                    <i class="far fa-clock mr-2"></i> Sent
+                    <i className="far fa-clock mr-2"></i> Sent
                   </label>
                   <input
                     type="date"
@@ -259,7 +259,7 @@ const PreviewEmail = () => {
               {/* akhir date */}
               {/* tracking email */}
               <MDBBox className="d-flex align-items-center my-3 ml-1">
-                <i class="fas fa-envelope-open-text mr-2"></i>
+                <i className="fas fa-envelope-open-text mr-2"></i>
                 Track open :
                 <div className="ml-2 custom-control custom-switch">
                   <input
@@ -292,7 +292,7 @@ const PreviewEmail = () => {
                 }}
                 color="transparent"
               >
-                <i class="far fa-envelope mr-2"></i>
+                <i className="far fa-envelope mr-2"></i>
                 Send test email
               </MDBBtn>
             </MDBBox>
@@ -311,7 +311,7 @@ const PreviewEmail = () => {
                 }}
                 color="transparent"
               >
-                <i class="fas fa-save mr-2"></i>
+                <i className="fas fa-save mr-2"></i>
                 Save as draft
               </MDBBtn>
             </MDBBox>
