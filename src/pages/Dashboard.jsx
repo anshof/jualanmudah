@@ -7,6 +7,7 @@ import {
   MDBCol,
   MDBDataTable,
 } from "mdbreact";
+import moment from "moment"
 import "../css/style.css";
 
 import Navbar from "../components/Navbar";
@@ -17,7 +18,7 @@ import {
   getUserBio,
   doRefershSignin,
 } from "../stores/actions/userAction";
-import { getSendList } from "../stores/actions/mailAction";
+import { getSendList, deleteLocalDraft } from "../stores/actions/mailAction";
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +29,7 @@ class Dashboard extends Component {
     await this.props.doRefershSignin();
     await this.props.getUserBio();
     await this.props.getSendList();
+    this.props.deleteLocalDraft()
   };
 
   render() {
@@ -56,15 +58,16 @@ class Dashboard extends Component {
         {
           label: "Created At",
           field: "created_at",
+          sort : "asc",
           width: 200,
         },
       ],
       rows: 
       [
-        ...this.props.mailSendList.map((el, index) => (
+        ...this.props.mailSendList.reverse().map((el, index) => (
         { key : index,
           title: el.subject,
-          created_at: el.created_at.slice(0, -9),
+          created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
           open_rate: el.open_rate,
           segment: el.group_customer.name,
           status: (
@@ -167,5 +170,6 @@ const mapDispatchToProps = {
   doLogOut,
   getSendList,
   doRefershSignin,
+  deleteLocalDraft
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

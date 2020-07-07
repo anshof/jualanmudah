@@ -88,6 +88,20 @@ const PictName = (props) => {
       <hr />
       <MDBBox className="pl-3">
         <Link
+        to="/dashboard"
+          className="mb-1"
+          style={{
+            fontSize: "18px",
+            fontWeight: "600",
+            color: "#192e35",
+          }}
+        >
+          Campaign Status
+        </Link>
+      </MDBBox>
+      <hr />
+      <MDBBox className="pl-3">
+        <Link
         to="/draft"
           className="mb-1"
           style={{

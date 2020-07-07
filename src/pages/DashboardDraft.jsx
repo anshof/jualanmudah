@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import moment from 'moment'
 import { MDBBox, MDBRow, MDBCol, MDBBtn, MDBDataTable } from "mdbreact";
 import "../css/style.css";
 
@@ -12,7 +13,7 @@ import {
   getUserBio,
   doRefershSignin,
 } from "../stores/actions/userAction";
-import { getDraftList, deleteDraft } from "../stores/actions/mailAction";
+import { getDraftList, deleteDraft, getDraft } from "../stores/actions/mailAction";
 
 class DashboardDraft extends Component {
   constructor(props) {
@@ -26,7 +27,33 @@ class DashboardDraft extends Component {
     await this.props.doRefershSignin();
     this.props.getUserBio();
     this.props.getDraftList();
+    // this.setState({"rows" : [
+    //   ...this.props.draftList.reverse().map((el, index) => ({
+    //     key: index,
+    //     title: <p onClick={() => this.changeRouter(el.id)}>{el.subject ? el.subject : "Unsubjected"}</p>,
+    //     // created_at: el.created_at.slice(0, -9),
+    //     created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
+    //     segment: el.group_id !== 0
+    //       ? el.group_customer.name
+    //       : "Unsegmented",
+    //     delete: (
+    //       <MDBBtn
+    //         color="transparent"
+    //         size="xs"
+    //         style={{ boxShadow: "none", padding: "0", margin: "0" }}
+    //       >
+    //         <i
+    //           className="fa fa-trash"
+    //           aria-hidden="true"
+    //           onClick={() => this.handleDelete(el.id)}
+    //           style={{ cursor: "pointer" }}
+    //         ></i>
+    //       </MDBBtn>
+    //     ),
+    //   })),
+    // ]})
   };
+
 
   handleDelete = (id) => {
     var result = window.confirm("Are you sure to delete?");
@@ -35,41 +62,46 @@ class DashboardDraft extends Component {
     }
   };
 
+  changeRouter = async (draftId) => {
+    // localStorage.setItem("draftId", draftId);
+     await this.props.getDraft(draftId)
+    //  this.props.history.replace("/draft/" + draftId);
+     this.props.history.push("/draft/" + draftId, { ...this.props.draft })
+    // alert("done")
+  };
+
   render() {
     const data = {
       columns: [
         {
           label: "Title",
           field: "title",
-          sort: "asc",
           width: 150,
           color: "pink",
         },
         {
           label: "Created At",
           field: "created_at",
-          sort: "asc",
           width: 200,
         },
         {
           label: "Segments",
           field: "segment",
-          sort: "asc",
           width: 270,
         },
         {
           label: "Delete",
           field: "delete",
-          sort: "asc",
           width: 150,
         },
       ],
-      rows: [
-        ...this.props.draftList.map((el, index) => ({
+      rows: [ 
+        ...this.props.draftList.reverse().map((el, index) => ({
           key: index,
-          title: el.subject ? el.subject : "Unsubjected",
-          created_at: el.created_at.slice(0, -9),
-          segment: el.group_customer.name
+          title: <p onClick={() => this.changeRouter(el.id)}>{el.subject ? el.subject : "Unsubjected"}</p>,
+          // created_at: el.created_at.slice(0, -9),
+          created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
+          segment: el.group_id !== 0
             ? el.group_customer.name
             : "Unsegmented",
           delete: (
@@ -79,7 +111,7 @@ class DashboardDraft extends Component {
               style={{ boxShadow: "none", padding: "0", margin: "0" }}
             >
               <i
-                class="fa fa-trash"
+                className="fa fa-trash"
                 aria-hidden="true"
                 onClick={() => this.handleDelete(el.id)}
                 style={{ cursor: "pointer" }}
@@ -164,6 +196,7 @@ const mapStateToProps = (state) => {
   return {
     bio: state.userState.bio,
     draftList: state.mailState.mailDraftList,
+    draft: state.mailState.maildraft,
   };
 };
 const mapDispatchToProps = {
@@ -172,5 +205,6 @@ const mapDispatchToProps = {
   deleteDraft,
   doLogOut,
   doRefershSignin,
+  getDraft
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardDraft);

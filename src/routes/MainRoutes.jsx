@@ -14,7 +14,7 @@ import DashboardDraft from "../pages/DashboardDraft";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import NotFound from "../pages/NotFound";
-// import AboutUs from "../pages/AboutUs"
+import AboutUs from "../pages/AboutUs"
 const MainRoutes = () => {
   return (
     <Provider store={store}>
@@ -30,7 +30,7 @@ const MainRoutes = () => {
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/draft" component={DashboardDraft} />
           <Route exact path="/draft/:draftId" component={NewBroadcast} />
-          {/* <Route exact path="/about-us" component={AboutUs} /> */}
+          <Route exact path="/about" component={AboutUs} />
           <Route component={NotFound} />
         </Switch>
       </Router>

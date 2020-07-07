@@ -1,12 +1,18 @@
 import axios from "axios";
+import {
+  EditorState,
+  ContentState,
+} from "draft-js";
+import htmlToDraft from "html-to-draftjs";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // const baseUrl = process.env.REACT_APP_PUBLIC_URL;
 // const baseUrl = "https://slytherin.perintiscerita.shop/";
 const baseUrl = "http://0.0.0.0:5050";
 
 export const addMail = () => {
-  return (dispatch, getState) => {
+  return async(dispatch, getState) => {
     const token = localStorage.getItem("token");
-    axios({
+    await axios({
       method: "POST",
       url: baseUrl + "/sent",
       data: {
@@ -27,50 +33,52 @@ export const addMail = () => {
   };
 };
 
-export const addDraft = () => {
-  return (dispatch, getState) => {
+export const addDraft = (content) => {
+  return async (dispatch, getState) => {
     const token = localStorage.getItem("token");
-    axios({
+    await axios({
       method: "POST",
       url: baseUrl + "/sent",
       data: {
-        status: getState().mail.status,
-        subject: getState().mail.subject,
-        content: getState().mail.content,
-        device: getState().mail.device,
-        contact_id: getState().mail.contactId,
-        group_id: getState().mail.groupId,
+        status: "draft",
+        subject: getState().mailState.subject,
+        content: content,
+        device: getState().mailState.device,
+        contact_id: getState().mailState.contactId,
+        group_id: getState().mailState.groupId,
       },
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(() => {
-        dispatch({ type: "SUCCESS_ADD_MAIL" });
+      .then(async(response) => {
+        dispatch({ type: "SUCCESS_ADD_DRAFT", payload: response.data });
+        await localStorage.setItem("savedId",response.data.id)
+        alert("Saved to draft");
       })
       .catch(() => {});
   };
 };
 
 export const deleteDraft = (id) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     const token = localStorage.getItem("token");
-    axios({
+    await axios({
       method: "DELETE",
       url: baseUrl + "/sent/" + id,
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(() => {
-        dispatch({ type: "SUCCESS_DELETE_DRAFT_MAIL", payload:id });
+        dispatch({ type: "SUCCESS_DELETE_DRAFT_MAIL", payload: id });
       })
       .catch((error) => {
-        console.error("Delete draft error",error)
+        console.error("Delete draft error", error);
       });
   };
 };
 
 export const getMailList = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     const token = localStorage.getItem("token");
-    axios({
+    await axios({
       method: "GET",
       url: baseUrl + "/sent",
       headers: { Authorization: `Bearer ${token}` },
@@ -83,51 +91,84 @@ export const getMailList = () => {
 };
 
 export const getSendList = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     const token = localStorage.getItem("token");
-    axios({
+    await axios({
       method: "GET",
       url: baseUrl + "/sent/sent-list",
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => {
-        dispatch({ type: "SUCCESS_GET_MAIL_SEND_LIST", payload: response.data });
+        dispatch({
+          type: "SUCCESS_GET_MAIL_SEND_LIST",
+          payload: response.data,
+        });
       })
       .catch(() => {});
   };
 };
 
 export const getDraftList = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     const token = localStorage.getItem("token");
-    axios({
+    await axios({
       method: "GET",
       url: baseUrl + "/sent/draft-list",
 
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => {
-        dispatch({ type: "SUCCESS_GET_MAIL_DRAFT_LIST", payload: response.data });
+        dispatch({
+          type: "SUCCESS_GET_MAIL_DRAFT_LIST",
+          payload: response.data,
+        });
       })
       .catch(() => {});
   };
 };
 
-export const getDraft = () => {
-  return (dispatch, getState) => {
+export const getDraft = (draftId) => {
+  return async (dispatch) => {
     const token = localStorage.getItem("token");
-    axios({
+    await axios({
       method: "GET",
-      url: baseUrl + "/sent/draft",
-      data: {
-        draft_id: getState().mail.draftId,
-      },
       headers: { Authorization: `Bearer ${token}` },
+      url: baseUrl + "/sent/draft",
+      params: {
+        draft_id: draftId,
+      },
     })
-      .then(() => {
-        dispatch({ type: "SUCCESS_GET_MAIL_DRAFT_LIST" });
+      .then(async (response) => {
+        let rawContent = await response.data.content;
+        const contentBlock = await htmlToDraft(String(rawContent));
+        const contentState = await ContentState.createFromBlockArray(
+          contentBlock.contentBlocks
+        );
+        if (contentState) {
+        dispatch({ type: "SUCCESS_GET_MAIL_DRAFT", payload: response.data, editor:EditorState.createWithContent(contentState) });
+
+        } else {
+        dispatch({ type: "SUCCESS_GET_MAIL_DRAFT", payload: response.data, editor:EditorState.createEmpty() });
+      }
       })
       .catch(() => {});
+  };
+};
+
+export const changeEditor = (editorState) => {
+  return {  
+      type: 'UPDATE_EDITOR_STATE',
+      payload: editorState,
+  }
+}
+
+export const deleteLocalDraft = () => {
+  return () => {
+    localStorage.removeItem("subject");
+    localStorage.removeItem("content");
+    localStorage.removeItem("group_id");
+    localStorage.removeItem("created_at");
+    localStorage.removeItem("send_date");
   };
 };
 

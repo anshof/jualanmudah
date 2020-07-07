@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { MDBBox, MDBRow, MDBCol, MDBBtn, MDBDataTable } from "mdbreact";
 import { connect } from "react-redux";
-import Navbar from "../components/Navbar";
-
+import moment from "moment"
 import "../css/style.css";
+
+
+import Navbar from "../components/Navbar";
 import PictName from "../components/PictName";
 
 import {
@@ -67,10 +69,10 @@ class DashboardStaff extends Component {
         },
       ],
       rows: [
-        ...this.props.staffs.map((el, index) => ({
+        ...this.props.staffs.reverse().map((el, index) => ({
           key: index,
           name: el.full_name,
-          created_at: el.created_at.slice(0, -9),
+          created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
           broadcast: "0",
           delete: (
             <MDBBtn

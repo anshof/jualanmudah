@@ -89,7 +89,7 @@ class Home extends Component {
                 Increasing your revenue by connecting you to your customer in a
                 better, easier and faster way.
               </p>
-              <Link to="/signup">
+              <Link to="/dashboard">
                 <MDBBox
                   className="btn text-uppercase my-0 py-2"
                   style={{
@@ -374,7 +374,7 @@ class Home extends Component {
                     Grow your audience.
                   </p>
                   <MDBLink
-                    to="/signup"
+                    to="/dashboard"
                     className="btn text-uppercase my-0 py-2"
                     style={{
                       boxShadow: "none",

@@ -1,6 +1,7 @@
 const initialState = {
   mailSendList: [],
   mailDraftList: [],
+  draft : ""
 };
 
 export default function mailReducer(mailState = initialState, action) {
@@ -15,6 +16,12 @@ export default function mailReducer(mailState = initialState, action) {
         ...mailState,
         mailDraftList: action.payload,
       };
+      case "SUCCESS_GET_MAIL_DRAFT":
+        return {
+          ...mailState,
+          draft: action.payload,
+          editor: action.editor,
+        };
     case "SUCCESS_DELETE_DRAFT_MAIL":
       return {
         ...mailState,
@@ -29,6 +36,11 @@ export default function mailReducer(mailState = initialState, action) {
         ...mailState,
         [action.payload.target.name]: action.payload.target.value,
       };
+      case "UPDATE_EDITOR_STATE":
+        return {
+          ...mailState,
+          editor: action.payload,
+        };
     default:
       return mailState;
   }

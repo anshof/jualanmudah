@@ -3,15 +3,20 @@ import EmailEditor from "react-email-editor";
 import { Redirect } from "react-router-dom";
 import { render } from "react-dom";
 import { MDBBox, MDBRow, MDBBtn } from "mdbreact";
-import {connect} from "react-redux"
+import { connect } from "react-redux";
 import sample from "../components/sample.json";
 import Navbar from "../components/Navbar";
 import "../css/style.css";
-import { doLogOut, doRefershSignin, getUserBio } from "../stores/actions/userAction";
+import {
+  doLogOut,
+  doRefershSignin,
+  getUserBio,
+} from "../stores/actions/userAction";
 
-class App extends Component {
+class EmailBuilder extends Component {
   constructor(props) {
     super(props);
+    this.handleSignIn = () => this.handleSignIn.bind(this)
     this.state = {
       isLogin: true,
       mailDesign: "",
@@ -23,14 +28,20 @@ class App extends Component {
     this.onLoad = this.onLoad.bind(this);
   }
 
+  handleSignIn = () => {
+    this.props.getUserBio()
+  }
   componentDidMount = async () => {
     await this.props.doRefershSignin();
-    this.props.getUserBio();
+    await this.props.getUserBio();
   };
 
   exportHtml = () => {
-    this.editor.exportHtml((html) => {
-      this.setState({ mailHtml: html });
+    this.editor.exportHtml((data) => {
+      const { design, html } = data;
+      console.log("exportHtml", html); // untuk send
+      console.warn("exportdesign", design); // kalo save draft
+      // this.setState({ mailHtml: html });
       alert("Design exported");
     });
   };
@@ -38,6 +49,7 @@ class App extends Component {
   saveDesign = () => {
     this.editor.saveDesign((design) => {
       this.setState({ mailDesign: design });
+      console.log("design", design)
       alert("Design JSON has been saved");
     });
   };
@@ -52,18 +64,32 @@ class App extends Component {
   };
 
   render() {
-    return (
-      <Fragment>
-        <Navbar
-          isLogin={this.state.isLogin}
-          fontColor={"white"}
-          backNav={"rgb(241, 76, 89)"}
-          style={{ position: "fixed" }}
-          logout = {() => this.props.doLogOut()}
-          bio={this.props.bio}
+    console.log(this.props);
+    if (!localStorage.getItem("isSignin")) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/signin",
+            state: { message: "You must sign in first!" },
+          }}
         />
-        <MDBBox
-          style={{ backgroundColor: "#f7f7f7", padding: "100px 0 50px 0" }}
+      );
+    } else {
+      if (!this.props.bio) {
+        return <h3 className="loading">Loading...</h3>;
+      }
+      return render(  
+        <Fragment>
+        <Navbar
+        fontColor={"white"}
+        backNav={"rgb(241, 76, 89)"}
+        style={{ position: "fixed" }}
+        logout={() => this.props.doLogOut()}
+        bio={this.props.bio}
+      />
+      {/* <App /> */}
+      <MDBBox
+          style={{ backgroundColor: "#f7f7f7", padding: "100px 0 0 0" }}
         >
           <MDBBox className="d-flex align-items-center justify-content-between mx-5 pb-3">
             <h3
@@ -119,27 +145,12 @@ class App extends Component {
           >
             <EmailEditor
               ref={(editor) => (this.editor = editor)}
-              onLoad={this.onLoad}
+              // onLoad={this.onLoad}
             />
           </MDBRow>
         </MDBBox>
       </Fragment>
-    );
-  }
-}
-class EmailBuilder extends Component {
-  render() {
-    if (!localStorage.getItem("isSignin")) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/signin",
-            state: { message: "You must sign in first!" },
-          }}
-        />
-      );
-    }else {
-      return render(<App />, document.getElementById("root"));
+      , document.getElementById("root"));
     }
   }
 }
@@ -151,6 +162,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   doLogOut,
   doRefershSignin,
-  getUserBio
+  getUserBio,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EmailBuilder);

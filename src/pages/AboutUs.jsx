@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
 import { MDBBox, MDBRow, MDBCol } from "mdbreact";
-
-import Navbar from "../components/Navbar";
-
 import "../css/style.css";
 
+import Navbar from "../components/Navbar";
+import {
+  doLogOut,
+  doRefershSignin,
+  getUserBio
+} from "../stores/actions/userAction";
 class AboutUs extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +24,7 @@ class AboutUs extends Component {
           fontColor={"white"}
           backNav={"rgb(241, 76, 89)"}
           style={{ position: "fixed" }}
+          bio={this.props.bio}
         />
         <MDBBox
           style={{
@@ -52,4 +56,14 @@ class AboutUs extends Component {
     );
   }
 }
-export default AboutUs;
+const mapStateToProps = (state) => {
+  return {
+    bio: state.userState.bio,
+  };
+};
+const mapDispatchToProps = {
+  doLogOut,
+  doRefershSignin,
+  getUserBio
+};
+export default connect(mapStateToProps, mapDispatchToProps)(AboutUs);
