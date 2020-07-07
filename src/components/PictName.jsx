@@ -16,6 +16,7 @@ const PictName = () => {
       }}
       className="text-left"
     >
+      {/* user name and pict */}
       <MDBBox>
         <MDBBox className="d-flex justify-content-center">
           <MDBBox>
@@ -42,6 +43,8 @@ const PictName = () => {
         </p>
         <p className="text-muted text-center mt-0">hermione@alterra.id</p>
       </MDBBox>
+      {/* end user name and pict */}
+      {/* btn new broadcast */}
       <MDBBox className="text-center" style={{ margin: "0", padding: "0" }}>
         <button
           color="transparent"
@@ -61,30 +64,9 @@ const PictName = () => {
           <i class="fas fa-plus mr-1"></i> New Broadcast
         </button>
       </MDBBox>
+      {/* end btn new broadcast */}
       <hr />
-      <MDBBox className="pl-3">
-        <p
-          className="mb-1"
-          style={{
-            fontSize: "18px",
-            fontWeight: "600",
-            color: "#192e35",
-          }}
-        >
-          All segments
-        </p>
-        <a href="#!" style={{ color: "#192e35" }}>
-          <p className="py-0 my-0" style={{ fontSize: "16px" }}>
-            Woman
-          </p>
-        </a>
-        <a href="#!" style={{ color: "#192e35" }}>
-          <p className="py-0 my-0" style={{ fontSize: "16px" }}>
-            Man
-          </p>
-        </a>
-      </MDBBox>
-      <hr />
+      {/* draft */}
       <MDBBox className="pl-3">
         <p
           className="mb-1"
@@ -97,7 +79,9 @@ const PictName = () => {
           Draft
         </p>
       </MDBBox>
+      {/* end draft */}
       <hr />
+      {/* database */}
       <MDBBox className="pl-3">
         <p
           className="mb-1"
@@ -109,7 +93,52 @@ const PictName = () => {
         >
           Database
         </p>
+        <a href="#!" style={{ color: "#192e35" }}>
+          <p
+            className="py-0 my-0"
+            style={{
+              fontSize: "16px",
+            }}
+          >
+            All segments
+          </p>
+        </a>
+        <a href="#!" style={{ color: "#192e35" }}>
+          <p className="py-0 my-0" style={{ fontSize: "16px" }}>
+            Woman
+          </p>
+        </a>
+        <a href="#!" style={{ color: "#192e35" }}>
+          <p className="py-0 my-0" style={{ fontSize: "16px" }}>
+            Man
+          </p>
+        </a>
       </MDBBox>
+      {/* end database */}
+      {/* btn new segment */}
+      <MDBBox
+        className="text-center"
+        style={{ margin: "10px 0", padding: "0" }}
+      >
+        <button
+          color="transparent"
+          style={{
+            backgroundColor: "#f14c59",
+            border: "1px solid #f14c59",
+            color: "white",
+            boxShadow: "none",
+            borderRadius: "40px",
+            fontSize: "14px",
+            height: "40px",
+            margin: "0",
+            padding: "0 13px",
+          }}
+          className="text-capitalize"
+        >
+          <i class="fas fa-plus mr-1"></i> New Segment
+        </button>
+      </MDBBox>
+      {/* end btn new segment */}
     </MDBBox>
   );
 };
