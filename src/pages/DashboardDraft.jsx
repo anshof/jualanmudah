@@ -25,34 +25,62 @@ class DashboardDraft extends Component {
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
+    await this.props.getDraftList();
     this.props.getUserBio();
-    this.props.getDraftList();
-    // this.setState({"rows" : [
-    //   ...this.props.draftList.reverse().map((el, index) => ({
-    //     key: index,
-    //     title: <p onClick={() => this.changeRouter(el.id)}>{el.subject ? el.subject : "Unsubjected"}</p>,
-    //     // created_at: el.created_at.slice(0, -9),
-    //     created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
-    //     segment: el.group_id !== 0
-    //       ? el.group_customer.name
-    //       : "Unsegmented",
-    //     delete: (
-    //       <MDBBtn
-    //         color="transparent"
-    //         size="xs"
-    //         style={{ boxShadow: "none", padding: "0", margin: "0" }}
-    //       >
-    //         <i
-    //           className="fa fa-trash"
-    //           aria-hidden="true"
-    //           onClick={() => this.handleDelete(el.id)}
-    //           style={{ cursor: "pointer" }}
-    //         ></i>
-    //       </MDBBtn>
-    //     ),
-    //   })),
-    // ]})
-  };
+    if (this.props.draftList){
+      this.setState({
+        data: {
+          columns: [
+            {
+              label: "Title",
+              field: "title",
+              width: 150,
+              color: "pink",
+            },
+            {
+              label: "Created At",
+              field: "created_at",
+              width: 200,
+            },
+            {
+              label: "Segments",
+              field: "segment",
+              width: 270,
+            },
+            {
+              label: "Delete",
+              field: "delete",
+              width: 150,
+            },
+          ],
+          rows: [ 
+            ...this.props.draftList.reverse().map((el, index) => ({
+              key: index,
+              title: <p onClick={() => this.changeRouter(el.id)}>{el.subject ? el.subject : "Unsubjected"}</p>,
+              // created_at: el.created_at.slice(0, -9),
+              created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
+              segment: el.group_id !== 0
+                ? el.group_customer.name
+                : "Unsegmented",
+              delete: (
+                <MDBBtn
+                  color="transparent"
+                  size="xs"
+                  style={{ boxShadow: "none", padding: "0", margin: "0" }}
+                >
+                  <i
+                    className="fa fa-trash"
+                    aria-hidden="true"
+                    onClick={() => this.handleDelete(el.id)}
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                </MDBBtn>
+              )})),
+            ],
+          },
+        });
+      }
+    };
 
 
   handleDelete = (id) => {
@@ -71,57 +99,7 @@ class DashboardDraft extends Component {
   };
 
   render() {
-    const data = {
-      columns: [
-        {
-          label: "Title",
-          field: "title",
-          width: 150,
-          color: "pink",
-        },
-        {
-          label: "Created At",
-          field: "created_at",
-          width: 200,
-        },
-        {
-          label: "Segments",
-          field: "segment",
-          width: 270,
-        },
-        {
-          label: "Delete",
-          field: "delete",
-          width: 150,
-        },
-      ],
-      rows: [ 
-        ...this.props.draftList.reverse().map((el, index) => ({
-          key: index,
-          title: <p onClick={() => this.changeRouter(el.id)}>{el.subject ? el.subject : "Unsubjected"}</p>,
-          // created_at: el.created_at.slice(0, -9),
-          created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
-          segment: el.group_id !== 0
-            ? el.group_customer.name
-            : "Unsegmented",
-          delete: (
-            <MDBBtn
-              color="transparent"
-              size="xs"
-              style={{ boxShadow: "none", padding: "0", margin: "0" }}
-            >
-              <i
-                className="fa fa-trash"
-                aria-hidden="true"
-                onClick={() => this.handleDelete(el.id)}
-                style={{ cursor: "pointer" }}
-              ></i>
-            </MDBBtn>
-          ),
-        })),
-      ],
-    };
-
+    
     if (!localStorage.getItem("isSignin")) {
       return (
         <Redirect
@@ -132,6 +110,7 @@ class DashboardDraft extends Component {
         />
       );
     } else {
+      const data = this.state.data
       return (
         <MDBBox>
           <Navbar

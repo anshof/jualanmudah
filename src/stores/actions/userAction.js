@@ -27,16 +27,16 @@ export const doSignin = () => {
 };
 
 export const doRefershSignin = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     const token = localStorage.getItem("token");
-    axios({
+    await axios({
       method: "POST",
       url: baseUrl + "/auth/refresh",
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then((response) => {
+      .then(async (response) => {
         if (response.data.hasOwnProperty("token")) {
-          dispatch({ type: "SUCCESS_SIGNIN", payload: response.data });
+          await dispatch({ type: "SUCCESS_SIGNIN", payload: response.data });
           localStorage.setItem("token", response.data.token);
         }
       })

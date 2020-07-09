@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { MDBBox, MDBCol, MDBRow, MDBBtn } from "mdbreact";
-import { Prompt } from "react-router";
+// import { Prompt } from "react-router";
 import Navbar from "../components/Navbar";
 
 import "../css/style.css";
@@ -18,7 +18,6 @@ import {
   getUserBio,
 } from "../stores/actions/userAction";
 import {
-  addMail,
   addDraft,
   getDraft,
   doDraftToSend,
@@ -30,33 +29,16 @@ import {
 class NewBroadcast extends Component {
   constructor(props) {
     super(props);
-    //   this.handleDraft = () => this.handleDraft.bind(this);
-    //   this.handleDraft()
-    //   this.props.getDraft(this.props.match.params.draftId)
-    //   let html = this.props.match.params.draftId
-    //     ? localStorage.getItem("content")
-    //     : "";
-    //   const contentBlock = htmlToDraft(String(html));
-    //   if (contentBlock) {
-    //     const contentState = ContentState.createFromBlockArray(
-    //       contentBlock.contentBlocks
-    //     );
-    //     const editorState = EditorState.createWithContent(contentState);
-    this.state = {
-      //     editorState,
-      //     isLoading: false,
-    };
-    //   }
+    this.state = {};
   }
 
-  componentWillUnmount = async () => {
-    await this.props.deleteLocalDraft();
-    if (this.shouldBlockNavigation) {
-      window.onbeforeunload = () => true;
-    } else {
-      window.onbeforeunload = undefined;
-    }
-  };
+  // componentDidUpdate = async () => {
+  //   if (this.shouldBlockNavigation) {
+  //     window.onbeforeunload = () => true;
+  //   } else {
+  //     window.onbeforeunload = undefined;
+  //   }
+  // };
 
   handleDraft = async () => {
     if (this.props.match.params.draftId) {
@@ -64,28 +46,7 @@ class NewBroadcast extends Component {
     } else {
       await this.props.deleteLocalDraft();
     }
-    // this.setState({ isLoading: true });
   };
-
-  // componentDidUpdate = async () => {
-
-  //   if (this.state.isLoading) {
-  //     console.log("did update");
-
-  //     await this.props.getDraft(this.props.match.params.draftId);
-  //     let html = this.props.match.params.draftId
-  //       ? localStorage.getItem("content")
-  //       : "";
-  //     const contentBlock = htmlToDraft(String(html));
-  //     const contentState = ContentState.createFromBlockArray(
-  //       contentBlock.contentBlocks
-  //     );
-  //     this.setState({
-  //       editorState: EditorState.createWithContent(contentState),
-  //       isLoading: false,
-  //     });
-  //   }
-  // };
 
   onEditorStateChange = (editorState) => {
     this.setState({
@@ -95,46 +56,17 @@ class NewBroadcast extends Component {
 
   handleSaveToDraft = async (content) => {
     await this.props.addDraft(content);
-    // this.props.history.replace("/draft/" + String(localStorage.getItem("savedId")));
+    this.props.history.replace(
+      "/draft/" + String(localStorage.getItem("savedId"))
+    );
   };
 
   componentDidMount = async () => {
-    // console.log("did mounted");
     this.props.getUserBio();
     if (!this.props.match.params.draftId) {
       await this.props.deleteLocalDraft();
     } else {
       await this.props.getDraft(this.props.match.params.draftId);
-      // const paramCategory = await this.props.match.params.draftId;
-      // await this.handleDraft().then(console.log("sudah handle draft")).then(async () => {
-      //   let rawContent = await localStorage.getItem("content");
-      //   console.log("sudah rawContent", rawContent)
-      //   const contentBlock = await htmlToDraft(String(rawContent));
-      //   console.log("sudah contentBlock", contentBlock)
-      //   const contentState = await ContentState.createFromBlockArray(
-      //     contentBlock.contentBlocks
-      //   );
-      //   console.log("contentState", contentState)
-      //   if (contentState) {
-      //     this.setState({
-      //       editorState: EditorState.createWithContent(contentState),
-      //     });
-      //   } else {
-      //     this.setState({ editorState: EditorState.createEmpty() });
-      //   }
-      // });
-      // let html = await localStorage.getItem("content");
-      // ? localStorage.getItem("content")
-      // : "";
-      // if (html) {
-      //   const contentBlock = htmlToDraft(String(html));
-      //   const contentState = ContentState.createFromBlockArray(
-      //     contentBlock.contentBlocks
-      //   );
-      //   this.setState({
-      //     editorState: EditorState.createWithContent(contentState),
-      //   });
-      // }
     }
   };
 
@@ -155,10 +87,10 @@ class NewBroadcast extends Component {
       }
       return (
         <MDBBox>
-          <Prompt
+          {/* <Prompt
             when={this.shouldBlockNavigation}
             message="You have unsaved changes, are you sure you want to leave?"
-          />
+          /> */}
           <Navbar
             toggle={(key) => this.toggle(key)}
             logout={() => this.props.doLogOut()}
@@ -300,6 +232,16 @@ class NewBroadcast extends Component {
                           placeholder="Type your text here..."
                         />
                       </MDBBox>
+                      <textarea
+                        disabled
+                        value={
+                          editorState
+                            ? draftToHtml(
+                                convertToRaw(editorState.getCurrentContent())
+                              )
+                            : ""
+                        }
+                      />
                     </MDBBox>
                   </MDBBox>
                 </MDBCol>
@@ -477,7 +419,6 @@ const mapDispatchToProps = {
   doLogOut,
   getUserBio,
   doRefershSignin,
-  addMail,
   addDraft,
   doDraftToSend,
   changeInputMail,

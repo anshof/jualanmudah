@@ -1,16 +1,40 @@
 import axios from "axios";
-import {
-  EditorState,
-  ContentState,
-} from "draft-js";
+import { EditorState, ContentState } from "draft-js";
 import htmlToDraft from "html-to-draftjs";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // const baseUrl = process.env.REACT_APP_PUBLIC_URL;
 // const baseUrl = "https://slytherin.perintiscerita.shop/";
 const baseUrl = "http://0.0.0.0:5050";
 
+export const sendMailNow = (content, contactId) => {
+  return async (dispatch, getState) => {
+    const token = localStorage.getItem("token");
+    await axios({
+      method: "POST",
+      url: baseUrl + "/sent/direct",
+      data: {
+        status: "sent",
+        send_date: "now",
+        subject: getState().mailState.subject,
+        content: content,
+        device: "email",
+        contact_id: contactId,
+        group_id : getState().mailState.groupIdSelect
+      },
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(async() => {
+        await dispatch({ type: "SUCCESS_SEND_MAIL" });
+        alert("Kirim sekarang sukses")
+      })
+      .catch((error) => {
+        alert("Kirim sekarang error")
+        console.error(error)});
+  };
+};
+
 export const addMail = () => {
-  return async(dispatch, getState) => {
+  return async (dispatch, getState) => {
     const token = localStorage.getItem("token");
     await axios({
       method: "POST",
@@ -26,10 +50,11 @@ export const addMail = () => {
       },
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(() => {
-        dispatch({ type: "SUCCESS_ADD_MAIL" });
+      .then((response) => {
+        dispatch({ type: "SUCCESS_ADD_MAIL",  });
+        alert("Broadcast sudah terkirim!");
       })
-      .catch(() => {});
+      .catch((error) => {console.error(error)});
   };
 };
 
@@ -49,12 +74,12 @@ export const addDraft = (content) => {
       },
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(async(response) => {
+      .then(async (response) => {
         dispatch({ type: "SUCCESS_ADD_DRAFT", payload: response.data });
-        await localStorage.setItem("savedId",response.data.id)
-        alert("Saved to draft");
+        await localStorage.setItem("savedId", response.data.id);
+        alert("Disimpan di draft");
       })
-      .catch(() => {});
+      .catch((error) => {console.error(error)});
   };
 };
 
@@ -86,7 +111,7 @@ export const getMailList = () => {
       .then((response) => {
         dispatch({ type: "SUCCESS_GET_MAIL_LIST", payload: response.data });
       })
-      .catch(() => {});
+      .catch((error) => {console.error(error)});
   };
 };
 
@@ -104,7 +129,7 @@ export const getSendList = () => {
           payload: response.data,
         });
       })
-      .catch(() => {});
+      .catch((error) => {console.error(error)});
   };
 };
 
@@ -123,7 +148,7 @@ export const getDraftList = () => {
           payload: response.data,
         });
       })
-      .catch(() => {});
+      .catch((error) => {console.error(error)});
   };
 };
 
@@ -145,22 +170,29 @@ export const getDraft = (draftId) => {
           contentBlock.contentBlocks
         );
         if (contentState) {
-        dispatch({ type: "SUCCESS_GET_MAIL_DRAFT", payload: response.data, editor:EditorState.createWithContent(contentState) });
-
+          dispatch({
+            type: "SUCCESS_GET_MAIL_DRAFT",
+            payload: response.data,
+            editor: EditorState.createWithContent(contentState),
+          });
         } else {
-        dispatch({ type: "SUCCESS_GET_MAIL_DRAFT", payload: response.data, editor:EditorState.createEmpty() });
-      }
+          dispatch({
+            type: "SUCCESS_GET_MAIL_DRAFT",
+            payload: response.data,
+            editor: EditorState.createEmpty(),
+          });
+        }
       })
-      .catch(() => {});
+      .catch((error) => {console.error(error)});
   };
 };
 
 export const changeEditor = (editorState) => {
-  return {  
-      type: 'UPDATE_EDITOR_STATE',
-      payload: editorState,
-  }
-}
+  return {
+    type: "UPDATE_EDITOR_STATE",
+    payload: editorState,
+  };
+};
 
 export const deleteLocalDraft = () => {
   return () => {
@@ -193,7 +225,7 @@ export const doDraftToSend = () => {
       .then(() => {
         dispatch({ type: "SUCCESS_ADD_MAIL" });
       })
-      .catch(() => {});
+      .catch((error) => {console.error(error)});
   };
 };
 

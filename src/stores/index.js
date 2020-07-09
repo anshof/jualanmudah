@@ -4,11 +4,13 @@ import thunk from "redux-thunk";
 import userReducer from "./reducers/userReducer";
 import mailReducer from "./reducers/mailReducer";
 import customerReducer from "./reducers/customerReducer";
+import contactReducer from "./reducers/contactReducer";
 
 const rootReducer = combineReducers({
   userState : userReducer,
   mailState : mailReducer,
   customerState : customerReducer,
+  contactState : contactReducer,
 });
 const store = createStore(rootReducer, applyMiddleware(thunk));
 

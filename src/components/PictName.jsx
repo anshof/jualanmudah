@@ -21,7 +21,7 @@ const PictName = (props) => {
           <MDBBox>
             <img
               src={
-                props.bio.user_image ? props.bio.user_image : require("../images/deafult-profile.jpg")
+                props.bio.user_image === "https://firebasestorage.googleapis.com/v0/b/personal-email-d3b3b.appspot.com/o/images%2Fuser_image%2F9ff2f2f01c4bd1b013.png?alt=media&token=272b7417-a9fa-4fde-99b1-e00fa6d377ee" ? props.bio.user_image : require("../images/deafult-profile.jpg")
               }
               alt="pict"
               style={{
@@ -74,7 +74,7 @@ const PictName = (props) => {
         >
           All segments
         </p>
-        <a href="#!" style={{ color: "#192e35" }}>
+        {/* <a href="#!" style={{ color: "#192e35" }}>
           <p className="py-0 my-0" style={{ fontSize: "16px" }}>
             Woman
           </p>
@@ -83,12 +83,12 @@ const PictName = (props) => {
           <p className="py-0 my-0" style={{ fontSize: "16px" }}>
             Man
           </p>
-        </a>
+        </a> */}
       </MDBBox>
       <hr />
       <MDBBox className="pl-3">
         <Link
-        to="/dashboard"
+        to="/segment"
           className="mb-1"
           style={{
             fontSize: "18px",
@@ -96,7 +96,7 @@ const PictName = (props) => {
             color: "#192e35",
           }}
         >
-          Campaign Status
+          New Segment
         </Link>
       </MDBBox>
       <hr />
@@ -127,7 +127,7 @@ const PictName = (props) => {
           Database
         </Link>
       </MDBBox>
-      <hr />
+      {/* <hr />
       <MDBBox className="pl-3">
         <Link
         to="/staff"
@@ -140,7 +140,7 @@ const PictName = (props) => {
         >
           Staff
         </Link>
-      </MDBBox>
+      </MDBBox> */}
     </MDBBox>
   );
 };

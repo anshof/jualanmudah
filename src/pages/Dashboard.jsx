@@ -30,63 +30,63 @@ class Dashboard extends Component {
     await this.props.getUserBio();
     await this.props.getSendList();
     this.props.deleteLocalDraft()
-  };
-
-  render() {
-    const data = {
-      columns: [
-        {
-          label: "Title",
-          field: "title",
-          width: 150,
-        },
-        {
-          label: "Open rate",
-          field: "open_rate",
-          width: 270,
-        },
-        {
-          label: "Status",
-          field: "status",
-          width: 150,
-        },
-        {
-          label: "Segment",
-          field: "segment",
-          width: 150,
-        },
-        {
-          label: "Created At",
-          field: "created_at",
-          sort : "asc",
-          width: 200,
-        },
-      ],
-      rows: 
-      [
-        ...this.props.mailSendList.reverse().map((el, index) => (
-        { key : index,
-          title: el.subject,
-          created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
-          open_rate: el.open_rate,
-          segment: el.group_customer.name,
-          status: (
-            <MDBBox
-              style={{
-                width: "100%",
-                color: "white",
-                backgroundColor: "green",
-                borderRadius: "40px",
-              }}
-            >
-              SUCCESS
-            </MDBBox>
-          )
-        }
-      ))
-      ],
+    if (this.props.mailSendList){
+      this.setState({
+        data : {
+          columns: [
+            {
+              label: "Title",
+              field: "title",
+              width: 150,
+            },
+            {
+              label: "Open rate",
+              field: "open_rate",
+              width: 270,
+            },
+            {
+              label: "Status",
+              field: "status",
+              width: 150,
+            },
+            {
+              label: "Segment",
+              field: "segment",
+              width: 150,
+            },
+            {
+              label: "Created At",
+              field: "created_at",
+              sort : "asc",
+              width: 200,
+            },
+          ],
+          rows: [
+            ...this.props.mailSendList.reverse().map((el, index) => (
+            { key : index,
+              title: el.subject,
+              created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
+              open_rate: el.open_rate,
+              segment: el.group_customer.name,
+              status: (
+                <MDBBox
+                  style={{
+                    width: "100%",
+                    color: "white",
+                    backgroundColor: "green",
+                    borderRadius: "40px",
+                  }}
+                >
+                  SUCCESS
+                </MDBBox>
+            )})),
+            ],
+          },
+        });
+      }
     };
 
+  render() {
     if (!localStorage.getItem("isSignin")) {
       return (
         <Redirect
@@ -97,6 +97,7 @@ class Dashboard extends Component {
         />
       );
     } else {
+      const data = this.state.data
       return (
         <MDBBox>
           <Navbar

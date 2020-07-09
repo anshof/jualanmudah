@@ -1,7 +1,9 @@
 const initialState = {
   mailSendList: [],
   mailDraftList: [],
-  draft : ""
+  draft : "",
+  contactChoice : "exist"
+
 };
 
 export default function mailReducer(mailState = initialState, action) {
@@ -31,6 +33,10 @@ export default function mailReducer(mailState = initialState, action) {
           ),
         ],
       };
+      case "SUCCESS_SEND_MAIL":
+        return {
+          ...mailState,
+        };
     case "CHANGE_INPUT_MAIL":
       return {
         ...mailState,
