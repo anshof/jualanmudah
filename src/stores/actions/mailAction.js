@@ -33,6 +33,37 @@ export const sendMailNow = (content, contactId) => {
   };
 };
 
+export const sendMailScheduled = (content,contactId) => {
+  return async (dispatch, getState) => {
+    const token = localStorage.getItem("token");
+    let date = getState().mailState.sendDate.replace(/-/g,",")
+    let time = getState().mailState.sendTime.replace(/:/g,",")
+    date = date.replace(/,0/g,",")
+    if (String(time[0]) === "0"){
+      time = time.slice(1).replace(/,0/g,",")
+    }
+    await axios({
+      method: "POST",
+      url: baseUrl + "/sent/direct",
+      data: {
+        status : "sent",
+        send_date: date + "," + time + ",0",
+        subject: getState().mailState.subject,
+        content: content,
+        device: "email",
+        contact_id: contactId,
+        group_id : getState().mailState.groupIdSelect
+      },
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(async() => {
+        dispatch({ type: "SUCCESS_SEND_MAIL" });
+      })
+      .catch((error) => {
+        console.error(error)});
+  };
+};
+
 export const addMail = () => {
   return async (dispatch, getState) => {
     const token = localStorage.getItem("token");
@@ -58,7 +89,7 @@ export const addMail = () => {
   };
 };
 
-export const addDraft = (content) => {
+export const addDraft = (content, contactId) => {
   return async (dispatch, getState) => {
     const token = localStorage.getItem("token");
     await axios({
@@ -66,11 +97,39 @@ export const addDraft = (content) => {
       url: baseUrl + "/sent",
       data: {
         status: "draft",
+        // send_date: "now",
         subject: getState().mailState.subject,
         content: content,
-        device: getState().mailState.device,
-        contact_id: getState().mailState.contactId,
-        group_id: getState().mailState.groupId,
+        device: "email",
+        contact_id: contactId,
+        group_id: getState().mailState.groupIdSelect,
+      },
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(async (response) => {
+        dispatch({ type: "SUCCESS_ADD_DRAFT", payload: response.data });
+        await localStorage.setItem("savedId", response.data.id);
+        alert("Disimpan di draft");
+      })
+      .catch((error) => {console.error(error)});
+  };
+};
+
+export const changeDraft = (content, contactId) => {
+  return async (dispatch, getState) => {
+    const token = localStorage.getItem("token");
+    await axios({
+      method: "PATCH",
+      url: baseUrl + "/sent",
+      data: {
+        sent_id : getState().mailState.draft.id,
+        status: "draft",
+        // send_date: "now",
+        subject: getState().mailState.subject,
+        content: content,
+        device: "email",
+        contact_id: contactId,
+        group_id: getState().mailState.groupIdSelect,
       },
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -204,28 +263,62 @@ export const deleteLocalDraft = () => {
   };
 };
 
-export const doDraftToSend = () => {
-  return (dispatch, getState) => {
+export const doDraftToSend = (content, contactId) => {
+  return async(dispatch, getState) => {
     const token = localStorage.getItem("token");
-    axios({
+    await axios({
       method: "PATCH",
       url: baseUrl + "/sent",
       data: {
-        sent_id: getState().mail.sentId,
-        status: getState().mail.status,
-        subject: getState().mail.subject,
-        reminder: getState().mail.reminder,
-        content: getState().mail.content,
-        device: getState().mail.device,
-        contact_id: getState().mail.contactId,
-        group_id: getState().mail.groupId,
+        sent_id: getState().mailState.draft.id,
+        status: "sent",
+        send_date: "now",
+        subject: getState().mailState.subject ? getState().mailState.subject : getState().mailState.draft.subject,
+        content: content,
+        device: "email",
+        contact_id: contactId,
+        group_id : getState().mailState.groupIdSelect ? getState().mailState.groupIdSelect : getState().mailState.draft.group_id
+      },
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(async() => {
+        await alert("Kirim sekarang sukses")
+        dispatch({ type: "SUCCESS_SEND_MAIL" });
+      })
+      .catch((error) => {console.error(error)});
+  };
+};
+
+export const doDraftToScheduled = (content, contactId) => {
+  return async(dispatch, getState) => {
+    const token = localStorage.getItem("token");
+    let date = getState().mailState.sendDate.replace(/-/g,",")
+    let time = getState().mailState.sendTime.replace(/:/g,",")
+    date = date.replace(/,0/g,",")
+    if (String(time[0]) === "0"){
+      time = time.slice(1).replace(/,0/g,",")
+    }
+    await axios({
+      method: "PATCH",
+      url: baseUrl + "/sent",
+      data: {
+        sent_id: getState().mailState.draft.id,
+        status: "sent",
+        send_date: date + "," + time + ",0",
+        subject: getState().mailState.subject ? getState().mailState.subject : getState().mailState.draft.subject,
+        content: content,
+        device: "email",
+        contact_id: contactId,
+        group_id : getState().mailState.groupIdSelect ? getState().mailState.groupIdSelect : getState().mailState.draft.group_id
       },
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(() => {
-        dispatch({ type: "SUCCESS_ADD_MAIL" });
+        alert("Kirim sekarang sukses")
+        dispatch({ type: "SUCCESS_SEND_MAIL" });
       })
-      .catch((error) => {console.error(error)});
+      .catch((error) => {
+        console.error(error)});
   };
 };
 

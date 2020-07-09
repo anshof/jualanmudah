@@ -38,6 +38,9 @@ import {
   deleteLocalDraft,
   changeEditor,
   sendMailNow,
+  changeDraft,
+  sendMailScheduled,
+  doDraftToScheduled
 } from "../stores/actions/mailAction";
 
 class Accordion extends Component {
@@ -91,29 +94,96 @@ class Accordion extends Component {
   };
 
   handleSaveToDraft = async (content) => {
-    await this.props.addDraft(content);
-    await this.setState({ saved: true });
+    if (this.props.mailState.contactChoice === "new") {
+      await this.props.addNewEmail();
+      if (this.props.match.params.draftId) {
+        await this.props.changeDraft(
+          content,
+          this.props.contactState.newEmail.id
+        );
+      } else {
+        await this.props.addDraft(content, this.props.contactState.newEmail.id);
+      }
+    } else if (this.props.mailState.contactChoice === "exist") {
+      if (this.props.match.params.draftId) {
+        await this.props.changeDraft(
+          content,
+          this.props.mailState.contactIdSelect
+        );
+      } else {
+        await this.props.addDraft(
+          content,
+          this.props.mailState.contactIdSelect
+        );
+      }
+    }
     await this.props.history.push(
       "/draft/" + String(localStorage.getItem("savedId"))
     );
-    this.setState({ saved: false });
   };
 
   handleSendNow = async (content) => {
     if (this.props.mailState.contactChoice === "new") {
       await this.props.addNewEmail();
-      await this.props.sendMailNow(
-        content,
-        this.props.contactState.newEmail.id
-      );
+      if (this.props.match.params.draftId) {
+        await this.props.doDraftToSend(
+          content,
+          this.props.contactState.newEmail.id
+        );
+      } else {
+        await this.props.sendMailNow(
+          content,
+          this.props.contactState.newEmail.id
+        );
+      }
     } else if (this.props.mailState.contactChoice === "exist") {
-      await this.props.sendMailNow(
-        content,
-        this.props.mailState.contactIdSelect
-      );
+      if (this.props.match.params.draftId) {
+        await this.props.doDraftToSend(
+          content,
+          this.props.mailState.contactIdSelect ? this.props.mailState.contactIdSelect : this.props.draft.contact_id
+        );
+      } else {
+        await this.props.sendMailNow(
+          content,
+          this.props.mailState.contactIdSelect
+          );
+        }
+      this.props.history.push("/broadcast")
     }
-    this.props.history.push("/dashboard");
-    // window.location.reload();
+    window.location.reload();
+    ;
+  };
+
+  handleSendScheduled = async (content) => {
+    if (this.props.mailState.contactChoice === "new") {
+      await this.props.addNewEmail();
+      if (this.props.match.params.draftId) {
+        await this.props.doDraftToScheduled(
+          content,
+          this.props.contactState.newEmail.id
+        );
+      } else {
+        await this.props.sendMailScheduled(
+          content,
+          this.props.contactState.newEmail.id
+        );
+      }
+    } else if (this.props.mailState.contactChoice === "exist") {
+      if (this.props.match.params.draftId) {
+        await this.props.doDraftToScheduled(
+          content,
+          this.props.mailState.contactIdSelect ? this.props.mailState.contactIdSelect : this.props.draft.contact_id
+        );
+      } else {
+        this.props.sendMailScheduled(
+          content,
+          this.props.mailState.contactIdSelect
+        );
+      }
+    }
+    alert("Pengiriman terjadwal sukses")
+    window.location.reload();
+    ;
   };
 
   render() {
@@ -137,8 +207,6 @@ class Accordion extends Component {
               String(item.id) === String(this.props.mailState.groupIdSelect)
           )[0].name
         : false;
-      console.log(this.props.mailState.groupIdSelect);
-      console.log(selectedSegment);
       return (
         <MDBBox>
           {/* <Prompt
@@ -291,12 +359,27 @@ class Accordion extends Component {
                               name="contactIdSelect"
                               onChange={(e) => this.props.changeInputMail(e)}
                             >
-                              <option value="" disabled selected>
+                              <option
+                                value=""
+                                disabled
+                                selected={
+                                  this.props.match.params.draftId ? false : true
+                                }
+                              >
                                 Pilih Email
                               </option>
                               {this.props.emailList
                                 ? this.props.emailList.map((el, index) => (
-                                    <option key={index} value={el.id}>
+                                    <option
+                                      key={index}
+                                      value={el.id}
+                                      selected={
+                                        this.props.match.params.draftId &&
+                                        el.id === this.props.draft.contact_id
+                                          ? true
+                                          : false
+                                      }
+                                    >
                                       {el.email_or_wa}
                                     </option>
                                   ))
@@ -358,18 +441,33 @@ class Accordion extends Component {
                           name="groupIdSelect"
                           onChange={(e) => this.props.changeInputMail(e)}
                         >
-                          <option value="" disabled selected>
+                          <option
+                            value=""
+                            disabled
+                            selected={
+                              this.props.match.params.draftId ? false : true
+                            }
+                          >
                             Pilih Segmen
                           </option>
                           {this.props.customerGroups
                             ? this.props.customerGroups.map((el, index) => (
-                                <option key={index} value={el.id}>
+                                <option
+                                  key={index}
+                                  value={el.id}
+                                  selected={
+                                    this.props.match.params.draftId &&
+                                    el.id === this.props.draft.group_id
+                                      ? true
+                                      : false
+                                  }
+                                >
                                   {el.name}
                                 </option>
                               ))
                             : false}
                         </select>
-                        <p style={{ fontSize: "12px", marginTop: "30px" }}>
+                        <p style={{ fontSize: "15px", marginTop: "30px" }}>
                           *Ketika menambahkan email baru :
                           <br />
                           <span className="ml-2">
@@ -756,36 +854,47 @@ class Accordion extends Component {
                               width: "auto",
                             }}
                             color="transparent"
+                            onClick = {() => this.handleSendScheduled(draftToHtml(
+                                    convertToRaw(
+                                      editorState.getCurrentContent()
+                                    )
+                                  ))}
                           >
                             <i className="far fa-envelope mr-2"></i>
                             Jadwalkan Pengiriman
                           </MDBBtn>
                         </MDBBox>
                         <MDBBox className="d-flex align-items-center justify-content-center">
-                          <MDBBtn
-                            className="my-2 py-2 text-capitalize"
-                            style={{
-                              boxShadow: "none",
-                              borderRadius: "40px",
-                              backgroundColor: "white",
-                              color: "#f14c59",
-                              fontSize: "18px",
-                              fontWeight: "400",
-                              border: "1px solid #f14c59",
-                              width: "auto",
-                            }}
-                            color="transparent"
-                            onClick={() =>
-                              this.handleSaveToDraft(
-                                draftToHtml(
-                                  convertToRaw(editorState.getCurrentContent())
+                          {!this.props.match.params.draftId ? (
+                            <MDBBtn
+                              className="my-2 py-2 text-capitalize"
+                              style={{
+                                boxShadow: "none",
+                                borderRadius: "40px",
+                                backgroundColor: "white",
+                                color: "#f14c59",
+                                fontSize: "18px",
+                                fontWeight: "400",
+                                border: "1px solid #f14c59",
+                                width: "auto",
+                              }}
+                              color="transparent"
+                              onClick={() =>
+                                this.handleSaveToDraft(
+                                  draftToHtml(
+                                    convertToRaw(
+                                      editorState.getCurrentContent()
+                                    )
+                                  )
                                 )
-                              )
-                            }
-                          >
-                            <i className="fas fa-save mr-2"></i>
-                            Simpan sebagai draft
-                          </MDBBtn>
+                              }
+                            >
+                              <i className="fas fa-save mr-2"></i>
+                              Simpan sebagai draft
+                            </MDBBtn>
+                          ) : (
+                            false
+                          )}
                         </MDBBox>
                       </MDBBox>
                     </MDBCol>
@@ -864,5 +973,8 @@ const mapDispatchToProps = {
   getCustomerGroupList,
   addNewEmail,
   sendMailNow,
+  changeDraft,
+  sendMailScheduled,
+  doDraftToScheduled
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Accordion);
