@@ -538,6 +538,8 @@ class Accordion extends Component {
                       fontSize: "15px",
                       fontWeight: "300",
                     }}
+                    active={this.state.activeItem === "1"}
+                    onClick={this.toggle("1")}
                     color="transparent"
                   >
                     Back

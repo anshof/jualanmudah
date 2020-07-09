@@ -14,6 +14,11 @@ import AboutUs from "../pages/AboutUs";
 import Database from "../pages/Database";
 import Accordion from "../pages/Accordion";
 import NewSegment from "../pages/NewSegment";
+import CollapsePage from "../pages/CollapsePage";
+import ContentSegment from "../pages/ContentSegment";
+import PreviewEmail from "../pages/PreviewEmail";
+import AllSegments from "../pages/AllSegments";
+import HowToUse from "../pages/HowToUse";
 const MainRoutes = () => {
   return (
     <BrowserRouter>
@@ -30,6 +35,11 @@ const MainRoutes = () => {
         <Route exact path="/database" component={Database} />
         <Route exact path="/accordion" component={Accordion} />
         <Route exact path="/new-segment" component={NewSegment} />
+        <Route exact path="/collapse" component={CollapsePage} />
+        <Route exact path="/content-segment" component={ContentSegment} />
+        <Route exact path="/preview-email" component={PreviewEmail} />
+        <Route exact path="/all-segment" component={AllSegments} />
+        <Route exact path="/how-to-use" component={HowToUse} />
       </Switch>
     </BrowserRouter>
   );
