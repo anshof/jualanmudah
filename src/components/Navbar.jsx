@@ -53,7 +53,7 @@ const Navbar = (props) => {
               className="nav ml-3 text-uppercase text-decoration-none"
               style={{ color: props.fontColor ? props.fontColor : "#f14c59" }}
             >
-              Cara Menggunakan?
+              Cara penggunaan
             </a>
           </MDBNavItem>
           {/* <MDBNavItem>
@@ -120,7 +120,7 @@ const Navbar = (props) => {
                     borderRadius: "20px",
                   }}
                 >
-                  Login
+                  masuk
                 </MDBBox>
               </a>
             </MDBNavItem>

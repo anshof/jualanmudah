@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import moment from "moment";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {
@@ -58,14 +57,9 @@ class NewSegment extends Component {
               color: "pink",
             },
             {
-              label: "BOD",
-              field: "bod",
+              label: "Email",
+              field: "email",
               width: 270,
-            },
-            {
-              label: "Address",
-              field: "address",
-              width: 100,
             },
             {
               label: "Company",
@@ -89,8 +83,7 @@ class NewSegment extends Component {
                 </form>
               ),
               name: el.First_name + " " + el.last_name,
-              bod: moment.utc(el.bod).format("YYYY/MM/DD"),
-              address: el.address,
+              email: el.email,
               company: el.company,
             })),
           ],
@@ -135,14 +128,9 @@ class NewSegment extends Component {
               color: "pink",
             },
             {
-              label: "BOD",
-              field: "bod",
+              label: "Email",
+              field: "email",
               width: 270,
-            },
-            {
-              label: "Address",
-              field: "address",
-              width: 100,
             },
             {
               label: "Company",
@@ -166,8 +154,7 @@ class NewSegment extends Component {
                 </form>
               ),
               name: el.First_name + " " + el.last_name,
-              bod: moment.utc(el.bod).format("YYYY/MM/DD"),
-              address: el.address,
+              email: el.email,
               company: el.company,
             })),
           ],

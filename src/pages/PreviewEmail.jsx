@@ -48,12 +48,10 @@ class PreviewEmail extends Component {
             }
           ],
           rows: [ 
-              ...this.props.draft.customer.map((el, index) => ({
+              ...this.props.draft.track.map((el, index) => ({
                 key: index,
-                name: el.First_name + " " + el.last_name,
-                email: el.email,
-            })),
-            ...this.props.draft.track.map((el, index) => ({
+                name: el.customer.First_name + " " + el.customer.last_name,
+                email: el.customer.email,
               open : el.status_open ? <i class="fas fa-check" style={{color:"rgb(241, 76, 89)"}}></i> : <i class="fas fa-times" style={{color:"rgb(241, 76, 89)"}}></i>,
             })),
           ],

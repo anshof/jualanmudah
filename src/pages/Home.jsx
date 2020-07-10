@@ -54,7 +54,7 @@ class Home extends Component {
                 }}
                 className="text-capitalize"
               >
-                help you <br /> boost your <br /> revenue
+                tingkatkan <br /> penjualan anda <br /> sekarang!!!
               </h1>
               <p
                 style={{
@@ -63,8 +63,7 @@ class Home extends Component {
                   color: "#385a66",
                 }}
               >
-                Increasing your revenue by connecting you to your customer in a
-                better, easier and faster way.
+                Tingkatkan penghasilan Anda dengan menghubungkan Anda ke pelanggan dengan cara yang lebih baik, lebih mudah, dan lebih cepat.
               </p>
               <Link to="/dashboard">
                 <MDBBox
@@ -78,7 +77,7 @@ class Home extends Component {
                     borderRadius: "20px",
                   }}
                 >
-                  Start now
+                  mulai sekarang
                 </MDBBox>
               </Link>
             </MDBBox>
