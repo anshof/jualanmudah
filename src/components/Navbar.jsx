@@ -49,7 +49,7 @@ const Navbar = (props) => {
         <MDBNavbarNav right className="d-flex align-items-center">
           <MDBNavItem>
             <a
-              href="/about"
+              href="/how-to-use"
               className="nav ml-3 text-uppercase text-decoration-none"
               style={{ color: props.fontColor ? props.fontColor : "#f14c59" }}
             >

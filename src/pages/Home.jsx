@@ -51,10 +51,6 @@ class Home extends Component {
     return (
       <Fragment>
         <Navbar
-          toggle={(key) => this.toggle(key)}
-          modalSignin={this.state.modalSignin}
-          modalSignup={this.state.modalSignup}
-          isLogin={this.state.isLogin}
           backNav={"white"}
           fontColor={"rgb(241, 76, 89)"}
           logout = {() => this.props.doLogOut()}

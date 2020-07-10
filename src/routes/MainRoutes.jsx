@@ -14,10 +14,10 @@ import DashboardDraft from "../pages/DashboardDraft";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import NotFound from "../pages/NotFound";
-import AboutUs from "../pages/AboutUs"
 import NewSegment from "../pages/NewSegment"
 import AllSegments from "../pages/AllSegments"
 import PreviewEmail from "../pages/PreviewEmail"
+import HowToUse from "../pages/HowToUse"
 const MainRoutes = () => {
   return (
     <Provider store={store}>
@@ -34,10 +34,10 @@ const MainRoutes = () => {
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/draft" component={DashboardDraft} />
           <Route exact path="/draft/:draftId" component={NewBroadcast} />
-          <Route exact path="/about" component={AboutUs} />
           <Route exact path="/segment" component={NewSegment} />
           <Route exact path="/segment/:segmentId" component={AllSegments} />
           <Route exact path="/segment-list" component={AllSegments} />
+          <Route exact path="/how-to-use" component={HowToUse} />
           <Route component={NotFound} />
         </Switch>
       </Router>

@@ -1,29 +1,34 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+
 import { MDBBox, MDBRow, MDBCol } from "mdbreact";
-import "../css/style.css";
 
 import Navbar from "../components/Navbar";
+
+import "../css/style.css";
 import {
   doLogOut,
   doRefershSignin,
   getUserBio
 } from "../stores/actions/userAction";
-class AboutUs extends Component {
+class HowToUse extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLogin: true,
     };
   }
+  componentDidMount = async () => {
+    await this.props.doRefershSignin();
+    this.props.getUserBio();
+  }; 
   render() {
     return (
       <MDBBox>
         <Navbar
-          isLogin={this.state.isLogin}
-          fontColor={"white"}
-          backNav={"rgb(241, 76, 89)"}
-          style={{ position: "fixed" }}
+          backNav={"white"}
+          fontColor={"rgb(241, 76, 89)"}
+          logout = {() => this.props.doLogOut()}
           bio={this.props.bio}
         />
         <MDBBox
@@ -59,6 +64,8 @@ class AboutUs extends Component {
 const mapStateToProps = (state) => {
   return {
     bio: state.userState.bio,
+    username: state.userState.username,
+    password: state.userState.password,
   };
 };
 const mapDispatchToProps = {
@@ -66,4 +73,4 @@ const mapDispatchToProps = {
   doRefershSignin,
   getUserBio
 };
-export default connect(mapStateToProps, mapDispatchToProps)(AboutUs);
+export default connect(mapStateToProps, mapDispatchToProps)(HowToUse);
