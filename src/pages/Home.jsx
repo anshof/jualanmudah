@@ -22,29 +22,12 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLogin: false,
-      isOpen: false,
-      modalSignin: false,
-      modalSignup: false,
     };
-    this.toggleCollapse = this.toggleCollapse.bind(this);
-    this.toggle = this.toggle.bind(this);
   }
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
     this.props.getUserBio();
-  };
-
-  toggleCollapse() {
-    this.setState({ isOpen: !this.state.isOpen });
-  }
-
-  toggle = (key) => () => {
-    let modalKey = "modal" + key;
-    this.setState({
-      [modalKey]: !this.state[modalKey],
-    });
   };
 
   render() {
@@ -94,7 +77,6 @@ class Home extends Component {
                     color: "white",
                     borderRadius: "20px",
                   }}
-                  onClick={this.toggle("Signin")}
                 >
                   Start now
                 </MDBBox>
