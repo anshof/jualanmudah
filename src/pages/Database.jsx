@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import moment from 'moment'
+import moment from "moment";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { CSVReader } from "react-papaparse";
@@ -44,7 +44,7 @@ class Database extends Component {
   }
 
   componentDidMount = async () => {
-    await this.props.getCustomerList()
+    await this.props.getCustomerList();
     await this.props.doRefershSignin();
     await this.props.getUserBio();
     if (this.props.customerList) {
@@ -88,7 +88,7 @@ class Database extends Component {
               key: index,
               name: el.First_name + " " + el.last_name,
               email: el.email,
-              bod: moment.utc(el.bod).format('YYYY/MM/DD'),
+              bod: moment.utc(el.bod).format("YYYY/MM/DD"),
               address: el.address,
               phone: el.phone[0] !== "0" ? "0" + el.phone : el.phone,
               company: el.company,
@@ -98,7 +98,7 @@ class Database extends Component {
       });
     }
   };
-  
+
   toggle = (key) => () => {
     let modalKey = "modal" + key;
     this.setState({
@@ -111,10 +111,10 @@ class Database extends Component {
   };
 
   postUpload = async () => {
-    await this.props.addCustomer()
-    await alert("Database telah update")
-    window.location.reload()
-  }
+    await this.props.addCustomer();
+    await alert("Database telah update");
+    window.location.reload();
+  };
 
   handleOnError = (err, file, inputElem, reason) => {
     console.log(err);
@@ -135,7 +135,7 @@ class Database extends Component {
         />
       );
     } else {
-      const data = this.state.data
+      const data = this.state.data;
       if (!this.props.customerList) {
         return <h3 className="loading">Loading...</h3>;
       }
@@ -249,11 +249,13 @@ class Database extends Component {
                         </MDBBtn>
                       </MDBRow>
                     </MDBModalBody>
-                    <MDBModalFooter className="pt-3 mb-1" style={{marginRight:"70px"}}>
+                    <MDBModalFooter
+                      className="pt-3 mb-1"
+                      style={{ marginRight: "70px" }}
+                    >
                       <p className="font-small gray-text d-flex justify-content-center">
-                        Data dengan email
-                        yang sama tidak akan terupload
-                        <br/>
+                        Data dengan email yang sama tidak akan terupload
+                        <br />
                         Hapus data lama dengan email yang sama terlebih dahulu
                       </p>
                     </MDBModalFooter>
@@ -307,7 +309,7 @@ class Database extends Component {
             >
               {/* side bar */}
               <MDBCol size="2">
-                <PictName bio={this.props.bio} />
+                <PictName bio={this.props.bio} active={"database"} />
               </MDBCol>
               {/* end side bar */}
               {/* table */}

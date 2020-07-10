@@ -56,7 +56,7 @@ class DashboardDraft extends Component {
           rows: [ 
             ...this.props.draftList.reverse().map((el, index) => ({
               key: index,
-              title: <p onClick={() => this.changeRouter(el.id)}>{el.subject ? el.subject : "Unsubjected"}</p>,
+              title: <p style={{color:"rgb(241, 76, 89)", cursor:"pointer"}}onClick={() => this.changeRouter(el.id)}>{el.subject ? el.subject : "Unsubjected"}</p>,
               // created_at: el.created_at.slice(0, -9),
               created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
               segment: el.group_id !== 0
@@ -71,7 +71,7 @@ class DashboardDraft extends Component {
                   <i
                     className="fa fa-trash"
                     aria-hidden="true"
-                    onClick={() => this.handleDelete(el.id)}
+                    onClick={(id) => this.handleDelete(el.id)}
                     style={{ cursor: "pointer" }}
                   ></i>
                 </MDBBtn>
@@ -88,14 +88,12 @@ class DashboardDraft extends Component {
     if (result) {
       this.props.deleteDraft(id);
     }
+    window.location.reload()
   };
 
   changeRouter = async (draftId) => {
-    // localStorage.setItem("draftId", draftId);
      await this.props.getDraft(draftId)
-    //  this.props.history.replace("/draft/" + draftId);
      this.props.history.push("/draft/" + draftId, { ...this.props.draft })
-    // alert("done")
   };
 
   render() {
@@ -149,7 +147,7 @@ class DashboardDraft extends Component {
             >
               {/* side bar */}
               <MDBCol size="2">
-                <PictName bio={this.props.bio} />
+                <PictName bio={this.props.bio} active={"draft"}/>
               </MDBCol>
               {/* end side bar */}
               {/* table */}

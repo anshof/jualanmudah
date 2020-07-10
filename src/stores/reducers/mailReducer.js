@@ -29,7 +29,7 @@ export default function mailReducer(mailState = initialState, action) {
         ...mailState,
         mailDraftList: [
           ...mailState.mailDraftList.filter(
-            (item) => item.id !== action.payload
+            (item) => String(item.id) !== String(action.payload)
           ),
         ],
       };

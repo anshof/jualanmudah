@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  MDBBox,
-  MDBRow,
-  MDBCol,
-  MDBDataTable,
-} from "mdbreact";
-import moment from "moment"
+import { MDBBox, MDBRow, MDBCol, MDBDataTable } from "mdbreact";
+import moment from "moment";
 import "../css/style.css";
 
 import Navbar from "../components/Navbar";
@@ -18,21 +13,25 @@ import {
   getUserBio,
   doRefershSignin,
 } from "../stores/actions/userAction";
-import { getSendList, deleteLocalDraft } from "../stores/actions/mailAction";
+import {
+  getSendList,
+  deleteLocalDraft,
+  getDraft,
+} from "../stores/actions/mailAction";
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-   }
+  }
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
     await this.props.getUserBio();
     await this.props.getSendList();
-    this.props.deleteLocalDraft()
-    if (this.props.mailSendList){
+    this.props.deleteLocalDraft();
+    if (this.props.mailSendList) {
       this.setState({
-        data : {
+        data: {
           columns: [
             {
               label: "Title",
@@ -57,15 +56,22 @@ class Dashboard extends Component {
             {
               label: "Created At",
               field: "created_at",
-              sort : "asc",
+              sort: "asc",
               width: 200,
             },
           ],
           rows: [
-            ...this.props.mailSendList.reverse().map((el, index) => (
-            { key : index,
-              title: el.subject,
-              created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
+            ...this.props.mailSendList.reverse().map((el, index) => ({
+              key: index,
+              title: (
+                <p
+                  style={{ color: "rgb(241, 76, 89)", cursor: "pointer" }}
+                  onClick={() => this.changeRouter(el.id)}
+                >
+                  {el.subject}
+                </p>
+              ),
+              created_at: moment.utc(el.created_at).format("YYYY/MM/DD"),
               open_rate: el.open_rate,
               segment: el.group_customer.name,
               status: (
@@ -79,12 +85,18 @@ class Dashboard extends Component {
                 >
                   SUCCESS
                 </MDBBox>
-            )})),
-            ],
-          },
-        });
-      }
-    };
+              ),
+            })),
+          ],
+        },
+      });
+    }
+  };
+
+  changeRouter = async (mailId) => {
+    await this.props.getDraft(mailId);
+    this.props.history.push("/broadcast/" + mailId, { ...this.props.draft });
+  };
 
   render() {
     if (!localStorage.getItem("isSignin")) {
@@ -97,7 +109,7 @@ class Dashboard extends Component {
         />
       );
     } else {
-      const data = this.state.data
+      const data = this.state.data;
       return (
         <MDBBox>
           <Navbar
@@ -108,54 +120,52 @@ class Dashboard extends Component {
             logout={() => this.props.doLogOut()}
             bio={this.props.bio}
           />
-         <MDBBox
-          style={{
-            backgroundColor: "#f7f7f7",
-            padding: "100px 0 1px 0",
-          }}
-        >
-          {/* title */}
-          <MDBBox className="d-flex align-items-center mx-5 pb-3">
-            <span
-              className="text-left"
-              style={{
-                fontWeight: "600",
-                color: "#192e35",
-                fontSize: "28px",
-              }}
-            >
-              Manage Broadcast
-            </span>
-          </MDBBox>
-          {/* end title */}
-          {/* main row */}
-          <MDBRow
+          <MDBBox
             style={{
-              margin: "20px",
+              backgroundColor: "#f7f7f7",
+              padding: "100px 0 1px 0",
             }}
           >
-            {/* side bar */}
-            <MDBCol size="2">
-              <PictName 
-                bio={this.props.bio}
-              />
-            </MDBCol>
-            {/* end side bar */}
-            {/* table */}
-            <MDBCol size="10">
-              <MDBDataTable
-                hover
-                data={data}
+            {/* title */}
+            <MDBBox className="d-flex align-items-center mx-5 pb-3">
+              <span
+                className="text-left"
                 style={{
-                  backgroundColor: "white",
+                  fontWeight: "600",
+                  color: "#192e35",
+                  fontSize: "28px",
                 }}
-              />
-            </MDBCol>
-            {/* end table */}
-          </MDBRow>
-          {/* end main row */}
+              >
+                Manage Broadcast
+              </span>
+            </MDBBox>
+            {/* end title */}
+            {/* main row */}
+            <MDBRow
+              style={{
+                margin: "20px",
+              }}
+            >
+              {/* side bar */}
+              <MDBCol size="2">
+                <PictName bio={this.props.bio} active={"broadcasts"}/>
+              </MDBCol>
+              {/* end side bar */}
+              {/* table */}
+              <MDBCol size="10">
+                <MDBDataTable
+                  hover
+                  data={data}
+                  style={{
+                    backgroundColor: "white",
+                  }}
+                />
+              </MDBCol>
+              {/* end table */}
+            </MDBRow>
+            {/* end main row */}
+          </MDBBox>
         </MDBBox>
-      </MDBBox>
       );
     }
   }
@@ -171,6 +181,7 @@ const mapDispatchToProps = {
   doLogOut,
   getSendList,
   doRefershSignin,
-  deleteLocalDraft
+  deleteLocalDraft,
+  getDraft,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

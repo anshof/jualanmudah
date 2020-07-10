@@ -6,14 +6,12 @@ import {
   MDBCol,
   MDBRow,
   MDBContainer,
-  MDBModal,
   MDBLink,
 } from "mdbreact";
 import { Link } from "react-router-dom";
 
 import "../css/style.css";
 import Navbar from "../components/Navbar";
-import SignIn from "../components/SignIn";
 
 import {
   doLogOut,
@@ -387,13 +385,6 @@ class Home extends Component {
                   >
                     Start now
                   </MDBLink>
-                  <MDBModal
-                    isOpen={this.modalSignin}
-                    toggle={this.toggle("Signin")}
-                    size="md"
-                  >
-                    <SignIn />
-                  </MDBModal>
                 </MDBBox>
               </MDBCol>
             </MDBRow>

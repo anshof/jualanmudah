@@ -120,14 +120,14 @@ export const addCustomerMember = (customerId, groupId) => {
   };
 };
 
-export const getCustomerMember = () => {
-  return async (dispatch, getState) => {
+export const getCustomerMember = (group_id) => {
+  return async (dispatch) => {
     const token = localStorage.getItem("token");
     await axios({
       method: "GET",
       url: baseUrl + "/customer-member",
       params: {
-        group_id: parseInt(getState().customerState.groupListSelect)
+        group_id: group_id
       },
       headers: { Authorization: `Bearer ${token}` },
     })

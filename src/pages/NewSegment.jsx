@@ -33,7 +33,6 @@ class NewSegment extends Component {
       radio1: 1,
       radio2: 1,
     };
-    this.toggle = this.toggle.bind(this);
   }
 
   componentDidMount = async () => {
@@ -100,13 +99,6 @@ class NewSegment extends Component {
     }
   };
 
-  toggle = (key) => () => {
-    let modalKey = "modal" + key;
-    this.setState({
-      [modalKey]: !this.state[modalKey],
-    });
-  };
-
   onClickChoice1 = (nr) => () => {
     this.setState({
       radio1: nr,
@@ -123,9 +115,8 @@ class NewSegment extends Component {
     await this.props.changeInputCustomer(e)
     if (this.props.customerState.groupListSelect === "all") {
     await this.props.getCustomerList();
-      console.log("getgroupmember")
     } else {
-    await this.props.getCustomerMember()}
+    await this.props.getCustomerMember(this.props.customerState.groupListSelect)}
     let dataCustomer = await this.props.customerState.customerList
     if (dataCustomer) {
       this.setState({
