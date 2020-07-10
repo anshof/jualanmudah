@@ -2,9 +2,9 @@ const initialState = {
   customerList: [],
   customerUpload: [],
   groupListSelect: "all",
-  selectCustomerId : [],
-  groupIdCreated : "",
-  member : []
+  selectCustomerId: [],
+  groupIdCreated: "",
+  member: [],
 };
 
 export default function customerReducer(customerState = initialState, action) {
@@ -19,20 +19,29 @@ export default function customerReducer(customerState = initialState, action) {
         ...customerState,
         customerList: [...customerState.customerList, action.payload],
       };
-      case "SUCCESS_ADD_CUSTOMER_GROUP":
-        return {
-          ...customerState,
-          groupIdCreated : action.payload
-        };
-        case "SUCCESS_ADD_CUSTOMER_GROUP_MEMBER":
-          return {
-            ...customerState,
-          };
-          case "SUCCESS_GET_CUSTOMER_MEMBER":
-            return {
-              ...customerState,
-              customerList : action.payload.anggota
-            };
+    case "SUCCESS_ADD_CUSTOMER_GROUP":
+      return {
+        ...customerState,
+        groupIdCreated: action.payload,
+      };
+    case "SUCCESS_ADD_CUSTOMER_GROUP_MEMBER":
+      return {
+        ...customerState,
+      };
+    case "SUCCESS_GET_CUSTOMER_MEMBER":
+      return {
+        ...customerState,
+        customerList: action.payload.anggota,
+      };
+    case "SUCCESS_DELETE_GROUP":
+      return {
+        ...customerState,
+        customerGroup: [
+          ...customerState.customerGroup.filter(
+            (item) => String(item.id) !== String(action.payload)
+          ),
+        ],
+      };
     case "SUCCES_UPLOAD_DATA":
       return {
         ...customerState,

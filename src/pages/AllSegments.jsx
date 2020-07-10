@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { MDBDataTable, MDBBox, MDBRow, MDBCol } from "mdbreact";
+import { MDBDataTable, MDBBox, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import moment from "moment";
@@ -14,6 +14,7 @@ import {
 import {
   getCustomerGroupList,
   getCustomerMember,
+  deleteGroup,
 } from "../stores/actions/customerAction";
 class AllSegments extends Component {
   constructor(props) {
@@ -28,162 +29,92 @@ class AllSegments extends Component {
   componentDidMount = async () => {
     await this.props.doRefershSignin();
     await this.props.getUserBio();
+    await this.props.getCustomerGroupList();
     let groupData;
     if (this.props.match.params.segmentId) {
       await this.props.getCustomerMember(this.props.match.params.segmentId);
       groupData = await this.props.customerState.customerList;
-      if (groupData) {
-        this.setState({
-          data: {
-            columns: [
-              {
-                label: "Name",
-                field: "name",
-                width: 150,
-                color: "pink",
-              },
-              {
-                label: "Email",
-                field: "email",
-                width: 200,
-              },
-              {
-                label: "BOD",
-                field: "bod",
-                width: 270,
-              },
-              {
-                label: "Address",
-                field: "address",
-                width: 100,
-              },
-              {
-                label: "Phone",
-                field: "phone",
-                width: 150,
-              },
-              {
-                label: "Company",
-                field: "company",
-                width: 100,
-              },
-            ],
-            rows: [
-              ...groupData.map((el, index) => ({
-                key: index,
-                name: el.First_name + " " + el.last_name,
-                email: el.email,
-                bod: moment.utc(el.bod).format("YYYY/MM/DD"),
-                address: el.address,
-                phone: el.phone[0] !== "0" ? "0" + el.phone : el.phone,
-                company: el.company,
-              })),
-            ],
-          },
-        });
-      }
+        this.callSegment(groupData)
     } else {
-      await this.props.getCustomerGroupList();
       groupData = await this.props.customerGroups;
-      if (groupData) {
-        this.setState({
-          data: {
-            columns: [
-              {
-                label: "Segment",
-                field: "segment",
-                sort: "asc",
-                width: 150,
-                color: "pink",
-              },
-              {
-                label: "Jumlah customer",
-                field: "jumlahCustomer",
-                sort: "asc",
-                width: 200,
-              },
-              {
-                label: "Created at",
-                field: "created_at",
-                sort: "asc",
-                width: 270,
-              },
-            ],
-            rows: [
-              ...groupData.map((el, index) => ({
-                key: index,
-                segment: (
-                  <p
-                    style={{ color: "rgb(241, 76, 89)", cursor: "pointer" }}
-                    onClick={() => this.changeRouter(el.id)}
-                  >
-                    {el.name}
-                  </p>
-                ),
-                jumlahCustomer: 0,
-                created_at: moment.utc(el.created_at).format("YYYY/MM/DD"),
-              })),
-            ],
-          },
-        });
-      }
-    }
+    this.callAllSegment(groupData)
   };
+}
 
-  handleBacktoList = async() => {
-    await this.props.getCustomerGroupList();
-    await this.props.getCustomerGroupList();
-    let groupData = await this.props.customerGroups;
-      if (groupData) {
-        this.setState({
-          data: {
-            columns: [
-              {
-                label: "Segment",
-                field: "segment",
-                sort: "asc",
-                width: 150,
-                color: "pink",
-              },
-              {
-                label: "Jumlah customer",
-                field: "jumlahCustomer",
-                sort: "asc",
-                width: 200,
-              },
-              {
-                label: "Created at",
-                field: "created_at",
-                sort: "asc",
-                width: 270,
-              },
-            ],
-            rows: [
-              ...groupData.map((el, index) => ({
-                key: index,
-                segment: (
-                  <p
-                    style={{ color: "rgb(241, 76, 89)", cursor: "pointer" }}
-                    onClick={() => this.changeRouter(el.id)}
-                  >
-                    {el.name}
-                  </p>
-                ),
-                jumlahCustomer: 0,
-                created_at: moment.utc(el.created_at).format("YYYY/MM/DD"),
-              })),
-            ],
-          },
-        });
-      }
+  callAllSegment = (groupData) => {
+    if (groupData) {
+      this.setState({
+        data: {
+          columns: [
+            {
+              label: "Segment",
+              field: "segment",
+              sort: "asc",
+              width: 150,
+              color: "pink",
+            },
+            {
+              label: "Jumlah customer",
+              field: "jumlahCustomer",
+              sort: "asc",
+              width: 200,
+            },
+            {
+              label: "Tanggal Dibuat",
+              field: "created_at",
+              sort: "asc",
+              width: 270,
+            },
+            {
+              label: "Detail",
+              field: "detail",
+              sort: "asc",
+              width: 270,
+            },
+            {
+              label: "Hapus",
+              field: "delete",
+              sort: "asc",
+              width: 270,
+            },
+          ],
+          rows: [
+            ...groupData.map((el, index) => ({
+              key: index,
+              segment : el.name,
+              detail: (
+                <p
+                  style={{ color: "rgb(241, 76, 89)", cursor: "pointer" }}
+                  onClick={() => this.changeRouter(el.id)}
+                >
+                  Detail
+                </p>
+              ),
+              jumlahCustomer: 0,
+              created_at: moment.utc(el.created_at).format("YYYY/MM/DD"),
+              delete: (
+                <MDBBtn
+                  color="transparent"
+                  size="xs"
+                  style={{ boxShadow: "none", padding: "0", margin: "0" }}
+                >
+                  <i
+                    className="fa fa-trash"
+                    aria-hidden="true"
+                    onClick={(id) => this.handleDeleteGroup(el.id)}
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                </MDBBtn>
+              ),
+            })),
+          ],
+        },
+      });
+    }
   }
 
-  changeRouter = async (segmentId) => {
-    await this.props.getCustomerMember(segmentId);
-    await this.props.history.push("/segment/" + segmentId, {
-      ...this.props.draft,
-    });
-    if (this.props.customerState.customerList) {
+  callSegment = (groupData) => {
+    if (groupData) {
       this.setState({
         data: {
           columns: [
@@ -218,9 +149,15 @@ class AllSegments extends Component {
               field: "company",
               width: 100,
             },
+            {
+              label: "Hapus",
+              field: "delete",
+              sort: "asc",
+              width: 270,
+            },
           ],
           rows: [
-            ...this.props.customerState.customerList.map((el, index) => ({
+            ...groupData.map((el, index) => ({
               key: index,
               name: el.First_name + " " + el.last_name,
               email: el.email,
@@ -228,11 +165,50 @@ class AllSegments extends Component {
               address: el.address,
               phone: el.phone[0] !== "0" ? "0" + el.phone : el.phone,
               company: el.company,
+              delete: (
+                <MDBBtn
+                  color="transparent"
+                  size="xs"
+                  style={{ boxShadow: "none", padding: "0", margin: "0" }}
+                >
+                  <i
+                    className="fa fa-trash"
+                    aria-hidden="true"
+                    // onClick={(id) => this.handleDeleteGroup(el.id)}
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                </MDBBtn>
+              ),
             })),
           ],
         },
       });
     }
+  }
+
+  handleBacktoList = async () => {
+    await this.props.getCustomerGroupList();
+    let groupData = await this.props.customerGroups;
+    this.callAllSegment(groupData)
+  };
+
+  handleDeleteGroup = async (id) => {
+    var result = window.confirm("Are you sure to delete?");
+    if (result) {
+      await this.props.deleteGroup(id);
+    }
+    await this.props.getCustomerGroupList();
+    let groupData = await this.props.customerGroups;
+    this.callAllSegment(groupData)
+  };
+
+  changeRouter = async (segmentId) => {
+    await this.props.getCustomerMember(segmentId);
+    await this.props.history.push("/segment/" + segmentId, {
+      ...this.props.draft,
+    });
+    let groupData = this.props.customerState.customerList
+    this.callSegment(groupData)
   };
 
   render() {
@@ -273,24 +249,26 @@ class AllSegments extends Component {
               >
                 All Segments
               </span>
-              {this.props.match.params.segmentId?
+              {this.props.match.params.segmentId ? (
                 <Link
-                to="/segment-list"
-                onClick = {this.handleBacktoList}
+                  to="/segment-list"
+                  onClick={this.handleBacktoList}
                   color="transparent"
                   style={{
                     color: "#f14c59",
                     fontSize: "16px",
-                    fontWeight : "500",
+                    fontWeight: "500",
                     height: "40px",
                     marginTop: "8px",
-                    cursor:"pointer"
+                    cursor: "pointer",
                   }}
                   className="text-capitalize px-3"
                 >
                   Back to All Segment
-                </Link> : false
-              }
+                </Link>
+              ) : (
+                false
+              )}
             </MDBBox>
             {/* tabel */}
             <MDBRow
@@ -330,5 +308,6 @@ const mapDispatchToProps = {
   doRefershSignin,
   getCustomerGroupList,
   getCustomerMember,
+  deleteGroup,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AllSegments);

@@ -48,6 +48,12 @@ class DashboardDraft extends Component {
               width: 270,
             },
             {
+              label: "Edit",
+              field: "edit",
+              sort: "asc",
+              width: 200,
+            },
+            {
               label: "Delete",
               field: "delete",
               width: 150,
@@ -56,8 +62,8 @@ class DashboardDraft extends Component {
           rows: [ 
             ...this.props.draftList.reverse().map((el, index) => ({
               key: index,
-              title: <p style={{color:"rgb(241, 76, 89)", cursor:"pointer"}}onClick={() => this.changeRouter(el.id)}>{el.subject ? el.subject : "Unsubjected"}</p>,
-              // created_at: el.created_at.slice(0, -9),
+              title: el.subject ? el.subject : "Unsubjected",
+            edit : <p style={{color:"rgb(241, 76, 89)", cursor:"pointer"}}onClick={() => this.changeRouter(el.id)}>Edit</p>,
               created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
               segment: el.group_id !== 0
                 ? el.group_customer.name
@@ -83,12 +89,68 @@ class DashboardDraft extends Component {
     };
 
 
-  handleDelete = (id) => {
+  handleDelete = async (id) => {
     var result = window.confirm("Are you sure to delete?");
-    if (result) {
-      this.props.deleteDraft(id);
+    if  (result) {
+      await this.props.deleteDraft(id);
     }
-    window.location.reload()
+    this.setState({
+      data: {
+        columns: [
+          {
+            label: "Title",
+            field: "title",
+            width: 150,
+            color: "pink",
+          },
+          {
+            label: "Created At",
+            field: "created_at",
+            width: 200,
+          },
+          {
+            label: "Segments",
+            field: "segment",
+            width: 270,
+          },
+          {
+            label: "Edit",
+            field: "edit",
+            sort: "asc",
+            width: 200,
+          },
+          {
+            label: "Delete",
+            field: "delete",
+            width: 150,
+          },
+        ],
+        rows: [ 
+          ...this.props.draftList.reverse().map((el, index) => ({
+            key: index,
+            title: el.subject ? el.subject : "Unsubjected",
+            edit : <p style={{color:"rgb(241, 76, 89)", cursor:"pointer"}}onClick={() => this.changeRouter(el.id)}>Edit</p>,
+            created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
+            segment: el.group_id !== 0
+              ? el.group_customer.name
+              : "Unsegmented",
+            delete: (
+              <MDBBtn
+                color="transparent"
+                size="xs"
+                style={{ boxShadow: "none", padding: "0", margin: "0" }}
+              >
+                <i
+                  className="fa fa-trash"
+                  aria-hidden="true"
+                  onClick={(id) => this.handleDelete(el.id)}
+                  style={{ cursor: "pointer" }}
+                ></i>
+              </MDBBtn>
+            )})),
+          ],
+        },
+      })
   };
 
   changeRouter = async (draftId) => {

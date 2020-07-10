@@ -192,6 +192,41 @@ export const getSendList = () => {
   };
 };
 
+export const getSent = (sent_id) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    await axios({
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+      url: baseUrl + "/sent/sent-id",
+      params: {
+        sent_id: sent_id,
+      },
+    })
+      .then(async (response) => {
+        let rawContent = await response.data.content;
+        const contentBlock = await htmlToDraft(String(rawContent));
+        const contentState = await ContentState.createFromBlockArray(
+          contentBlock.contentBlocks
+        );
+        if (contentState) {
+          dispatch({
+            type: "SUCCESS_GET_MAIL_DRAFT",
+            payload: response.data,
+            editor: EditorState.createWithContent(contentState),
+          });
+        } else {
+          dispatch({
+            type: "SUCCESS_GET_MAIL_DRAFT",
+            payload: response.data,
+            editor: EditorState.createEmpty(),
+          });
+        }
+      })
+      .catch((error) => {console.error(error)});
+  };
+};
+
 export const getDraftList = () => {
   return async (dispatch) => {
     const token = localStorage.getItem("token");

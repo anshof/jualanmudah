@@ -10,7 +10,7 @@ import {
   doRefershSignin,
   getUserBio,
 } from "../stores/actions/userAction";
-import { getDraft } from "../stores/actions/mailAction";
+import { getSent } from "../stores/actions/mailAction";
 class PreviewEmail extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +22,7 @@ class PreviewEmail extends Component {
   componentDidMount = async () => {
     await this.props.doRefershSignin();
     this.props.getUserBio();
-    await this.props.getDraft(this.props.match.params.mailId);
+    await this.props.getSent(this.props.match.params.mailId);
     if (this.props.draft){
       this.setState({
         data: {
@@ -48,14 +48,15 @@ class PreviewEmail extends Component {
             }
           ],
           rows: [ 
-            ...this.props.draft.customer.map((el, index) => ({
-              key: index,
-              name: el.First_name + " " + el.last_name,
-              // open: <i class="fas fa-times"></i>,
-              open : <i class="fas fa-check" style={{color:"rgb(241, 76, 89)"}}></i>,
-              email: el.email
-              })),
-            ],
+              ...this.props.draft.customer.map((el, index) => ({
+                key: index,
+                name: el.First_name + " " + el.last_name,
+                email: el.email,
+            })),
+            ...this.props.draft.track.map((el, index) => ({
+              open : el.status_open ? <i class="fas fa-check" style={{color:"rgb(241, 76, 89)"}}></i> : <i class="fas fa-times" style={{color:"rgb(241, 76, 89)"}}></i>,
+            })),
+          ],
           },
         });
       }
@@ -165,6 +166,6 @@ const mapDispatchToProps = {
   doLogOut,
   getUserBio,
   doRefershSignin,
-  getDraft,
+  getSent,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(PreviewEmail);

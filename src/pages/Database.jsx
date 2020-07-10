@@ -82,6 +82,12 @@ class Database extends Component {
               field: "company",
               width: 100,
             },
+            {
+              label: "Hapus",
+              field: "delete",
+              sort: "asc",
+              width: 270,
+            },
           ],
           rows: [
             ...this.props.customerList.map((el, index) => ({
@@ -92,6 +98,20 @@ class Database extends Component {
               address: el.address,
               phone: el.phone[0] !== "0" ? "0" + el.phone : el.phone,
               company: el.company,
+              delete: (
+                <MDBBtn
+                  color="transparent"
+                  size="xs"
+                  style={{ boxShadow: "none", padding: "0", margin: "0" }}
+                >
+                  <i
+                    className="fa fa-trash"
+                    aria-hidden="true"
+                    // onClick={(id) => this.handleDeleteGroup(el.id)}
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                </MDBBtn>
+              ),
             })),
           ],
         },

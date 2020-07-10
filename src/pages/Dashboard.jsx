@@ -16,7 +16,6 @@ import {
 import {
   getSendList,
   deleteLocalDraft,
-  getDraft,
 } from "../stores/actions/mailAction";
 class Dashboard extends Component {
   constructor(props) {
@@ -34,7 +33,7 @@ class Dashboard extends Component {
         data: {
           columns: [
             {
-              label: "Title",
+              label: "Subject",
               field: "title",
               width: 150,
             },
@@ -42,11 +41,6 @@ class Dashboard extends Component {
               label: "Open rate",
               field: "open_rate",
               width: 270,
-            },
-            {
-              label: "Status",
-              field: "status",
-              width: 150,
             },
             {
               label: "Segment",
@@ -59,33 +53,28 @@ class Dashboard extends Component {
               sort: "asc",
               width: 200,
             },
+            {
+              label: "Details",
+              field: "details",
+              sort: "asc",
+              width: 200,
+            },
           ],
           rows: [
             ...this.props.mailSendList.reverse().map((el, index) => ({
               key: index,
-              title: (
+              title: el.subject,
+              details : (
                 <p
                   style={{ color: "rgb(241, 76, 89)", cursor: "pointer" }}
                   onClick={() => this.changeRouter(el.id)}
                 >
-                  {el.subject}
+                  Details
                 </p>
               ),
               created_at: moment.utc(el.created_at).format("YYYY/MM/DD"),
-              open_rate: el.open_rate,
+              open_rate: el.open_rate + "/" + el.total_sent,
               segment: el.group_customer.name,
-              status: (
-                <MDBBox
-                  style={{
-                    width: "100%",
-                    color: "white",
-                    backgroundColor: "green",
-                    borderRadius: "40px",
-                  }}
-                >
-                  SUCCESS
-                </MDBBox>
-              ),
             })),
           ],
         },
@@ -94,7 +83,6 @@ class Dashboard extends Component {
   };
 
   changeRouter = async (mailId) => {
-    await this.props.getDraft(mailId);
     this.props.history.push("/broadcast/" + mailId, { ...this.props.draft });
   };
 
@@ -182,6 +170,5 @@ const mapDispatchToProps = {
   getSendList,
   doRefershSignin,
   deleteLocalDraft,
-  getDraft,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -64,8 +64,50 @@ const PictName = (props) => {
             }}
             className="text-capitalize"
           >
-            <i className="fas fa-plus mr-1"></i> New Broadcast
+            <i className="fas fa-plus mr-1"></i> Buat Broadcast
           </button>
+        </Link>
+      </MDBBox>
+      
+      <hr />
+      <MDBBox
+        className="text-center"
+        style={{ margin: "0", padding: "0", marginTop: "10px" }}
+      >
+        <Link to="/segment">
+          <button
+            color="transparent"
+            style={{
+              backgroundColor: "#f14c59",
+              border: "1px solid #f14c59",
+              color: "white",
+              boxShadow: "none",
+              borderRadius: "40px",
+              fontSize: "14px",
+              height: "40px",
+              margin: "0",
+              padding: "0 13px",
+            }}
+            className="text-capitalize"
+          >
+            <i className="fas fa-plus mr-1"></i> Buat Segmen
+          </button>
+        </Link>
+      </MDBBox>
+      
+      <hr />
+      <MDBBox className="pl-3">
+        <Link
+          to={props.active !== "broadcasts" ? "/dashboard" : "#"}
+          className="mb-1"
+          style={{
+            fontSize: "18px",
+            fontWeight: "600",
+            color: props.active !== "broadcasts" ? "rgb(241, 76, 89)" : "#192e35",
+            cursor : props.active !== "broadcasts" ? "pointer" : "text"
+          }}
+        >
+          Broadcasts
         </Link>
       </MDBBox>
       <hr />
@@ -76,51 +118,11 @@ const PictName = (props) => {
           style={{
             fontSize: "18px",
             fontWeight: "600",
-            color: "#192e35",
+            color: props.active !== "segments" ? "rgb(241, 76, 89)" : "#192e35",
             cursor : props.active !== "segments" ? "pointer" : "text"
           }}
         >
-          All segments
-        </Link>
-        {/* <a href="#!" style={{ color: "#192e35" }}>
-          <p className="py-0 my-0" style={{ fontSize: "16px" }}>
-            Woman
-          </p>
-        </a>
-        <a href="#!" style={{ color: "#192e35" }}>
-          <p className="py-0 my-0" style={{ fontSize: "16px" }}>
-            Man
-          </p>
-        </a> */}
-      </MDBBox>
-      <hr />
-      <MDBBox className="pl-3">
-        <Link
-          to="/segment"
-          onClick={props.params ? props.router : false}
-          className="mb-1"
-          style={{
-            fontSize: "18px",
-            fontWeight: "600",
-            color: "#192e35",
-          }}
-        >
-          New Segment
-        </Link>
-      </MDBBox>
-      <hr />
-      <MDBBox className="pl-3">
-        <Link
-          to={props.active !== "broadcasts" ? "/dashboard" : "#"}
-          className="mb-1"
-          style={{
-            fontSize: "18px",
-            fontWeight: "600",
-            color: "#192e35",
-            cursor : props.active !== "broadcasts" ? "pointer" : "text"
-          }}
-        >
-          Broadcasts
+          Semua segmen
         </Link>
       </MDBBox>
       <hr />
@@ -131,7 +133,7 @@ const PictName = (props) => {
           style={{
             fontSize: "18px",
             fontWeight: "600",
-            color: "#192e35",
+            color: props.active !== "draft" ? "rgb(241, 76, 89)" : "#192e35",
             cursor : props.active !== "draft" ? "pointer" : "text"
           }}
         >
@@ -146,7 +148,7 @@ const PictName = (props) => {
           style={{
             fontSize: "18px",
             fontWeight: "600",
-            color: "#192e35",
+            color: props.active !== "database" ? "rgb(241, 76, 89)" : "#192e35",
             cursor : props.active !== "database" ? "pointer" : "text"
           }}
         >

@@ -23,6 +23,23 @@ export const getCustomerList = () => {
   };
 };
 
+export const deleteGroup = (id) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    await axios({
+      method: "DELETE",
+      url: baseUrl + "/customer-group/" + id,
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(() => {
+        dispatch({ type: "SUCCESS_DELETE_GROUP", payload: id });
+      })
+      .catch((error) => {
+        console.error("Delete group error", error);
+      });
+  };
+};
+
 export const addCustomer = () => {
   return async (dispatch, getState) => {
     const token = localStorage.getItem("token");
