@@ -1,45 +1,33 @@
 import React, { Component, Fragment } from "react";
-import { MDBBox, MDBCol, MDBRow, MDBContainer, MDBModal } from "mdbreact";
+import { connect } from "react-redux";
+
+import { MDBBox, MDBCol, MDBRow, MDBContainer, MDBLink } from "mdbreact";
 import { Link } from "react-router-dom";
 
 import "../css/style.css";
 import Navbar from "../components/Navbar";
-import SignIn from "../components/SignIn";
 
+import {
+  doLogOut,
+  doRefershSignin,
+  getUserBio,
+} from "../stores/actions/userAction";
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLogin: false,
-      isOpen: false,
-      modalSignin: false,
-      modalSignup: false,
-    };
-    this.toggleCollapse = this.toggleCollapse.bind(this);
-    this.toggle = this.toggle.bind(this);
-  }
+  state = {};
 
-  toggleCollapse() {
-    this.setState({ isOpen: !this.state.isOpen });
-  }
-
-  toggle = (key) => () => {
-    let modalKey = "modal" + key;
-    this.setState({
-      [modalKey]: !this.state[modalKey],
-    });
+  componentDidMount = async () => {
+    await this.props.doRefershSignin();
+    this.props.getUserBio();
   };
 
   render() {
     return (
       <Fragment>
         <Navbar
-          toggle={(key) => this.toggle(key)}
-          modalSignin={this.state.modalSignin}
-          modalSignup={this.state.modalSignup}
-          isLogin={this.state.isLogin}
           backNav={"white"}
           fontColor={"rgb(241, 76, 89)"}
+          logout={() => this.props.doLogOut()}
+          bio={this.props.bio}
         />
         <MDBRow
           style={{
@@ -56,7 +44,7 @@ class Home extends Component {
                 }}
                 className="text-capitalize"
               >
-                help you <br /> boost your <br /> revenue
+                tingkatkan <br /> penjualan anda <br /> sekarang!!!
               </h1>
               <p
                 style={{
@@ -65,24 +53,24 @@ class Home extends Component {
                   color: "#385a66",
                 }}
               >
-                Increasing your revenue by connecting you to your customer in a
-                better, easier and faster way.
+                Tingkatkan penghasilan Anda dengan menghubungkan Anda ke
+                pelanggan dengan cara yang lebih baik, lebih mudah, dan lebih
+                cepat.
               </p>
-              <Link to="/signup">
-              <MDBBox
-                className="btn text-uppercase my-0 py-2"
-                style={{
-                  boxShadow: "none",
-                  fontSize: "18px",
-                  fontFamily: "Source Sans Pro",
-                  backgroundColor: "#f14c59",
-                  color: "white",
-                  borderRadius: "20px",
-                }}
-                onClick={this.toggle("Signin")}
-              >
-                Start now
-              </MDBBox>
+              <Link to="/dashboard">
+                <MDBBox
+                  className="btn text-uppercase my-0 py-2"
+                  style={{
+                    boxShadow: "none",
+                    fontSize: "18px",
+                    fontFamily: "Source Sans Pro",
+                    backgroundColor: "#f14c59",
+                    color: "white",
+                    borderRadius: "20px",
+                  }}
+                >
+                  mulai sekarang
+                </MDBBox>
               </Link>
             </MDBBox>
           </MDBCol>
@@ -103,8 +91,11 @@ class Home extends Component {
             color: "#1b2e35",
           }}
         >
-          <h2>"ini quotes buwagus, sumpah sumpah"</h2>
-          <p style={{ fontSize: "18px", color: "#385a66" }}>alula</p>
+          <h2>
+            “Content builds relationships. Relationships are built on trust.
+            Trust drives revenue”
+          </h2>
+          <p style={{ fontSize: "18px", color: "#385a66" }}>- Andrew Davis -</p>
         </MDBBox>
         {/* akhir quote */}
         {/* 3 panel */}
@@ -349,7 +340,8 @@ class Home extends Component {
                     Manage your campaign, customers and sales. <br />
                     Grow your audience.
                   </p>
-                  <MDBBox
+                  <MDBLink
+                    to="/dashboard"
                     className="btn text-uppercase my-0 py-2"
                     style={{
                       boxShadow: "none",
@@ -357,33 +349,12 @@ class Home extends Component {
                       backgroundColor: "#f14c59",
                       color: "white",
                       borderRadius: "20px",
+                      maxWidth: "160px",
                     }}
                   >
                     Start now
-                  </MDBBox>
-                  <MDBModal
-                    isOpen={this.modalSignin}
-                    toggle={
-                      this.toggle("Signup")
-                        ? this.toggle("Signup") & this.toggle("Signin")
-                        : this.toggle("Signin")
-                    }
-                    size="md"
-                  >
-                    <SignIn />
-                  </MDBModal>
+                  </MDBLink>
                 </MDBBox>
-                <MDBModal
-                  isOpen={this.modalSignin}
-                  toggle={
-                    this.toggle("Signup")
-                      ? this.toggle("Signup") & this.toggle("Signin")
-                      : this.toggle("Signin")
-                  }
-                  size="md"
-                >
-                  <SignIn />
-                </MDBModal>
               </MDBCol>
             </MDBRow>
           </MDBBox>
@@ -458,5 +429,16 @@ class Home extends Component {
     );
   }
 }
-
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    bio: state.userState.bio,
+    username: state.userState.username,
+    password: state.userState.password,
+  };
+};
+const mapDispatchToProps = {
+  doLogOut,
+  doRefershSignin,
+  getUserBio,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

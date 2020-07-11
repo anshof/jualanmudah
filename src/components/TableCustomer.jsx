@@ -11,7 +11,6 @@ function Table(props) {
   };
   return (
     <Route>
-      {props.data.map((el, index) => (
         <MDBRow
           className="text-capitalize d-flex align-items-center py-3"
           style={{
@@ -22,28 +21,26 @@ function Table(props) {
             margin: "0 0 10px 0",
             fontSize: "14px",
           }}
-          key={index}
         >
           <MDBCol size="2" style={{ textAlign: "center" }}>
-            <span className="pl-1">{truncate(el.name)}</span>
+            <span className="pl-1">{truncate(props.name)}</span>
           </MDBCol>
           <MDBCol size="2" style={{ textAlign: "center" }}>
-            <span>{truncate(el.email)}</span>
+            <span>{truncate(props.email)}</span>
           </MDBCol>
           <MDBCol size="2" style={{ textAlign: "center" }}>
-            <span>{truncate(el.phone)}</span>
+            <span>{truncate(props.phone)}</span>
           </MDBCol>
           <MDBCol size="2" style={{ textAlign: "center" }}>
-            <span>{truncate(el.bod)}</span>
+            <span>{truncate(props.bod)}</span>
           </MDBCol>
           <MDBCol size="2" style={{ textAlign: "center" }}>
-            <span>{truncate(el.address)}</span>
+            <span>{truncate(props.address)}</span>
           </MDBCol>
           <MDBCol size="2" style={{ textAlign: "center" }}>
-            <span className="pl-2">{truncate(el.company)}</span>
+            <span className="pl-2">{truncate(props.company)}</span>
           </MDBCol>
         </MDBRow>
-      ))}
     </Route>
   );
 }
