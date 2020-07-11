@@ -90,7 +90,7 @@ const PictName = (props) => {
             }}
             className="text-capitalize"
           >
-            <i className="fas fa-plus mr-1"></i> Buat Segmen
+            <i className="fas fa-plus mr-1"></i> Buat Grup
           </button>
         </Link>
       </MDBBox>
@@ -122,7 +122,7 @@ const PictName = (props) => {
             cursor : props.active !== "segments" ? "pointer" : "text"
           }}
         >
-          Semua segmen
+          Semua grup
         </Link>
       </MDBBox>
       <hr />

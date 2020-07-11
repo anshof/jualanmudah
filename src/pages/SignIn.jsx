@@ -63,7 +63,7 @@ class SignIn extends Component {
                   className="dark-grey-text mb-3"
                   style={{ fontWeight: "600" }}
                 >
-                  Sign in and feel free to use Jualanmudah
+                  Masuk dan mulailah perjalananmu bersama kami.
                 </h3>
               </div>
               <MDBInput
@@ -97,7 +97,7 @@ class SignIn extends Component {
                   }}
                   onClick={this.postSignIn}
                 >
-                  Sign in
+                  Masuk
                 </MDBBtn>
               </div>
             </MDBCardBody>
@@ -106,13 +106,13 @@ class SignIn extends Component {
               style={{ margin: "50px 20px 0 20px" }}
             >
               <p className="font-small grey-text ">
-                Didn't have an account?
+                Tidak punya akun?
                 <Link
                   className="red-text ml-1"
                   to="/signup"
                   style={{ cursor: "pointer" }}
                 >
-                  Sign up
+                  daftar disini.
                 </Link>
               </p>
             </MDBModalFooter>
