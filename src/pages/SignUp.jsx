@@ -1,38 +1,24 @@
 import React, { Component } from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import {
   MDBBtn,
   MDBModalFooter,
   MDBInput,
   MDBCardBody,
   MDBRow,
-  MDBModal,
   MDBCol,
-  MDBNavbarBrand
+  MDBNavbarBrand,
 } from "mdbreact";
 import "../css/style.css";
-import SignIn from "../components/SignIn";
+import { doSignup, changeInputUser } from "../stores/actions/userAction";
 
-export default class SignUp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLogin: false,
-      isOpen: false,
-      modalSignin: false,
-
-      passVal: false,
-      messagePass: "",
-      password: "",
-
-      emailVal: false,
-      messageEmail: "",
-      email: "",
-
-      signupVal: false,
-    };
-    this.toggle = this.toggle.bind(this);
-  }
+class SignUp extends Component {
+  state = {
+    isOpen: false,
+    passVal: false,
+    messagePass: "",
+  };
 
   toggle = (key) => () => {
     let modalKey = "modal" + key;
@@ -41,28 +27,13 @@ export default class SignUp extends Component {
     });
   };
 
-  checkEmail = (event) => {
-    this.setState({ email: event.target.value });
-    const email = this.state.email;
-    if (email.length <= 2) {
-      this.setState({ messageEmail: "" });
-      this.setState({ emailVal: false });
-    } else if (!/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/.test(email)) {
-      this.setState({ messageEmail: "Email is invalid" });
-      this.setState({ emailVal: false });
-    } else {
-      this.setState({ messageEmail: "" });
-      this.setState({ emailVal: true });
-    }
-  };
-
-  checkPwd = (event) => {
-    this.setState({ password: event.target.value });
-    const pwd = this.state.password;
+  checkPwd = async (e) => {
+    await this.props.changeInputUser(e);
+    const pwd = this.props.password;
     if (pwd.length <= 2) {
       this.setState({ messagePass: "" });
       this.setState({ passVal: false });
-    } else if (pwd.length < 7) {
+    } else if (pwd.length < 8) {
       this.setState({ messagePass: "Your password is too short" });
       this.setState({ passVal: false });
     } else if (!/^(?=.*\d)/.test(pwd)) {
@@ -77,11 +48,26 @@ export default class SignUp extends Component {
     }
   };
 
+  postSignUp = async () => {
+    await this.props.doSignup();
+    this.props.history.push("/signin");
+  };
+
   render() {
-    const path = this.props.location.pathname
+    let validSignup;
+    if (
+      this.state.passVal &&
+      this.props.full_name &&
+      this.props.username &&
+      this.props.address &&
+      this.props.position
+    ) {
+      validSignup = true;
+    } else {
+      validSignup = false;
+    }
     return (
       <div className="signup">
-
         <MDBRow
           style={{
             marginRight: "0px",
@@ -91,18 +77,18 @@ export default class SignUp extends Component {
             size="5"
             style={{ minHeight: "100vmin", backgroundColor: "#fde9e9" }}
           >
-          <MDBNavbarBrand className="ml-5 mt-3 d-flex justify-content-start">
-          <Link
-          to="/"
-            className="logo"
-            style={{
-              fontSize: "32px",
-              color: "#f14c59",
-            }}
-          >
-            JM
-          </Link>
-        </MDBNavbarBrand>
+            <MDBNavbarBrand className="ml-5 mt-3 d-flex justify-content-start">
+              <Link
+                to="/"
+                className="logo"
+                style={{
+                  fontSize: "32px",
+                  color: "#f14c59",
+                }}
+              >
+                JM
+              </Link>
+            </MDBNavbarBrand>
             <MDBCardBody
               className="mx-4"
               style={{ marginTop: "10px", padding: "20px 90px" }}
@@ -115,93 +101,78 @@ export default class SignUp extends Component {
                   Get your free Jualanmudah <br /> account now!
                 </h3>
               </div>
+
               <MDBInput
-                name="name"
+                name="full_name"
                 label="Full Name"
                 group
                 type="text"
-                containerClass="mb-0"
+                containerclassName="mb-0"
+                onChange={this.props.changeInputUser}
               />
               <MDBInput
-                name="nickname"
+                name="username"
                 label="Username"
                 group
                 type="text"
-                containerClass="mb-0"
+                containerclassName="mb-0"
+                onChange={this.props.changeInputUser}
               />
               <MDBInput
-                name="email"
-                label="Email"
+                name="address"
+                label="Address"
                 group
-                type="email"
-                containerClass="mb-0"
-                onChange={this.checkEmail}
+                type="text"
+                containerclassName="mb-0"
+                onChange={this.props.changeInputUser}
               />
-              <div style={{ color: "red" }}>
-                {this.state.messageEmail ? this.state.messageEmail : false}
-              </div>
+              <MDBInput
+                name="position"
+                label="Position"
+                group
+                type="text"
+                containerclassName="mb-0"
+                onChange={this.props.changeInputUser}
+              />
               <MDBInput
                 name="password"
                 label="Password"
                 group
                 type="password"
-                containerClass="mb-0"
+                containerclassName="mb-0"
                 onChange={this.checkPwd}
               />
               <div style={{ color: "red" }}>
                 {this.state.messagePass ? this.state.messagePass : false}
               </div>
-              <div
-                className="text-left"
-                style={{ fontSize: "14px", marginTop: "10px" }}
-              >
-                Please input password same as your email account password
-              </div>
-              {/* <MDBInput
-            name="address"
-            label="Your full address"
-            group
-            type="text"
-            containerClass="mb-0"
-          />
-          <MDBInput
-            name="position"
-            label="Your position"
-            group
-            type="text"
-            containerClass="mb-0"
-          /> */}
+
               <div className="text-center signup-button d-flex justify-content-center mt-4">
                 <MDBBtn
                   type="button"
                   rounded
                   className="btn-block z-depth-1a"
-                  disabled={!this.state.passVal || !this.state.emailVal}
-                  style={{ maxWidth: "200px", borderRadius: "20px"}}
+                  disabled={!validSignup}
+                  style={{ maxWidth: "200px", borderRadius: "20px" }}
+                  onClick={this.postSignUp}
                 >
                   Sign up
                 </MDBBtn>
               </div>
             </MDBCardBody>
             <MDBModalFooter
-              className="mx-5 pt-3 mb-1 d-flex justify-content-center"
-              style={{ margin: "50px 20px 0 20px" }}
+              className="mx-5 pt-3 d-flex justify-content-center"
+              style={{ margin: "15px 20px 0 20px" }}
             >
               <p className="font-small grey-text ">
                 Have an account?
-                <Link to="/signin"className="red-text ml-1" style={{cursor: "pointer" }}>
+                <Link
+                  to="/signin"
+                  className="red-text ml-1"
+                  style={{ cursor: "pointer" }}
+                >
                   Sign in
                 </Link>
               </p>
-              <MDBModal
-                isOpen={this.state.modalSignin}
-                toggle={this.toggle("Signin")}
-                size="md"
-              >
-                <SignIn toggle={(key) => this.toggle(key)}
-                  path = {path}
-                />
-              </MDBModal>
             </MDBModalFooter>
           </MDBCol>
           <MDBCol size="7" style={{ marginTop: "75px" }}>
@@ -216,3 +187,19 @@ export default class SignUp extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    full_name: state.userState.full_name,
+    username: state.userState.username,
+    password: state.userState.password,
+    address: state.userState.username,
+    position: state.userState.position,
+  };
+};
+const mapDispatchToProps = {
+  doSignup,
+  changeInputUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

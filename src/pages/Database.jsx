@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from "react";
-
+import moment from "moment";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { CSVReader } from "react-papaparse";
 import {
   MDBBox,
   MDBRow,
@@ -7,334 +10,339 @@ import {
   MDBIcon,
   MDBFormInline,
   MDBModal,
+  MDBLink,
+  MDBDataTable,
+  MDBModalBody,
+  MDBModalFooter,
+  MDBBtn,
 } from "mdbreact";
-
-import Navbar from "../components/Navbar";
-import Table from "../components/TableCustomer";
-import PictName from "../components/PictName";
-import Pagination from "../components/Pagination";
-import NewDatabase from "../components/NewDatabaseModal";
-import DownloadFormDatabase from "../components/DownloadFormModal";
-
 import "../css/style.css";
 
+import Navbar from "../components/Navbar";
+import PictName from "../components/PictName";
+import DownloadFormDatabase from "../components/DownloadFormModal";
+
+import {
+  doLogOut,
+  getUserBio,
+  doRefershSignin,
+} from "../stores/actions/userAction";
+import {
+  getCustomerList,
+  addCustomer,
+  uploadDataCustomer,
+} from "../stores/actions/customerAction";
+
 class Database extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLogin: true,
-      modalFormDatabase: false,
-      modalNewDatabase: false,
-    };
-    this.toggle = this.toggle.bind(this);
-    this.data = [
-      {
-        name: "Tiger Nixon",
-        email: "System Architect",
-        phone: "$320",
-        bod: "2011/04/25",
-        address: "61",
-        company: "Edinburgh",
-      },
-      {
-        name: "Garrett Winters",
-        email: "Accountant",
-        company: "Tokyo",
-        address: "63",
-        bod: "2011/07/25",
-        phone: "$170",
-      },
-      {
-        name: "Ashton Cox",
-        email: "Junior Technical Author",
-        company: "San Francisco",
-        address: "66",
-        bod: "2009/01/12",
-        phone: "$86",
-      },
-      {
-        name: "Cedric Kelly",
-        email: "Senior Javascript Developer",
-        company: "Edinburgh",
-        address: "22",
-        bod: "2012/03/29",
-        phone: "$433",
-      },
-      {
-        name: "Airi Satou",
-        email: "Accountant",
-        company: "Tokyo",
-        address: "33",
-        bod: "2008/11/28",
-        phone: "$162",
-      },
-      {
-        name: "Brielle Williamson",
-        email: "Integration Specialist",
-        company: "New York",
-        address: "61",
-        bod: "2012/12/02",
-        phone: "$372",
-      },
-    ];
-  }
+  state = {
+    modalFormDatabase: false,
+    modalNewDatabase: false,
+  };
+
+  componentDidMount = async () => {
+    await this.props.getCustomerList();
+    await this.props.doRefershSignin();
+    await this.props.getUserBio();
+    this.callCustomerData();
+  };
+
   toggle = (key) => () => {
     let modalKey = "modal" + key;
     this.setState({
       [modalKey]: !this.state[modalKey],
     });
   };
-  render() {
-    return (
-      <Fragment>
-        <Navbar
-          isLogin={this.state.isLogin}
-          fontColor={"white"}
-          backNav={"rgb(241, 76, 89)"}
-          style={{ position: "fixed" }}
-        />
-        <MDBBox
-          style={{
-            backgroundColor: "#f7f7f7",
-            padding: "100px 0 1px 0",
-          }}
-        >
-          {/* first row */}
-          <MDBBox className="d-flex justify-content-between align-items-center mx-5 pb-3">
-            <span
-              className="text-left"
-              style={{
-                fontWeight: "600",
-                color: "#192e35",
-                fontSize: "28px",
-              }}
-            >
-              Database
-            </span>
-            <MDBBox className="d-flex">
-              <button
-                color="transparent"
-                style={{
-                  backgroundColor: "white",
-                  border: "1px solid #f14c59",
-                  color: "#f14c59",
-                  boxShadow: "none",
-                  borderRadius: "40px",
-                  fontSize: "16px",
-                  height: "40px",
-                }}
-                className="text-capitalize px-3"
-                onClick={this.toggle("NewDatabase")}
-              >
-                <i class="fas fa-plus-circle mr-1"></i> New Database
-              </button>
-              <MDBModal
-                isOpen={this.state.modalNewDatabase}
-                toggle={this.toggle("NewDatabase")}
-                size="md"
-              >
-                <NewDatabase toggle={this.toggle} />
-              </MDBModal>
-              <button
-                color="transparent"
-                style={{
-                  backgroundColor: "white",
-                  border: "1px solid #f14c59",
-                  color: "#f14c59",
-                  boxShadow: "none",
-                  borderRadius: "40px",
-                  fontSize: "16px",
-                  height: "40px",
-                }}
-                className="text-capitalize px-3 mx-3"
-                onClick={this.toggle("FormDatabase")}
-              >
-                <i class="fas fa-download mr-1"></i> Download Form
-              </button>
-              <MDBModal
-                isOpen={this.state.modalFormDatabase}
-                toggle={this.toggle("FormDatabase")}
-                size="md"
-              >
-                <DownloadFormDatabase toggle={this.toggle} />
-              </MDBModal>
 
-              <MDBFormInline className="md-form" style={{ margin: "0px" }}>
-                <MDBIcon
-                  style={{ cursor: "pointer", color: "#f14c59" }}
-                  icon="search"
-                />
-                <input
-                  className="form-control form-control-sm ml-2 w-75"
-                  type="text"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-              </MDBFormInline>
-            </MDBBox>
-          </MDBBox>
-          {/* end first row */}
-          {/* main row */}
-          <MDBRow
+  handleOnDrop = (data) => {
+    this.props.uploadDataCustomer(data);
+  };
+
+  callCustomerData = () => {
+    if (this.props.customerList) {
+      this.setState({
+        data: {
+          columns: [
+            {
+              label: "Name",
+              field: "name",
+              width: 150,
+              color: "pink",
+            },
+            {
+              label: "Email",
+              field: "email",
+              width: 200,
+            },
+            {
+              label: "BOD",
+              field: "bod",
+              width: 270,
+            },
+            {
+              label: "Address",
+              field: "address",
+              width: 100,
+            },
+            {
+              label: "Phone",
+              field: "phone",
+              width: 150,
+            },
+            {
+              label: "Company",
+              field: "company",
+              width: 100,
+            },
+          ],
+          rows: [
+            ...this.props.customerList.map((el, index) => ({
+              key: index,
+              name: el.First_name + " " + el.last_name,
+              email: el.email,
+              bod: moment.utc(el.bod).format("YYYY/MM/DD"),
+              address: el.address,
+              phone: el.phone[0] !== "0" ? "0" + el.phone : el.phone,
+              company: el.company,
+            })),
+          ],
+        },
+      });
+    }
+  };
+
+  postUpload = async () => {
+    await this.props.addCustomer();
+    await alert("Database telah update");
+    this.callCustomerData();
+  };
+
+  handleOnError = (err) => {
+    console.log(err);
+  };
+
+  handleOnRemoveFile = (data) => {
+    console.log(data);
+  };
+
+  render() {
+    if (!localStorage.getItem("isSignin")) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/signin",
+            state: { message: "You must sign in first!" },
+          }}
+        />
+      );
+    } else {
+      const data = this.state.data;
+      if (!this.props.customerList) {
+        return <h3 className="loading">Loading...</h3>;
+      }
+      return (
+        <Fragment>
+          <Navbar
+            isLogin={this.state.isLogin}
+            fontColor={"white"}
+            backNav={"rgb(241, 76, 89)"}
+            style={{ position: "fixed" }}
+            logout={() => this.props.doLogOut()}
+            bio={this.props.bio}
+          />
+          <MDBBox
             style={{
-              margin: "20px",
+              backgroundColor: "#f7f7f7",
+              padding: "100px 0 1px 0",
             }}
           >
-            {/* side bar */}
-            <MDBCol size="2">
-              <PictName />
-            </MDBCol>
-            {/* end side bar */}
-            {/* table */}
-            <MDBCol size="10">
-              {/* title */}
-              <MDBRow
-                className="text-uppercase mb-3"
+            {/* first row */}
+            <MDBBox className="d-flex justify-content-between align-items-center mx-5 pb-3">
+              <span
+                className="text-left"
                 style={{
-                  fontWeight: "700",
-                  color: "rgb(241, 76, 89)",
-                  margin: "0px",
+                  fontWeight: "600",
+                  color: "#192e35",
+                  fontSize: "28px",
                 }}
               >
-                {/* name */}
-                <MDBCol
-                  size="2"
-                  className="d-flex align-items-center justify-content-center"
+                Database
+              </span>
+              <MDBBox className="d-flex">
+                <button
+                  color="transparent"
+                  style={{
+                    backgroundColor: "white",
+                    border: "1px solid #f14c59",
+                    color: "#f14c59",
+                    boxShadow: "none",
+                    borderRadius: "40px",
+                    fontSize: "16px",
+                    height: "40px",
+                    marginTop: "8px",
+                  }}
+                  className="text-capitalize px-3"
+                  onClick={this.toggle("NewDatabase")}
                 >
-                  <span className="mr-1">Name</span>
-                  <MDBIcon
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    className="mr-1"
-                    icon="caret-up"
-                  />
-                  <MDBIcon
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    icon="caret-down"
-                  />
-                </MDBCol>
-                {/* end name */}
-                {/* email */}
-                <MDBCol
-                  size="2"
-                  className="d-flex align-items-center justify-content-center"
+                  <i className="fas fa-plus-circle mr-1"></i> New Database
+                </button>
+                <MDBModal
+                  isOpen={this.state.modalNewDatabase}
+                  toggle={this.toggle("NewDatabase")}
+                  size="md"
                 >
-                  <span className="mr-1">Email</span>
-                  <MDBIcon
+                  <div className="new-database">
+                    <MDBRow
+                      style={{
+                        justifyContent: "end",
+                        marginTop: "15px",
+                        marginRight: "20px",
+                      }}
+                    >
+                      <MDBIcon
+                        icon="times"
+                        onClick={this.toggle("NewDatabase")}
+                        style={{ cursor: "pointer", color: "#9e9e9e" }}
+                      />
+                    </MDBRow>
+                    <MDBModalBody className="new-database-modal mx-4">
+                      <div className="text-center">
+                        <h3
+                          className="dark-grey-text mb-5"
+                          style={{ fontWeight: "600" }}
+                        >
+                          New Database
+                        </h3>
+                      </div>
+                      <div className="parse">
+                        <CSVReader
+                          onDrop={this.handleOnDrop}
+                          onError={this.handleOnError}
+                          addRemoveButton
+                          onRemoveFile={this.handleOnRemoveFile}
+                          config={{ header: true, skipEmptyLines: true }}
+                        >
+                          <span>Drop CSV disini atau klik untuk upload.</span>
+                        </CSVReader>
+                      </div>
+                      <MDBRow
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          marginTop: "20px",
+                        }}
+                      >
+                        <MDBBtn
+                          color="transparent"
+                          style={{
+                            backgroundColor: "#f14c59",
+                            color: "white",
+                            boxShadow: "none",
+                            borderRadius: "40px",
+                            fontSize: "16px",
+                            minWidth: "260px",
+                            // padding: ".50rem 1rem",
+                          }}
+                          onClick={this.postUpload}
+                          className="text-capitalize mt-3"
+                        >
+                          <i className="fas fa-upload mr-1"></i> Upload Database
+                        </MDBBtn>
+                      </MDBRow>
+                    </MDBModalBody>
+                    <MDBModalFooter
+                      className="pt-3 mb-1"
+                      style={{ marginRight: "70px" }}
+                    >
+                      <p className="font-small gray-text d-flex justify-content-center">
+                        Data dengan email yang sama tidak akan terupload
+                        <br />
+                        Hapus data lama dengan email yang sama terlebih dahulu
+                      </p>
+                    </MDBModalFooter>
+                  </div>
+                </MDBModal>
+                <MDBLink to="../components/JMForm.csv" target="_blank" download>
+                  <button
+                    color="transparent"
                     style={{
-                      cursor: "pointer",
+                      backgroundColor: "white",
+                      border: "1px solid #f14c59",
+                      color: "#f14c59",
+                      boxShadow: "none",
+                      borderRadius: "40px",
+                      fontSize: "16px",
+                      height: "40px",
                     }}
-                    className="mr-1"
-                    icon="caret-up"
-                  />
-                  <MDBIcon
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    icon="caret-down"
-                  />
-                </MDBCol>
-                {/* end email */}
-                {/* phone */}
-                <MDBCol
-                  size="2"
-                  className="d-flex align-items-center justify-content-center"
+                    className="text-capitalize px-3 mx-3"
+                  >
+                    <i className="fas fa-download mr-1"></i> Download Form
+                  </button>
+                </MDBLink>
+                <MDBModal
+                  isOpen={this.state.modalFormDatabase}
+                  toggle={this.toggle("FormDatabase")}
+                  size="md"
                 >
-                  <span className="mr-1">Phone</span>
+                  <DownloadFormDatabase toggle={this.toggle} />
+                </MDBModal>
+
+                <MDBFormInline className="md-form" style={{ margin: "0px" }}>
                   <MDBIcon
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    className="mr-1"
-                    icon="caret-up"
+                    style={{ cursor: "pointer", color: "#f14c59" }}
+                    icon="search"
                   />
-                  <MDBIcon
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    icon="caret-down"
+                  <input
+                    className="form-control form-control-sm ml-2 w-75"
+                    type="text"
+                    placeholder="Search"
+                    aria-label="Search"
                   />
-                </MDBCol>
-                {/* end phone */}
-                {/* bod */}
-                <MDBCol
-                  size="2"
-                  className="d-flex align-items-center justify-content-center"
-                >
-                  <span className="mr-1">bod</span>
-                  <MDBIcon
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    className="mr-1"
-                    icon="caret-up"
-                  />
-                  <MDBIcon
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    icon="caret-down"
-                  />
-                </MDBCol>
-                {/* end bod */}
-                {/* address */}
-                <MDBCol
-                  size="2"
-                  className="d-flex align-items-center justify-content-center"
-                >
-                  <span className="mr-1">address</span>
-                  <MDBIcon
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    className="mr-1"
-                    icon="caret-up"
-                  />
-                  <MDBIcon
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    icon="caret-down"
-                  />
-                </MDBCol>
-                {/* end address */}
-                {/* company */}
-                <MDBCol
-                  size="2"
-                  className="d-flex align-items-center justify-content-center"
-                >
-                  <span className="mr-1">company</span>
-                  <MDBIcon
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    className="mr-1"
-                    icon="caret-up"
-                  />
-                  <MDBIcon
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    icon="caret-down"
-                  />
-                </MDBCol>
-                {/* end company */}
-              </MDBRow>
-              {/* end title */}
-              <Table data={this.data} />
-              <MDBBox className="pt-2 d-flex justify-content-center">
-                <Pagination />
+                </MDBFormInline>
               </MDBBox>
-            </MDBCol>
-            {/* end table */}
-          </MDBRow>
-          {/* end main row */}
-        </MDBBox>
-      </Fragment>
-    );
+            </MDBBox>
+            {/* end first row */}
+            {/* main row */}
+            <MDBRow
+              style={{
+                margin: "20px",
+              }}
+            >
+              {/* side bar */}
+              <MDBCol size="2">
+                <PictName bio={this.props.bio} active={"database"} />
+              </MDBCol>
+              {/* end side bar */}
+              {/* table */}
+              <MDBCol size="10">
+                <MDBDataTable
+                  hover
+                  data={data}
+                  style={{
+                    backgroundColor: "white",
+                  }}
+                />
+              </MDBCol>
+              {/* end table */}
+            </MDBRow>
+            {/* end main row */}
+          </MDBBox>
+        </Fragment>
+      );
+    }
   }
 }
-export default Database;
+const mapStateToProps = (state) => {
+  return {
+    bio: state.userState.bio,
+    customerList: state.customerState.customerList,
+  };
+};
+const mapDispatchToProps = {
+  getUserBio,
+  getCustomerList,
+  doLogOut,
+  doRefershSignin,
+  addCustomer,
+  uploadDataCustomer,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Database);

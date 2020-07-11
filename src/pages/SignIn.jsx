@@ -10,12 +10,25 @@ import {
   MDBNavbarBrand,
 } from "mdbreact";
 import "../css/style.css";
+import { doSignin, changeInputUser } from "../stores/actions/userAction";
+import { connect } from "react-redux";
 
-export default class SignIn extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+class SignIn extends Component {
+  state = {};
+
+  postSignIn = async () => {
+    await this.props.doSignin();
+    if (localStorage.getItem("isSignin")) {
+      this.props.history.push("/dashboard");
+    }
+  };
+
+  handleKeyPress = (event) => {
+    const submit = this.postSignIn;
+    if (event.key === "Enter") {
+      submit();
+    }
+  };
 
   render() {
     return (
@@ -54,31 +67,35 @@ export default class SignIn extends Component {
                 </h3>
               </div>
               <MDBInput
-                name="nickname"
+                name="username"
                 label="Username"
                 group
                 type="text"
-                containerClass="mb-0"
+                containerclassName="mb-0"
+                onChange={this.props.changeInputUser}
+                onKeyDown={this.handleKeyPress}
               />
               <MDBInput
                 name="password"
                 label="Password"
                 group
                 type="password"
-                containerClass="mb-0"
-                onChange={this.checkPwd}
+                containerclassName="mb-0"
+                onChange={this.props.changeInputUser}
+                onKeyDown={this.handleKeyPress}
               />
               <div className="text-center signup-button d-flex justify-content-center mt-3">
                 <MDBBtn
                   type="button"
                   rounded
                   className="btn-block z-depth-1a"
-                  disabled={!this.state.passVal || !this.state.emailVal}
+                  disabled={!this.props.username || !this.props.password}
                   style={{
                     maxWidth: "200px",
                     borderRadius: "20px",
                     marginBottom: "100px",
                   }}
+                  onClick={this.postSignIn}
                 >
                   Sign in
                 </MDBBtn>
@@ -112,3 +129,15 @@ export default class SignIn extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    username: state.userState.username,
+    password: state.userState.password,
+  };
+};
+const mapDispatchToProps = {
+  doSignin,
+  changeInputUser,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
