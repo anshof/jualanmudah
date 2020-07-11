@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import {Link} from "react-router-dom"
 import "../css/style.css";
 import {
   MDBBox,
@@ -34,7 +35,7 @@ const Navbar = (props) => {
     >
       <MDBContainer>
         <MDBNavbarBrand className="d-flex align-items-center justify-content-center">
-          <a href="/">
+          <Link to="/">
             <strong
               className="logo"
               style={{
@@ -44,21 +45,21 @@ const Navbar = (props) => {
             >
               JM
             </strong>
-          </a>
+          </Link>
         </MDBNavbarBrand>
         <MDBNavbarNav right className="d-flex align-items-center">
           <MDBNavItem>
-            <a
-              href="/how-to-use"
+            <Link
+              to="/how-to-use"
               className="nav ml-3 text-uppercase text-decoration-none"
               style={{ color: props.fontColor ? props.fontColor : "#f14c59" }}
             >
               Cara penggunaan
-            </a>
+            </Link>
           </MDBNavItem>
           {/* <MDBNavItem>
             <a
-              href="/contact"
+              to="/contact"
               className="text-decoration-none nav ml-3 text-uppercase text-decoration-none"
               style={{ color: props.fontColor ? props.fontColor : "#f14c59" }}
             >
@@ -68,15 +69,15 @@ const Navbar = (props) => {
           {localStorage.getItem("isSignin") ? (
             <Fragment>
               <MDBNavItem>
-                <a
-                  href="/dashboard"
+                <Link
+                  to="/dashboard"
                   className="text-decoration-none nav ml-3 text-uppercase text-decoration-none"
                   style={{
                     color: props.fontColor ? props.fontColor : "#f14c59",
                   }}
                 >
                   dashboard
-                </a>
+                </Link>
               </MDBNavItem>
               <MDBNavItem>
                 <div
@@ -91,7 +92,7 @@ const Navbar = (props) => {
                 </div>
               </MDBNavItem>
               <MDBNavItem>
-                <a href="/profile" className="ml-3 ">
+                <Link to="/profile" className="ml-3 ">
                   <img
                     src={
                 props.bio.user_image === "https://firebasestorage.googleapis.com/v0/b/personal-email-d3b3b.appspot.com/o/images%2Fuser_image%2F9ff2f2f01c4bd1b013.png?alt=media&token=272b7417-a9fa-4fde-99b1-e00fa6d377ee" ? props.bio.user_image : require("../images/deafult-profile.jpg")
@@ -104,12 +105,12 @@ const Navbar = (props) => {
                       objectFit: "cover",
                     }}
                   />
-                </a>
+                </Link>
               </MDBNavItem>
             </Fragment>
           ) : (
             <MDBNavItem>
-              <a href="/signin" className="ml-3 ">
+              <Link to="/signin" className="ml-3 ">
                 <MDBBox
                   className="btn text-uppercase my-0 py-1"
                   style={{
@@ -122,7 +123,7 @@ const Navbar = (props) => {
                 >
                   masuk
                 </MDBBox>
-              </a>
+              </Link>
             </MDBNavItem>
           )}
         </MDBNavbarNav>
