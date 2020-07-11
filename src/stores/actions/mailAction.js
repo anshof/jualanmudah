@@ -2,9 +2,10 @@ import axios from "axios";
 import { EditorState, ContentState } from "draft-js";
 import htmlToDraft from "html-to-draftjs";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 // const baseUrl = process.env.REACT_APP_PUBLIC_URL;
-// const baseUrl = "https://slytherin.perintiscerita.shop/";
-const baseUrl = "http://0.0.0.0:5050";
+const baseUrl = "https://slytherin.perintiscerita.shop/";
+// const baseUrl = "http://0.0.0.0:5050";
 
 export const sendMailNow = (content, contactId) => {
   return async (dispatch, getState) => {
