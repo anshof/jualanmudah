@@ -27,7 +27,7 @@ export const deleteGroup = (id) => {
   return async (dispatch) => {
     const token = localStorage.getItem("token");
     await axios({
-      method: "DELETE",
+      method: "PATCH",
       url: baseUrl + "/customer-group/" + id,
       headers: { Authorization: `Bearer ${token}` },
     })

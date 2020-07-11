@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import moment from 'moment'
+import moment from "moment";
 import { MDBBox, MDBRow, MDBCol, MDBBtn, MDBDataTable } from "mdbreact";
 import "../css/style.css";
 
@@ -13,21 +13,24 @@ import {
   getUserBio,
   doRefershSignin,
 } from "../stores/actions/userAction";
-import { getDraftList, deleteDraft, getDraft } from "../stores/actions/mailAction";
+import {
+  getDraftList,
+  deleteDraft,
+  getDraft,
+} from "../stores/actions/mailAction";
 
 class DashboardDraft extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLogin: true,
-    };
-  }
+  state = {};
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
     await this.props.getDraftList();
     this.props.getUserBio();
-    if (this.props.draftList){
+    this.callDraftList();
+  };
+
+  callDraftList = () => {
+    if (this.props.draftList) {
       this.setState({
         data: {
           columns: [
@@ -59,15 +62,21 @@ class DashboardDraft extends Component {
               width: 150,
             },
           ],
-          rows: [ 
+          rows: [
             ...this.props.draftList.reverse().map((el, index) => ({
               key: index,
               title: el.subject ? el.subject : "Unsubjected",
-            edit : <p style={{color:"rgb(241, 76, 89)", cursor:"pointer"}}onClick={() => this.changeRouter(el.id)}>Edit</p>,
-              created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
-              segment: el.group_id !== 0
-                ? el.group_customer.name
-                : "Unsegmented",
+              edit: (
+                <p
+                  style={{ color: "rgb(241, 76, 89)", cursor: "pointer" }}
+                  onClick={() => this.changeRouter(el.id)}
+                >
+                  Edit
+                </p>
+              ),
+              created_at: moment.utc(el.created_at).format("YYYY/MM/DD"),
+              segment:
+                el.group_id !== 0 ? el.group_customer.name : "Unsegmented",
               delete: (
                 <MDBBtn
                   color="transparent"
@@ -81,85 +90,28 @@ class DashboardDraft extends Component {
                     style={{ cursor: "pointer" }}
                   ></i>
                 </MDBBtn>
-              )})),
-            ],
-          },
-        });
-      }
-    };
-
+              ),
+            })),
+          ],
+        },
+      });
+    }
+  };
 
   handleDelete = async (id) => {
     var result = window.confirm("Are you sure to delete?");
-    if  (result) {
+    if (result) {
       await this.props.deleteDraft(id);
     }
-    this.setState({
-      data: {
-        columns: [
-          {
-            label: "Title",
-            field: "title",
-            width: 150,
-            color: "pink",
-          },
-          {
-            label: "Created At",
-            field: "created_at",
-            width: 200,
-          },
-          {
-            label: "Segments",
-            field: "segment",
-            width: 270,
-          },
-          {
-            label: "Edit",
-            field: "edit",
-            sort: "asc",
-            width: 200,
-          },
-          {
-            label: "Delete",
-            field: "delete",
-            width: 150,
-          },
-        ],
-        rows: [ 
-          ...this.props.draftList.reverse().map((el, index) => ({
-            key: index,
-            title: el.subject ? el.subject : "Unsubjected",
-            edit : <p style={{color:"rgb(241, 76, 89)", cursor:"pointer"}}onClick={() => this.changeRouter(el.id)}>Edit</p>,
-            created_at: moment.utc(el.created_at).format('YYYY/MM/DD'),
-            segment: el.group_id !== 0
-              ? el.group_customer.name
-              : "Unsegmented",
-            delete: (
-              <MDBBtn
-                color="transparent"
-                size="xs"
-                style={{ boxShadow: "none", padding: "0", margin: "0" }}
-              >
-                <i
-                  className="fa fa-trash"
-                  aria-hidden="true"
-                  onClick={(id) => this.handleDelete(el.id)}
-                  style={{ cursor: "pointer" }}
-                ></i>
-              </MDBBtn>
-            )})),
-          ],
-        },
-      })
+    this.callDraftList();
   };
 
   changeRouter = async (draftId) => {
-     await this.props.getDraft(draftId)
-     this.props.history.push("/draft/" + draftId, { ...this.props.draft })
+    await this.props.getDraft(draftId);
+    this.props.history.push("/draft/" + draftId, { ...this.props.draft });
   };
 
   render() {
-    
     if (!localStorage.getItem("isSignin")) {
       return (
         <Redirect
@@ -170,11 +122,10 @@ class DashboardDraft extends Component {
         />
       );
     } else {
-      const data = this.state.data
+      const data = this.state.data;
       return (
         <MDBBox>
           <Navbar
-            isLogin={this.state.isLogin}
             fontColor={"white"}
             backNav={"rgb(241, 76, 89)"}
             style={{ position: "fixed" }}
@@ -209,7 +160,7 @@ class DashboardDraft extends Component {
             >
               {/* side bar */}
               <MDBCol size="2">
-                <PictName bio={this.props.bio} active={"draft"}/>
+                <PictName bio={this.props.bio} active={"draft"} />
               </MDBCol>
               {/* end side bar */}
               {/* table */}
@@ -244,6 +195,6 @@ const mapDispatchToProps = {
   deleteDraft,
   doLogOut,
   doRefershSignin,
-  getDraft
+  getDraft,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardDraft);

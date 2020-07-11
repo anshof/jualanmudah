@@ -14,19 +14,7 @@ import { doSignin, changeInputUser } from "../stores/actions/userAction";
 import { connect } from "react-redux";
 
 class SignIn extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    // this.postSignIn = this.postSignIn(this);
-  }
-  
-  // postSignIn() {
-  //   this.props.doSignin().then(() => {
-  //     if (localStorage.getItem("isSignin")) {
-  //       this.props.history.push("/");
-  //     }
-  //   });
-  // }
+  state = {};
 
   postSignIn = async () => {
     await this.props.doSignin();

@@ -12,18 +12,15 @@ import {
 } from "../stores/actions/userAction";
 import { getSent } from "../stores/actions/mailAction";
 class PreviewEmail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editorState: {},
-    };
-  }
+  state = {
+    editorState: {},
+  };
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
     this.props.getUserBio();
     await this.props.getSent(this.props.match.params.mailId);
-    if (this.props.draft){
+    if (this.props.draft) {
       this.setState({
         data: {
           columns: [
@@ -45,19 +42,29 @@ class PreviewEmail extends Component {
               field: "email",
               sort: "asc",
               width: 200,
-            }
+            },
           ],
-          rows: [ 
-              ...this.props.draft.track.map((el, index) => ({
-                key: index,
-                name: el.customer.First_name + " " + el.customer.last_name,
-                email: el.customer.email,
-              open : el.status_open ? <i class="fas fa-check" style={{color:"rgb(241, 76, 89)"}}></i> : <i class="fas fa-times" style={{color:"rgb(241, 76, 89)"}}></i>,
+          rows: [
+            ...this.props.draft.track.map((el, index) => ({
+              key: index,
+              name: el.customer.First_name + " " + el.customer.last_name,
+              email: el.customer.email,
+              open: el.status_open ? (
+                <i
+                  class="fas fa-check"
+                  style={{ color: "rgb(241, 76, 89)" }}
+                ></i>
+              ) : (
+                <i
+                  class="fas fa-times"
+                  style={{ color: "rgb(241, 76, 89)" }}
+                ></i>
+              ),
             })),
           ],
-          },
-        });
-      }
+        },
+      });
+    }
   };
 
   render() {
@@ -72,7 +79,7 @@ class PreviewEmail extends Component {
       );
     } else {
       const editorState = this.props.editor;
-      const data = this.state.data
+      const data = this.state.data;
       return (
         <MDBBox style={{ backgroundColor: "#f7f7f7" }}>
           <Navbar
@@ -134,7 +141,11 @@ class PreviewEmail extends Component {
               {/* end create new segment */}
               {/* table */}
               <MDBCol size="6">
-                <p style={{ fontWeight: "500" }}>{this.props.draft ? this.props.draft.group_customer.name : "nama segment"}</p>
+                <p style={{ fontWeight: "500" }}>
+                  {this.props.draft
+                    ? this.props.draft.group_customer.name
+                    : "nama segment"}
+                </p>
                 <MDBDataTable
                   hover
                   btn

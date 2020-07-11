@@ -17,14 +17,10 @@ import {
   deleteGroup,
 } from "../stores/actions/customerAction";
 class AllSegments extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLogin: true,
-      modalFormDatabase: false,
-      modalNewDatabase: false,
-    };
-  }
+  state = {
+    modalFormDatabase: false,
+    modalNewDatabase: false,
+  };
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
@@ -34,12 +30,12 @@ class AllSegments extends Component {
     if (this.props.match.params.segmentId) {
       await this.props.getCustomerMember(this.props.match.params.segmentId);
       groupData = await this.props.customerState.customerList;
-        this.callSegment(groupData)
+      this.callSegment(groupData);
     } else {
       groupData = await this.props.customerGroups;
-    this.callAllSegment(groupData)
+      this.callAllSegment(groupData);
+    }
   };
-}
 
   callAllSegment = (groupData) => {
     if (groupData) {
@@ -81,7 +77,7 @@ class AllSegments extends Component {
           rows: [
             ...groupData.map((el, index) => ({
               key: index,
-              segment : el.name,
+              segment: el.name,
               detail: (
                 <p
                   style={{ color: "rgb(241, 76, 89)", cursor: "pointer" }}
@@ -111,7 +107,7 @@ class AllSegments extends Component {
         },
       });
     }
-  }
+  };
 
   callSegment = (groupData) => {
     if (groupData) {
@@ -184,12 +180,12 @@ class AllSegments extends Component {
         },
       });
     }
-  }
+  };
 
   handleBacktoList = async () => {
     await this.props.getCustomerGroupList();
     let groupData = await this.props.customerGroups;
-    this.callAllSegment(groupData)
+    this.callAllSegment(groupData);
   };
 
   handleDeleteGroup = async (id) => {
@@ -199,7 +195,7 @@ class AllSegments extends Component {
     }
     await this.props.getCustomerGroupList();
     let groupData = await this.props.customerGroups;
-    this.callAllSegment(groupData)
+    this.callAllSegment(groupData);
   };
 
   changeRouter = async (segmentId) => {
@@ -207,8 +203,8 @@ class AllSegments extends Component {
     await this.props.history.push("/segment/" + segmentId, {
       ...this.props.draft,
     });
-    let groupData = this.props.customerState.customerList
-    this.callSegment(groupData)
+    let groupData = this.props.customerState.customerList;
+    this.callSegment(groupData);
   };
 
   render() {

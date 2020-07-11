@@ -14,15 +14,11 @@ import "../css/style.css";
 import { doSignup, changeInputUser } from "../stores/actions/userAction";
 
 class SignUp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false,
-      passVal: false,
-      messagePass: "",
-    };
-    this.toggle = this.toggle.bind(this);
-  }
+  state = {
+    isOpen: false,
+    passVal: false,
+    messagePass: "",
+  };
 
   toggle = (key) => () => {
     let modalKey = "modal" + key;
@@ -32,7 +28,7 @@ class SignUp extends Component {
   };
 
   checkPwd = async (e) => {
-    await this.props.changeInputUser(e)
+    await this.props.changeInputUser(e);
     const pwd = this.props.password;
     if (pwd.length <= 2) {
       this.setState({ messagePass: "" });
@@ -58,7 +54,7 @@ class SignUp extends Component {
   };
 
   render() {
-    let validSignup
+    let validSignup;
     if (
       this.state.passVal &&
       this.props.full_name &&

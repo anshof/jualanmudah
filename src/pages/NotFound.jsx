@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Navbar from "../components/Navbar";
 
-import {
-  doLogOut,
-  getUserBio
-} from "../stores/actions/userAction";
+import { doLogOut, getUserBio } from "../stores/actions/userAction";
 
 class NotFound extends Component {
   componentDidMount = () => {
@@ -14,14 +11,14 @@ class NotFound extends Component {
   render() {
     return (
       <div>
-      <Navbar
-            fontColor={"white"}
-            backNav={"rgb(241, 76, 89)"}
-            logout = {() => this.props.doLogOut()}
-            fontColorNot={"rgb(241, 76, 89)"}
-            backNavButton={"white"}
+        <Navbar
+          fontColor={"white"}
+          backNav={"rgb(241, 76, 89)"}
+          logout={() => this.props.doLogOut()}
+          fontColorNot={"rgb(241, 76, 89)"}
+          backNavButton={"white"}
           bio={this.props.bio}
-          />
+        />
         <div className="d-flex justify-content-center">
           <img src={require("../images/404.webp")} alt="notfound" />
         </div>
@@ -49,6 +46,6 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
   doLogOut,
-  getUserBio
+  getUserBio,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NotFound);

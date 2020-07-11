@@ -1,13 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
-import {
-  MDBBox,
-  MDBCol,
-  MDBRow,
-  MDBContainer,
-  MDBLink,
-} from "mdbreact";
+import { MDBBox, MDBCol, MDBRow, MDBContainer, MDBLink } from "mdbreact";
 import { Link } from "react-router-dom";
 
 import "../css/style.css";
@@ -16,14 +10,10 @@ import Navbar from "../components/Navbar";
 import {
   doLogOut,
   doRefershSignin,
-  getUserBio
+  getUserBio,
 } from "../stores/actions/userAction";
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+  state = {};
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
@@ -36,7 +26,7 @@ class Home extends Component {
         <Navbar
           backNav={"white"}
           fontColor={"rgb(241, 76, 89)"}
-          logout = {() => this.props.doLogOut()}
+          logout={() => this.props.doLogOut()}
           bio={this.props.bio}
         />
         <MDBRow
@@ -63,7 +53,9 @@ class Home extends Component {
                   color: "#385a66",
                 }}
               >
-                Tingkatkan penghasilan Anda dengan menghubungkan Anda ke pelanggan dengan cara yang lebih baik, lebih mudah, dan lebih cepat.
+                Tingkatkan penghasilan Anda dengan menghubungkan Anda ke
+                pelanggan dengan cara yang lebih baik, lebih mudah, dan lebih
+                cepat.
               </p>
               <Link to="/dashboard">
                 <MDBBox
@@ -447,6 +439,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   doLogOut,
   doRefershSignin,
-  getUserBio
+  getUserBio,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

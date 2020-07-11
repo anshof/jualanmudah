@@ -13,15 +13,9 @@ import {
   getUserBio,
   doRefershSignin,
 } from "../stores/actions/userAction";
-import {
-  getSendList,
-  deleteLocalDraft,
-} from "../stores/actions/mailAction";
+import { getSendList, deleteLocalDraft } from "../stores/actions/mailAction";
 class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  state = {};
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
@@ -64,7 +58,7 @@ class Dashboard extends Component {
             ...this.props.mailSendList.reverse().map((el, index) => ({
               key: index,
               title: el.subject,
-              details : (
+              details: (
                 <p
                   style={{ color: "rgb(241, 76, 89)", cursor: "pointer" }}
                   onClick={() => this.changeRouter(el.id)}
@@ -101,7 +95,6 @@ class Dashboard extends Component {
       return (
         <MDBBox>
           <Navbar
-            isLogin={this.state.isLogin}
             fontColor={"white"}
             backNav={"rgb(241, 76, 89)"}
             style={{ position: "fixed" }}
@@ -136,7 +129,7 @@ class Dashboard extends Component {
             >
               {/* side bar */}
               <MDBCol size="2">
-                <PictName bio={this.props.bio} active={"broadcasts"}/>
+                <PictName bio={this.props.bio} active={"broadcasts"} />
               </MDBCol>
               {/* end side bar */}
               {/* table */}

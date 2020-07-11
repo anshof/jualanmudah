@@ -9,14 +9,10 @@ import "../css/style.css";
 import {
   doLogOut,
   doRefershSignin,
-  getUserBio
+  getUserBio,
 } from "../stores/actions/userAction";
 class HowToUse extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+  state = {};
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
@@ -28,7 +24,7 @@ class HowToUse extends Component {
         <Navbar
           backNav={"white"}
           fontColor={"rgb(241, 76, 89)"}
-          logout = {() => this.props.doLogOut()}
+          logout={() => this.props.doLogOut()}
           bio={this.props.bio}
         />
         <MDBBox
@@ -144,6 +140,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   doLogOut,
   doRefershSignin,
-  getUserBio
+  getUserBio,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HowToUse);

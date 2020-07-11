@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-// import { Prompt } from "react-router";
 
 import {
   MDBTabPane,
@@ -44,14 +43,12 @@ import {
 } from "../stores/actions/mailAction";
 
 class NewBroadcast extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editorState: {},
-      radio1: 1,
-      activeItem: this.props.match.params.draftId ? "3" : "1",
-    };
-  }
+  state = {
+    editorState: {},
+    radio1: 1,
+    activeItem: this.props.match.params.draftId ? "3" : "1",
+  };
+
   componentDidMount = async () => {
     await this.props.doRefershSignin();
     this.props.getUserBio();
@@ -210,10 +207,6 @@ class NewBroadcast extends Component {
         : false;
       return (
         <MDBBox>
-          {/* <Prompt
-            when={this.state.saved === false}
-            message="You have unsaved changes, are you sure you want to leave?"
-          /> */}
           <Navbar
             isLogin={this.state.isLogin}
             fontColor={"white"}

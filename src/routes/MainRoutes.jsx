@@ -6,9 +6,7 @@ import store from "../stores";
 
 import Home from "../pages/Home";
 import NewBroadcast from "../pages/NewBroadcast";
-import EmailBuilder from "../pages/EmailBuilder";
 import Database from "../pages/Database";
-import DashboardStaff from "../pages/DashboardStaff";
 import Dashboard from "../pages/Dashboard";
 import DashboardDraft from "../pages/DashboardDraft";
 import SignIn from "../pages/SignIn";
@@ -28,9 +26,7 @@ const MainRoutes = () => {
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/broadcast" component={NewBroadcast} />
           <Route exact path="/broadcast/:mailId" component={PreviewEmail} />
-          <Route exact path="/builder" component={EmailBuilder} />
           <Route exact path="/database" component={Database} />
-          <Route exact path="/staff" component={DashboardStaff} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/draft" component={DashboardDraft} />
           <Route exact path="/draft/:draftId" component={NewBroadcast} />

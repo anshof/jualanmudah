@@ -26,70 +26,17 @@ import {
 } from "../stores/actions/customerAction.js";
 
 class NewSegment extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      radio1: 1,
-      radio2: 1,
-    };
-  }
+  state = {
+    radio1: 1,
+    radio2: 1,
+  };
 
   componentDidMount = async () => {
     await this.props.getCustomerList();
-    let dataCustomer = this.props.customerList
     await this.props.getCustomerGroupList();
     await this.props.doRefershSignin();
     await this.props.getUserBio();
-    if (dataCustomer) {
-      this.setState({
-        data: {
-          columns: [
-            {
-              label: "Check",
-              field: "check",
-              sort: "asc",
-              width: 150,
-            },
-            {
-              label: "Name",
-              field: "name",
-              width: 150,
-              color: "pink",
-            },
-            {
-              label: "Email",
-              field: "email",
-              width: 270,
-            },
-            {
-              label: "Company",
-              field: "company",
-              width: 100,
-            },
-          ],
-          rows: [
-            ...this.props.customerList.map((el, index) => ({
-              key: index,
-              check: (
-                <form>
-                  <label class="checkbox-inline">
-                    <input
-                      type="checkbox"
-                      value={el.id}
-                      name="selectCustomerId"
-                      onChange={(e) => this.props.checkedCustomer(e)}
-                    />
-                  </label>
-                </form>
-              ),
-              name: el.First_name + " " + el.last_name,
-              email: el.email,
-              company: el.company,
-            })),
-          ],
-        },
-      });
-    }
+    this.callCustomerData();
   };
 
   onClickChoice1 = (nr) => () => {
@@ -104,14 +51,8 @@ class NewSegment extends Component {
     });
   };
 
-  onChangeGroupMember = async (e) => {
-    await this.props.changeInputCustomer(e)
-    if (this.props.customerState.groupListSelect === "all") {
-    await this.props.getCustomerList();
-    } else {
-    await this.props.getCustomerMember(this.props.customerState.groupListSelect)}
-    let dataCustomer = await this.props.customerState.customerList
-    if (dataCustomer) {
+  callCustomerData = () => {
+    if (this.props.customerList) {
       this.setState({
         data: {
           columns: [
@@ -161,19 +102,34 @@ class NewSegment extends Component {
         },
       });
     }
+  };
 
-  }
-
-  doneCreateGroup = async() => {
-    const customersId = await this.props.selectCustomerId
-    if (this.state.radio1 === 1){
-      await this.props.addCustomerGroup()}
-    const groupId = await this.state.radio1 === 1 ? this.props.customerState.groupIdCreated : this.props.customerState.groupIdSelect
-    for (let i = 0;i<customersId.length;i++){
-      await this.props.addCustomerMember(customersId[i],groupId)
+  onChangeGroupMember = async (e) => {
+    await this.props.changeInputCustomer(e);
+    if (this.props.customerState.groupListSelect === "all") {
+      await this.props.getCustomerList();
+    } else {
+      await this.props.getCustomerMember(
+        this.props.customerState.groupListSelect
+      );
     }
-    await alert("Sukses!")
-    window.location.reload(); 
+    this.callCustomerData();
+  };
+
+  doneCreateGroup = async () => {
+    const customersId = await this.props.selectCustomerId;
+    if (this.state.radio1 === 1) {
+      await this.props.addCustomerGroup();
+    }
+    const groupId =
+      (await this.state.radio1) === 1
+        ? this.props.customerState.groupIdCreated
+        : this.props.customerState.groupIdSelect;
+    for (let i = 0; i < customersId.length; i++) {
+      await this.props.addCustomerMember(customersId[i], groupId);
+    }
+    await alert("Sukses!");
+    window.location.reload();
   };
 
   render() {
@@ -276,7 +232,7 @@ class NewSegment extends Component {
                               className="form-control"
                               disabled={this.state.radio1 !== 1 ? true : false}
                               name="nameGroup"
-                                placeholder="Nama grup"
+                              placeholder="Nama grup"
                               aria-label="Username"
                               aria-describedby="basic-addon1"
                               onChange={(e) =>
@@ -299,7 +255,9 @@ class NewSegment extends Component {
                           name="groupIdSelect"
                           onChange={(e) => this.props.changeInputCustomer(e)}
                         >
-                          <option value="" disabled selected>Grup kontak</option>
+                          <option value="" disabled selected>
+                            Grup kontak
+                          </option>
                           {this.props.customerGroups
                             ? this.props.customerGroups.map((el, index) => (
                                 <option key={index} value={el.id}>
@@ -366,7 +324,9 @@ class NewSegment extends Component {
                         name="groupListSelect"
                         onChange={(e) => this.onChangeGroupMember(e)}
                       >
-                        <option value="" disabled selected>Grup kontak</option>
+                        <option value="" disabled selected>
+                          Grup kontak
+                        </option>
                         {this.props.customerGroups
                           ? this.props.customerGroups.map((el, index) => (
                               <option key={index} value={el.id}>
@@ -421,8 +381,8 @@ const mapStateToProps = (state) => {
     staffs: state.userState.staffs,
     customerGroups: state.customerState.customerGroup,
     customerList: state.customerState.customerList,
-    selectCustomerId : state.customerState.selectCustomerId,
-    customerState : state.customerState
+    selectCustomerId: state.customerState.selectCustomerId,
+    customerState: state.customerState,
   };
 };
 const mapDispatchToProps = {
@@ -435,6 +395,6 @@ const mapDispatchToProps = {
   getCustomerList,
   checkedCustomer,
   addCustomerMember,
-  getCustomerMember
+  getCustomerMember,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NewSegment);

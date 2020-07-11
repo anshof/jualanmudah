@@ -34,19 +34,30 @@ import {
 } from "../stores/actions/customerAction";
 
 class Database extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modalFormDatabase: false,
-      modalNewDatabase: false,
-    };
-    this.toggle = this.toggle.bind(this);
-  }
+  state = {
+    modalFormDatabase: false,
+    modalNewDatabase: false,
+  };
 
   componentDidMount = async () => {
     await this.props.getCustomerList();
     await this.props.doRefershSignin();
     await this.props.getUserBio();
+    this.callCustomerData();
+  };
+
+  toggle = (key) => () => {
+    let modalKey = "modal" + key;
+    this.setState({
+      [modalKey]: !this.state[modalKey],
+    });
+  };
+
+  handleOnDrop = (data) => {
+    this.props.uploadDataCustomer(data);
+  };
+
+  callCustomerData = () => {
     if (this.props.customerList) {
       this.setState({
         data: {
@@ -82,12 +93,6 @@ class Database extends Component {
               field: "company",
               width: 100,
             },
-            {
-              label: "Hapus",
-              field: "delete",
-              sort: "asc",
-              width: 270,
-            },
           ],
           rows: [
             ...this.props.customerList.map((el, index) => ({
@@ -98,20 +103,6 @@ class Database extends Component {
               address: el.address,
               phone: el.phone[0] !== "0" ? "0" + el.phone : el.phone,
               company: el.company,
-              delete: (
-                <MDBBtn
-                  color="transparent"
-                  size="xs"
-                  style={{ boxShadow: "none", padding: "0", margin: "0" }}
-                >
-                  <i
-                    className="fa fa-trash"
-                    aria-hidden="true"
-                    // onClick={(id) => this.handleDeleteGroup(el.id)}
-                    style={{ cursor: "pointer" }}
-                  ></i>
-                </MDBBtn>
-              ),
             })),
           ],
         },
@@ -119,24 +110,13 @@ class Database extends Component {
     }
   };
 
-  toggle = (key) => () => {
-    let modalKey = "modal" + key;
-    this.setState({
-      [modalKey]: !this.state[modalKey],
-    });
-  };
-
-  handleOnDrop = (data) => {
-    this.props.uploadDataCustomer(data);
-  };
-
   postUpload = async () => {
     await this.props.addCustomer();
     await alert("Database telah update");
-    window.location.reload();
+    this.callCustomerData();
   };
 
-  handleOnError = (err, file, inputElem, reason) => {
+  handleOnError = (err) => {
     console.log(err);
   };
 
