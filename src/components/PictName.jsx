@@ -1,10 +1,10 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import { MDBBox } from "mdbreact";
 
 import "../css/style.css";
 
-const PictName = () => {
+const PictName = (props) => {
   return (
     <MDBBox
       style={{
@@ -21,7 +21,10 @@ const PictName = () => {
           <MDBBox>
             <img
               src={
-                "https://emmawatson2017.files.wordpress.com/2017/01/emma-watson-harry-potter-movies-wallpapers-hd-wallpaper-high.jpg"
+                props.bio.user_image ===
+                "https://firebasestorage.googleapis.com/v0/b/personal-email-d3b3b.appspot.com/o/images%2Fuser_image%2F9ff2f2f01c4bd1b013.png?alt=media&token=272b7417-a9fa-4fde-99b1-e00fa6d377ee"
+                  ? props.bio.user_image
+                  : require("../images/deafult-profile.jpg")
               }
               alt="pict"
               style={{
@@ -38,68 +41,124 @@ const PictName = () => {
           className="text-center mb-0 pt-2"
           style={{ fontSize: "18px", fontWeight: "700", color: "#a13034" }}
         >
-          Hermione Granger
+          {props.bio.full_name}
         </p>
-        <p className="text-muted text-center mt-0">hermione@alterra.id</p>
       </MDBBox>
-      <MDBBox className="text-center" style={{ margin: "0", padding: "0" }}>
-        <button
-          color="transparent"
-          style={{
-            backgroundColor: "#f14c59",
-            border: "1px solid #f14c59",
-            color: "white",
-            boxShadow: "none",
-            borderRadius: "40px",
-            fontSize: "14px",
-            height: "40px",
-            margin: "0",
-            padding: "0 13px",
-          }}
-          className="text-capitalize"
-        >
-          <i class="fas fa-plus mr-1"></i> New Broadcast
-        </button>
+      <MDBBox
+        className="text-center"
+        style={{ margin: "0", padding: "0", marginTop: "10px" }}
+      >
+        <Link to="/broadcast">
+          <button
+            color="transparent"
+            style={{
+              backgroundColor: "#f14c59",
+              border: "1px solid #f14c59",
+              color: "white",
+              boxShadow: "none",
+              borderRadius: "40px",
+              fontSize: "14px",
+              height: "40px",
+              margin: "0",
+              padding: "0 13px",
+            }}
+            className="text-capitalize"
+          >
+            <i className="fas fa-plus mr-1"></i> Buat Broadcast
+          </button>
+        </Link>
       </MDBBox>
+      
+      <hr />
+      <MDBBox
+        className="text-center"
+        style={{ margin: "0", padding: "0", marginTop: "10px" }}
+      >
+        <Link to="/segment">
+          <button
+            color="transparent"
+            style={{
+              backgroundColor: "#f14c59",
+              border: "1px solid #f14c59",
+              color: "white",
+              boxShadow: "none",
+              borderRadius: "40px",
+              fontSize: "14px",
+              height: "40px",
+              margin: "0",
+              padding: "0 13px",
+            }}
+            className="text-capitalize"
+          >
+            <i className="fas fa-plus mr-1"></i> Buat Segmen
+          </button>
+        </Link>
+      </MDBBox>
+      
       <hr />
       <MDBBox className="pl-3">
-        <p
+        <Link
+          to={props.active !== "broadcasts" ? "/dashboard" : "#"}
           className="mb-1"
           style={{
             fontSize: "18px",
             fontWeight: "600",
-            color: "#192e35",
+            color: props.active !== "broadcasts" ? "rgb(241, 76, 89)" : "#192e35",
+            cursor : props.active !== "broadcasts" ? "pointer" : "text"
           }}
         >
-          All segments
-        </p>
-        <a href="#!" style={{ color: "#192e35" }}>
-          <p className="py-0 my-0" style={{ fontSize: "16px" }}>
-            Woman
-          </p>
-        </a>
-        <a href="#!" style={{ color: "#192e35" }}>
-          <p className="py-0 my-0" style={{ fontSize: "16px" }}>
-            Man
-          </p>
-        </a>
+          Broadcasts
+        </Link>
       </MDBBox>
       <hr />
       <MDBBox className="pl-3">
-        <p
+      <Link
+          to={props.active === "segments" ? "#" : "/segment-list"}
           className="mb-1"
           style={{
             fontSize: "18px",
             fontWeight: "600",
-            color: "#192e35",
+            color: props.active !== "segments" ? "rgb(241, 76, 89)" : "#192e35",
+            cursor : props.active !== "segments" ? "pointer" : "text"
+          }}
+        >
+          Semua segmen
+        </Link>
+      </MDBBox>
+      <hr />
+      <MDBBox className="pl-3">
+        <Link
+          to={props.active !== "draft" ? "/draft" : "#"}
+          className="mb-1"
+          style={{
+            fontSize: "18px",
+            fontWeight: "600",
+            color: props.active !== "draft" ? "rgb(241, 76, 89)" : "#192e35",
+            cursor : props.active !== "draft" ? "pointer" : "text"
           }}
         >
           Draft
-        </p>
+        </Link>
       </MDBBox>
       <hr />
       <MDBBox className="pl-3">
-        <p
+        <Link
+          to={props.active !== "database" ? "/database" : "#"}
+          className="mb-1"
+          style={{
+            fontSize: "18px",
+            fontWeight: "600",
+            color: props.active !== "database" ? "rgb(241, 76, 89)" : "#192e35",
+            cursor : props.active !== "database" ? "pointer" : "text"
+          }}
+        >
+          Database
+        </Link>
+      </MDBBox>
+      {/* <hr />
+      <MDBBox className="pl-3">
+        <Link
+        to="/staff"
           className="mb-1"
           style={{
             fontSize: "18px",
@@ -107,9 +166,9 @@ const PictName = () => {
             color: "#192e35",
           }}
         >
-          Database
-        </p>
-      </MDBBox>
+          Staff
+        </Link>
+      </MDBBox> */}
     </MDBBox>
   );
 };

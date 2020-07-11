@@ -1,10 +1,10 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import { MDBRow, MDBCol } from "mdbreact";
 
 import "../css/style.css";
 
-const Table = () => {
+const Table = (props) => {
   return (
     <MDBRow
       className="text-capitalize d-flex align-items-center py-3"
@@ -18,18 +18,18 @@ const Table = () => {
       }}
     >
       <MDBCol size="3" style={{ textAlign: "center" }}>
-        <span className="pl-1">Info produk terbaru</span>
+        <Link to="#"className="pl-1" style={{color:"rgb(241, 76, 89)"}}>{props.subject}</Link>
       </MDBCol>
       <MDBCol size="3" style={{ textAlign: "center" }}>
-        <span>Woman</span>
+        <span>{props.group.name}</span>
       </MDBCol>
       <MDBCol size="3" style={{ textAlign: "center" }}>
         <span>
-          <i class="far fa-trash-alt"></i>
+          <i className="far fa-trash-alt" onClick={() => props.delete(props.id)} style={{cursor:"pointer"}}></i>
         </span>
       </MDBCol>
       <MDBCol size="3" style={{ textAlign: "center" }}>
-        <span>20 Januari 2020 - 08:30</span>
+        <span>{props.createdAt.slice(0, -9)}</span>
       </MDBCol>
     </MDBRow>
   );
