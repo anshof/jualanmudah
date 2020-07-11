@@ -117,7 +117,7 @@ class Dashboard extends Component {
                   fontSize: "28px",
                 }}
               >
-                Manage Broadcast
+                Broadcast
               </span>
             </MDBBox>
             {/* end title */}

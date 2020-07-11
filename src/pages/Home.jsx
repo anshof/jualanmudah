@@ -44,7 +44,7 @@ class Home extends Component {
                 }}
                 className="text-capitalize"
               >
-                tingkatkan <br /> penjualan anda <br /> sekarang!!!
+                tingkatkan <br /> penjualanmu <br /> sekarang!!!
               </h1>
               <p
                 style={{
@@ -53,8 +53,8 @@ class Home extends Component {
                   color: "#385a66",
                 }}
               >
-                Tingkatkan penghasilan Anda dengan menghubungkan Anda ke
-                pelanggan dengan cara yang lebih baik, lebih mudah, dan lebih
+                Tingkatkan penghasilanmu. Hubungi
+                pelangganmu dengan cara yang lebih baik, mudah, dan
                 cepat.
               </p>
               <Link to="/dashboard">
@@ -92,10 +92,9 @@ class Home extends Component {
           }}
         >
           <h2>
-            “Content builds relationships. Relationships are built on trust.
-            Trust drives revenue”
+            “Sales is not about selling anymore but building trust and educating”
           </h2>
-          <p style={{ fontSize: "18px", color: "#385a66" }}>- Andrew Davis -</p>
+          <p style={{ fontSize: "18px", color: "#385a66" }}>- Siva Devaki -</p>
         </MDBBox>
         {/* akhir quote */}
         {/* 3 panel */}
@@ -114,7 +113,7 @@ class Home extends Component {
               style={{ fontSize: "35px", fontWeight: "600", color: "#1b2e35" }}
               className="mb-5"
             >
-              What we <span style={{ color: "#f14c59" }}>have</span>?
+              Kirim email tanpa <span style={{ color: "#f14c59" }}>batas</span>
             </p>
             <MDBRow>
               <MDBCol
@@ -135,7 +134,7 @@ class Home extends Component {
                     Broadcast email
                   </h5>
                   <p className="noPadMar">
-                    Sending email to dozens customer <br /> easily.
+                  Kirim email dengan cepat hingga ke ribuan kontak atau lebih.
                   </p>
                 </MDBBox>
               </MDBCol>
@@ -156,7 +155,7 @@ class Home extends Component {
                     Email tracker
                   </h5>
                   <p>
-                    You'll know when your customers <br /> see your campaign.
+                  Sekarang kamu akan tahu apakah emailmu dibaca atau tidak.
                   </p>
                 </MDBBox>
               </MDBCol>
@@ -174,11 +173,10 @@ class Home extends Component {
                     className="noPadMar"
                     style={{ fontWeight: "600", color: "#1b2e35" }}
                   >
-                    Broadcast WhatsApp
+                    Jadwal pengiriman email 
                   </h5>
                   <p>
-                    Get closer to your customer through <br />
-                    broadcast WhatsApp.
+                   Kamu bisa menjadwalkan kirim email untuk waktu yang akan datang.
                   </p>
                 </MDBBox>
               </MDBCol>
@@ -204,7 +202,7 @@ class Home extends Component {
               style={{ fontSize: "35px", fontWeight: "600", color: "#1b2e35" }}
               className="mb-5"
             >
-              Who are <span style={{ color: "#f14c59" }}>we</span>?
+              Siapa <span style={{ color: "#f14c59" }}>kami</span>?
             </p>
             <MDBRow
               style={{
@@ -230,12 +228,17 @@ class Home extends Component {
                     Jualan Mudah
                   </p>
                   <p style={{ fontSize: "18px" }}>
-                    There are many ways you can approach your customers.
+                    Pelanggan dapat didekati dengan banyak cara. 
                     <br />
-                    We provide broadcast email services for sales. Here, <br />
-                    you can see whether your customers read the emails you send
+                    Mengirim email salah satunya. 
                     <br />
-                    or not. Not only email but also whatsapp.
+                    <br />
+                    Kami menyediakan layanan broadcast email, dimana kamu bisa mengirim email tanpa batas.
+                    Kirim email dengan jumlah banyak kini tidak lagi sulit. 
+                    <br />
+                    <br />
+                    Kamu bisa membuat grup dari data pelangganmu untuk membuat target pembeli yang lebih spesifik.
+                    <br />
                   </p>
                 </MDBBox>
               </MDBCol>
@@ -275,14 +278,10 @@ class Home extends Component {
                       color: "#1b2e35",
                     }}
                   >
-                    Guaranteed privacy
+                   Privasi terjamin
                   </p>
                   <p style={{ fontSize: "18px" }}>
-                    We never use any external trackers, track members between{" "}
-                    communities or share any of your data. We also use magic
-                    links for login and anonymize collected data for anonymous
-                    visitors. Our #1 goal is making sure your data and community
-                    channel is yours and yours alone.
+                    Jangan khawatir kami jamin datamu aman.
                   </p>
                 </MDBBox>
               </MDBCol>
@@ -334,11 +333,11 @@ class Home extends Component {
                       color: "#1b2e35",
                     }}
                   >
-                    Getting started is easy
+                    Ayo
                   </p>
                   <p style={{ fontSize: "18px" }}>
-                    Manage your campaign, customers and sales. <br />
-                    Grow your audience.
+                    Tingkatkan penjualanmu<br />
+                    sekarang!!!
                   </p>
                   <MDBLink
                     to="/dashboard"
@@ -349,10 +348,10 @@ class Home extends Component {
                       backgroundColor: "#f14c59",
                       color: "white",
                       borderRadius: "20px",
-                      maxWidth: "160px",
+                      // maxWidth: "160px",
                     }}
                   >
-                    Start now
+                    Mulai Sekarang
                   </MDBLink>
                 </MDBBox>
               </MDBCol>
@@ -366,14 +365,13 @@ class Home extends Component {
                 <MDBCol size="3">
                   <h6 className="font-weight-bold">Menu</h6>
                   <h6 className="mb-0">Home</h6>
-                  <h6 className="my-0">Features</h6>
-                  <h6 className="my-0">About</h6>
+                  <h6 className="my-0">Cara Penggunaan</h6>
                 </MDBCol>
                 <MDBCol size="3">
-                  <h6 className="font-weight-bold">Features</h6>
+                  <h6 className="font-weight-bold">Fitur Utama</h6>
                   <h6 className="mb-0">Email broadcast</h6>
                   <h6 className="my-0">Email tracker</h6>
-                  <h6 className="my-0">WhatsApp broadcast</h6>
+                  <h6 className="my-0">Scheduled email</h6>
                 </MDBCol>
                 <MDBCol size="3">
                   <h6 className="font-weight-bold">Alterra Academy</h6>
