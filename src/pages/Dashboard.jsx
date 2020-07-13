@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { MDBBox, MDBRow, MDBCol, MDBDataTable } from "mdbreact";
 import moment from "moment";
@@ -80,59 +80,45 @@ class Dashboard extends Component {
   };
 
   render() {
-    if (!localStorage.getItem("isSignin")) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/signin",
-            state: { message: "You must sign in first!" },
-          }}
+    // if (!localStorage.getItem("isSignin")) {
+    //   return (
+    //     <Redirect
+    //       to={{
+    //         pathname: "/signin",
+    //         state: { message: "You must sign in first!" },
+    //       }}
+    //     />
+    //   );
+    // } else {
+    const data = this.state.data;
+    return (
+      <MDBBox>
+        <Navbar
+          fontColor={"white"}
+          backNav={"rgb(241, 76, 89)"}
+          style={{ position: "fixed" }}
+          logout={() => this.props.doLogOut()}
+          bio={this.props.bio}
         />
-      );
-    } else {
-      const data = this.state.data;
-      return (
-        <MDBBox>
-          <Navbar
-            fontColor={"white"}
-            backNav={"rgb(241, 76, 89)"}
-            style={{ position: "fixed" }}
-            logout={() => this.props.doLogOut()}
-            bio={this.props.bio}
-          />
-          <MDBBox
+        <MDBBox
+          style={{
+            padding: "54px 0 1px 0",
+          }}
+        >
+          {/* main row */}
+          <MDBRow
             style={{
-              backgroundColor: "#f7f7f7",
-              padding: "100px 0 1px 0",
+              margin: "20px 0 0 0",
             }}
           >
-            {/* title */}
-            <MDBBox className="d-flex align-items-center mx-5 pb-3">
-              <span
-                className="text-left"
-                style={{
-                  fontWeight: "600",
-                  color: "#192e35",
-                  fontSize: "28px",
-                }}
-              >
-                Broadcast
-              </span>
-            </MDBBox>
-            {/* end title */}
-            {/* main row */}
-            <MDBRow
-              style={{
-                margin: "20px",
-              }}
-            >
-              {/* side bar */}
-              <MDBCol size="2">
-                <PictName bio={this.props.bio} active={"broadcasts"} />
-              </MDBCol>
-              {/* end side bar */}
-              {/* table */}
-              <MDBCol size="10">
+            {/* side bar */}
+            <MDBCol size="2" style={{ backgroundColor: "#f14c59" }}>
+              <PictName bio={this.props.bio} active={"broadcasts"} />
+            </MDBCol>
+            {/* end side bar */}
+            {/* table */}
+            <MDBCol size="10">
+              <MDBBox style={{ padding: "30px 15px", minHeight: "560px" }}>
                 <MDBDataTable
                   hover
                   data={data}
@@ -140,16 +126,17 @@ class Dashboard extends Component {
                     backgroundColor: "white",
                   }}
                 />
-              </MDBCol>
-              {/* end table */}
-            </MDBRow>
-            {/* end main row */}
-          </MDBBox>
+              </MDBBox>
+            </MDBCol>
+            {/* end table */}
+          </MDBRow>
+          {/* end main row */}
         </MDBBox>
-      );
-    }
+      </MDBBox>
+    );
   }
 }
+// }
 const mapStateToProps = (state) => {
   return {
     bio: state.userState.bio,

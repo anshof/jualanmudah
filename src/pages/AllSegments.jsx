@@ -201,89 +201,89 @@ class AllSegments extends Component {
   };
 
   render() {
-    if (!localStorage.getItem("isSignin")) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/signin",
-            state: { message: "You must sign in first!" },
-          }}
+    // if (!localStorage.getItem("isSignin")) {
+    //   return (
+    //     <Redirect
+    //       to={{
+    //         pathname: "/signin",
+    //         state: { message: "You must sign in first!" },
+    //       }}
+    //     />
+    //   );
+    // } else {
+    const data = this.state.data;
+    return (
+      <MDBBox>
+        <Navbar
+          fontColor={"white"}
+          backNav={"rgb(241, 76, 89)"}
+          style={{ position: "fixed" }}
+          logout={() => this.props.doLogOut()}
+          bio={this.props.bio}
         />
-      );
-    } else {
-      const data = this.state.data;
-      return (
-        <MDBBox style={{ backgroundColor: "#f7f7f7" }}>
-          <Navbar
-            fontColor={"white"}
-            backNav={"rgb(241, 76, 89)"}
-            style={{ position: "fixed" }}
-            logout={() => this.props.doLogOut()}
-            bio={this.props.bio}
-          />
-          <MDBBox
+        <MDBBox
+          style={{
+            padding: "54px 0 1px 0",
+          }}
+        >
+          {/* tabel */}
+          <MDBRow
             style={{
-              padding: "100px 0 1px 0",
+              margin: "20px 0 0 0",
             }}
           >
-            {/* judul */}
-            <MDBBox className="d-flex justify-content-between align-items-center mx-5 pb-3">
-              <span
-                className="text-left"
-                style={{
-                  fontWeight: "600",
-                  color: "#192e35",
-                  fontSize: "28px",
-                }}
-              >
-                All Segments
-              </span>
-              {this.props.match.params.segmentId ? (
-                <Link
-                  to="/segment-list"
-                  onClick={this.handleBacktoList}
-                  color="transparent"
+            <MDBCol size="2" style={{ backgroundColor: "#f14c59" }}>
+              <PictName bio={this.props.bio} active={"segments"} />
+            </MDBCol>
+            <MDBCol size="10">
+              {/* judul */}
+              <MDBBox className="d-flex justify-content-between align-items-center pb-3">
+                <span
+                  className="text-left"
                   style={{
-                    color: "#f14c59",
-                    fontSize: "16px",
-                    fontWeight: "500",
-                    height: "40px",
-                    marginTop: "8px",
-                    cursor: "pointer",
+                    fontWeight: "600",
+                    color: "#192e35",
+                    fontSize: "28px",
                   }}
-                  className="text-capitalize px-3"
                 >
-                  Back to All Segment
-                </Link>
-              ) : (
-                false
-              )}
-            </MDBBox>
-            {/* tabel */}
-            <MDBRow
-              style={{
-                margin: "20px",
-              }}
-            >
-              <MDBCol size="2">
-                <PictName bio={this.props.bio} active={"segments"} />
-              </MDBCol>
-              <MDBCol size="10">
-                <MDBDataTable
-                  hover
-                  data={data}
-                  style={{
-                    backgroundColor: "white",
-                  }}
-                />
-              </MDBCol>
-            </MDBRow>
-          </MDBBox>
+                  All Segments
+                </span>
+                {this.props.match.params.segmentId ? (
+                  <Link
+                    to="/segment-list"
+                    onClick={this.handleBacktoList}
+                    color="transparent"
+                    style={{
+                      color: "#f14c59",
+                      fontSize: "16px",
+                      fontWeight: "500",
+                      height: "40px",
+                      marginTop: "8px",
+                      cursor: "pointer",
+                    }}
+                    className="text-capitalize px-3"
+                  >
+                    Back to All Segment
+                  </Link>
+                ) : (
+                  false
+                )}
+              </MDBBox>
+              <MDBDataTable
+                hover
+                data={data}
+                style={{
+                  backgroundColor: "white",
+                }}
+              />
+            </MDBCol>
+          </MDBRow>
         </MDBBox>
-      );
-    }
+      </MDBBox>
+    );
   }
 }
+// }
 const mapStateToProps = (state) => {
   return {
     bio: state.userState.bio,

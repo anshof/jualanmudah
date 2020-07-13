@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 import {
   MDBDataTable,
   MDBBox,
@@ -133,196 +133,125 @@ class NewSegment extends Component {
   };
 
   render() {
-    if (!localStorage.getItem("isSignin")) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/signin",
-            state: { message: "You must sign in first!" },
-          }}
+    // if (!localStorage.getItem("isSignin")) {
+    //   return (
+    //     <Redirect
+    //       to={{
+    //         pathname: "/signin",
+    //         state: { message: "You must sign in first!" },
+    //       }}
+    //     />
+    //   );
+    // } else {
+    const data = this.state.data;
+    if (!this.props.customerList) {
+      return <h3 className="loading">Loading...</h3>;
+    }
+    return (
+      <MDBBox style={{ backgroundColor: "#f7f7f7" }}>
+        <Navbar
+          isLogin={this.state.isLogin}
+          fontColor={"white"}
+          backNav={"rgb(241, 76, 89)"}
+          style={{ position: "fixed" }}
+          logout={() => this.props.doLogOut()}
+          bio={this.props.bio}
         />
-      );
-    } else {
-      const data = this.state.data;
-      if (!this.props.customerList) {
-        return <h3 className="loading">Loading...</h3>;
-      }
-      return (
-        <MDBBox style={{ backgroundColor: "#f7f7f7" }}>
-          <Navbar
-            isLogin={this.state.isLogin}
-            fontColor={"white"}
-            backNav={"rgb(241, 76, 89)"}
-            style={{ position: "fixed" }}
-            logout={() => this.props.doLogOut()}
-            bio={this.props.bio}
-          />
-          <MDBBox
-            style={{
-              padding: "100px 0 1px 0",
-            }}
-          >
-            {/* judul */}
-            <MDBBox className="d-flex justify-content-between align-items-center mx-5 pb-3">
-              <span
-                className="text-left"
-                style={{
-                  fontWeight: "600",
-                  color: "#192e35",
-                  fontSize: "28px",
-                }}
-              >
-                Atur Grup
-              </span>
-            </MDBBox>
-            {/* tabel */}
-            <MDBRow
+        <MDBBox
+          style={{
+            padding: "100px 0 1px 0",
+          }}
+        >
+          {/* judul */}
+          <MDBBox className="d-flex justify-content-between align-items-center mx-5 pb-3">
+            <span
+              className="text-left"
               style={{
-                margin: "20px",
+                fontWeight: "600",
+                color: "#192e35",
+                fontSize: "28px",
               }}
             >
-              {/* create new segment */}
-              <MDBCol size="6" className="text-left">
-                <MDBBox
-                  className="py-4"
+              Atur Grup
+            </span>
+          </MDBBox>
+          {/* tabel */}
+          <MDBRow
+            style={{
+              margin: "20px",
+            }}
+          >
+            {/* create new segment */}
+            <MDBCol size="6" className="text-left">
+              <MDBBox
+                className="py-4"
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: "20px",
+                }}
+              >
+                <MDBRow
+                  className="pt-2"
                   style={{
+                    margin: "0",
                     backgroundColor: "white",
                     borderRadius: "20px",
                   }}
                 >
-                  <MDBRow
-                    className="pt-2"
-                    style={{
-                      margin: "0",
-                      backgroundColor: "white",
-                      borderRadius: "20px",
-                    }}
-                  >
-                    <MDBCol size="2">
-                      <MDBBox
-                        style={{
-                          color: "#f14c59",
-                        }}
-                        className="ml-4 font-weight-bold"
-                      >
-                        1
-                      </MDBBox>
-                    </MDBCol>
-                    <MDBCol size="10" className="ml-0">
-                      <span style={{ fontWeight: "500" }}>
-                        Apa yang ingin anda lakukan ?
-                      </span>
-                      <br />
-                      <MDBBox className="mt-2 mb-3">
-                        <MDBInput
-                          onClick={this.onClickChoice1(1)}
-                          checked={this.state.radio1 === 1 ? true : false}
-                          label="Membuat grup baru"
-                          type="radio"
-                          id="radio1"
-                          name="groupSelectChoice1"
-                          value="all"
-                          onChange={(e) => this.props.changeInputCustomer(e)}
-                        />
-                        <MDBCol size="10" className="ml-1">
-                          <div className="input-group mb-3 mt-2 w-75">
-                            <div className="input-group-prepend"></div>
-                            <input
-                              type="text"
-                              className="form-control"
-                              disabled={this.state.radio1 !== 1 ? true : false}
-                              name="nameGroup"
-                              placeholder="Nama grup"
-                              aria-label="Username"
-                              aria-describedby="basic-addon1"
-                              onChange={(e) =>
-                                this.props.changeInputCustomer(e)
-                              }
-                            />
-                          </div>
-                        </MDBCol>
-                        <MDBInput
-                          onClick={this.onClickChoice1(2)}
-                          checked={this.state.radio1 === 2 ? true : false}
-                          label="Menambahkan anggota pada grup"
-                          type="radio"
-                          id="radio2"
-                        />
-                        <select
-                          class="browser-default custom-select w-75 ml-3 mt-2"
-                          disabled={this.state.radio1 !== 2 ? true : false}
-                          selected
-                          name="groupIdSelect"
-                          onChange={(e) => this.props.changeInputCustomer(e)}
-                        >
-                          <option value="" disabled selected>
-                            Grup kontak
-                          </option>
-                          {this.props.customerGroups
-                            ? this.props.customerGroups.map((el, index) => (
-                                <option key={index} value={el.id}>
-                                  {el.name}
-                                </option>
-                              ))
-                            : false}
-                        </select>
-                      </MDBBox>
-                    </MDBCol>
-                  </MDBRow>
-                  <MDBRow
-                    className="mt-2"
-                    style={{
-                      margin: "0",
-                    }}
-                  ></MDBRow>
-                  <MDBRow
-                    className="pt-2"
-                    style={{
-                      margin: "0",
-                      backgroundColor: "white",
-                      borderRadius: "20px",
-                    }}
-                  >
-                    <MDBCol size="2">
-                      <MDBBox
-                        style={{
-                          color: "#f14c59",
-                        }}
-                        className="ml-4 font-weight-bold"
-                      >
-                        2
-                      </MDBBox>
-                    </MDBCol>
-                    <MDBCol size="10" className="ml-0">
-                      <span style={{ fontWeight: "500" }}>
-                        Pilih data pelanggan dari :
-                      </span>
-                      <br />
-                      <MDBBox className="mt-2 mb-3">
-                        <MDBInput
-                          onClick={this.onClickChoice2(1)}
-                          checked={this.state.radio2 === 1 ? true : false}
-                          label="Semua kontak"
-                          type="radio"
-                          id="radio3"
-                          name="groupListSelect"
-                          value="all"
-                          onChange={(e) => this.onChangeGroupMember(e)}
-                        />
-                        <MDBInput
-                          onClick={this.onClickChoice2(2)}
-                          checked={this.state.radio2 === 2 ? true : false}
-                          label="Grup kontak yang sudah ada"
-                          type="radio"
-                          id="radio4"
-                        />
-                      </MDBBox>
+                  <MDBCol size="2">
+                    <MDBBox
+                      style={{
+                        color: "#f14c59",
+                      }}
+                      className="ml-4 font-weight-bold"
+                    >
+                      1
+                    </MDBBox>
+                  </MDBCol>
+                  <MDBCol size="10" className="ml-0">
+                    <span style={{ fontWeight: "500" }}>
+                      Apa yang ingin anda lakukan ?
+                    </span>
+                    <br />
+                    <MDBBox className="mt-2 mb-3">
+                      <MDBInput
+                        onClick={this.onClickChoice1(1)}
+                        checked={this.state.radio1 === 1 ? true : false}
+                        label="Membuat grup baru"
+                        type="radio"
+                        id="radio1"
+                        name="groupSelectChoice1"
+                        value="all"
+                        onChange={(e) => this.props.changeInputCustomer(e)}
+                      />
+                      <MDBCol size="10" className="ml-1">
+                        <div className="input-group mb-3 mt-2 w-75">
+                          <div className="input-group-prepend"></div>
+                          <input
+                            type="text"
+                            className="form-control"
+                            disabled={this.state.radio1 !== 1 ? true : false}
+                            name="nameGroup"
+                            placeholder="Nama grup"
+                            aria-label="Username"
+                            aria-describedby="basic-addon1"
+                            onChange={(e) => this.props.changeInputCustomer(e)}
+                          />
+                        </div>
+                      </MDBCol>
+                      <MDBInput
+                        onClick={this.onClickChoice1(2)}
+                        checked={this.state.radio1 === 2 ? true : false}
+                        label="Menambahkan anggota pada grup"
+                        type="radio"
+                        id="radio2"
+                      />
                       <select
-                        class="browser-default custom-select w-75 ml-3"
-                        disabled={this.state.radio2 !== 2 ? true : false}
+                        class="browser-default custom-select w-75 ml-3 mt-2"
+                        disabled={this.state.radio1 !== 2 ? true : false}
                         selected
-                        name="groupListSelect"
-                        onChange={(e) => this.onChangeGroupMember(e)}
+                        name="groupIdSelect"
+                        onChange={(e) => this.props.changeInputCustomer(e)}
                       >
                         <option value="" disabled selected>
                           Grup kontak
@@ -335,46 +264,115 @@ class NewSegment extends Component {
                             ))
                           : false}
                       </select>
-                    </MDBCol>
-                  </MDBRow>
-                  <MDBBox className="text-center">
-                    <MDBBtn
-                      color="transparent"
-                      className="mt-4 text-capitalize"
-                      style={{
-                        boxShadow: "none",
-                        color: "white",
-                        backgroundColor: "#f14c59",
-                        borderRadius: "40px",
-                      }}
-                      onClick={this.doneCreateGroup}
-                    >
-                      Simpan grup kontak
-                    </MDBBtn>
-                  </MDBBox>
-                </MDBBox>
-              </MDBCol>
-              {/* end create new segment */}
-              {/* table */}
-              <MDBCol size="6">
-                <MDBDataTable
-                  hover
-                  btn
-                  fixed
-                  data={data}
+                    </MDBBox>
+                  </MDBCol>
+                </MDBRow>
+                <MDBRow
+                  className="mt-2"
                   style={{
-                    backgroundColor: "white",
+                    margin: "0",
                   }}
-                />
-              </MDBCol>
-              {/* end table */}
-            </MDBRow>
-          </MDBBox>
+                ></MDBRow>
+                <MDBRow
+                  className="pt-2"
+                  style={{
+                    margin: "0",
+                    backgroundColor: "white",
+                    borderRadius: "20px",
+                  }}
+                >
+                  <MDBCol size="2">
+                    <MDBBox
+                      style={{
+                        color: "#f14c59",
+                      }}
+                      className="ml-4 font-weight-bold"
+                    >
+                      2
+                    </MDBBox>
+                  </MDBCol>
+                  <MDBCol size="10" className="ml-0">
+                    <span style={{ fontWeight: "500" }}>
+                      Pilih data pelanggan dari :
+                    </span>
+                    <br />
+                    <MDBBox className="mt-2 mb-3">
+                      <MDBInput
+                        onClick={this.onClickChoice2(1)}
+                        checked={this.state.radio2 === 1 ? true : false}
+                        label="Semua kontak"
+                        type="radio"
+                        id="radio3"
+                        name="groupListSelect"
+                        value="all"
+                        onChange={(e) => this.onChangeGroupMember(e)}
+                      />
+                      <MDBInput
+                        onClick={this.onClickChoice2(2)}
+                        checked={this.state.radio2 === 2 ? true : false}
+                        label="Grup kontak yang sudah ada"
+                        type="radio"
+                        id="radio4"
+                      />
+                    </MDBBox>
+                    <select
+                      class="browser-default custom-select w-75 ml-3"
+                      disabled={this.state.radio2 !== 2 ? true : false}
+                      selected
+                      name="groupListSelect"
+                      onChange={(e) => this.onChangeGroupMember(e)}
+                    >
+                      <option value="" disabled selected>
+                        Grup kontak
+                      </option>
+                      {this.props.customerGroups
+                        ? this.props.customerGroups.map((el, index) => (
+                            <option key={index} value={el.id}>
+                              {el.name}
+                            </option>
+                          ))
+                        : false}
+                    </select>
+                  </MDBCol>
+                </MDBRow>
+                <MDBBox className="text-center">
+                  <MDBBtn
+                    color="transparent"
+                    className="mt-4 text-capitalize"
+                    style={{
+                      boxShadow: "none",
+                      color: "white",
+                      backgroundColor: "#f14c59",
+                      borderRadius: "40px",
+                    }}
+                    onClick={this.doneCreateGroup}
+                  >
+                    Simpan grup kontak
+                  </MDBBtn>
+                </MDBBox>
+              </MDBBox>
+            </MDBCol>
+            {/* end create new segment */}
+            {/* table */}
+            <MDBCol size="6">
+              <MDBDataTable
+                hover
+                btn
+                fixed
+                data={data}
+                style={{
+                  backgroundColor: "white",
+                }}
+              />
+            </MDBCol>
+            {/* end table */}
+          </MDBRow>
         </MDBBox>
-      );
-    }
+      </MDBBox>
+    );
   }
 }
+// }
 const mapStateToProps = (state) => {
   return {
     bio: state.userState.bio,
