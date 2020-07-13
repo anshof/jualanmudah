@@ -34,12 +34,11 @@ import {
   getDraft,
   doDraftToSend,
   changeInputMail,
-  deleteLocalDraft,
   changeEditor,
   sendMailNow,
-  changeDraft,
   sendMailScheduled,
   doDraftToScheduled,
+  deleteExistDraft,
 } from "../stores/actions/mailAction";
 
 class NewBroadcast extends Component {
@@ -52,10 +51,10 @@ class NewBroadcast extends Component {
   componentDidMount = async () => {
     await this.props.doRefershSignin();
     this.props.getUserBio();
-    if (!this.props.match.params.draftId) {
-      await this.props.deleteLocalDraft();
-    } else {
+    if (this.props.match.params.draftId) {
       await this.props.getDraft(this.props.match.params.draftId);
+    } else {
+      await this.props.deleteExistDraft();
     }
     await this.props.getListEmail();
     this.props.getCustomerGroupList();
@@ -92,26 +91,9 @@ class NewBroadcast extends Component {
   handleSaveToDraft = async (content) => {
     if (this.props.mailState.contactChoice === "new") {
       await this.props.addNewEmail();
-      if (this.props.match.params.draftId) {
-        await this.props.changeDraft(
-          content,
-          this.props.contactState.newEmail.id
-        );
-      } else {
-        await this.props.addDraft(content, this.props.contactState.newEmail.id);
-      }
+      await this.props.addDraft(content, this.props.contactState.newEmail.id);
     } else if (this.props.mailState.contactChoice === "exist") {
-      if (this.props.match.params.draftId) {
-        await this.props.changeDraft(
-          content,
-          this.props.mailState.contactIdSelect
-        );
-      } else {
-        await this.props.addDraft(
-          content,
-          this.props.mailState.contactIdSelect
-        );
-      }
+      await this.props.addDraft(content, this.props.mailState.contactIdSelect);
     }
     await this.props.history.push(
       "/draft/" + String(localStorage.getItem("savedId"))
@@ -185,6 +167,7 @@ class NewBroadcast extends Component {
   };
 
   render() {
+    // console.log(this.props);
     if (!localStorage.getItem("isSignin")) {
       return (
         <Redirect
@@ -550,7 +533,7 @@ class NewBroadcast extends Component {
                               className="text-left mb-0"
                               style={{ fontWeight: "400" }}
                             >
-                              Email subject
+                              Subjek Email
                             </p>
                           </label>
                           <input
@@ -560,10 +543,10 @@ class NewBroadcast extends Component {
                                 : ""
                             }
                             type="text"
-                            className="form-control w-100"
+                            className="form-control w-75"
                             id="emailsubject"
                             name="subject"
-                            placeholder="email subject"
+                            placeholder="Subjek Email"
                             onChange={(e) => this.props.changeInputMail(e)}
                           />
                         </MDBBox>
@@ -573,45 +556,94 @@ class NewBroadcast extends Component {
                               className="text-left mb-0"
                               style={{ fontWeight: "400" }}
                             >
-                              Email content
+                              Badan Email
                             </p>
                           </label>
-                          <MDBBox
-                            style={{
-                              border: "1px solid #ced4da",
-                              minHeight: "240px",
-                            }}
-                          >
-                            <Editor
-                              editorState={editorState}
-                              onEditorStateChange={(editorState) =>
-                                this.props.changeEditor(editorState)
-                              }
-                              placeholder="Type your text here..."
-                            />
-                          </MDBBox>
+                          <MDBRow>
+                            <MDBCol size="9">
+                              <MDBBox
+                                style={{
+                                  border: "1px solid #ced4da",
+                                  minHeight: "240px",
+                                }}
+                              >
+                                <Editor
+                                  editorState={editorState}
+                                  onEditorStateChange={(editorState) =>
+                                    this.props.changeEditor(editorState)
+                                  }
+                                  placeholder="Klik disini untuk mulai mengetik"
+                                />
+                              </MDBBox>
+                            </MDBCol>
+                            <MDBCol size="3">
+                              Salam pembuka : <br />
+                              <span style={{color:"rgb(241, 76, 89)"}}>Dear, [Nama Pertama Pelanggan] </span> <br />
+                              dan salam penutup : <br />
+                              <span style={{color:"rgb(241, 76, 89)"}}>Best regards, [Nama Anda]</span> <br />
+                              akan otomatis tertulis. <br /> <br />
+                              Untuk mengantisipasi penulisan berulang dari salam,
+                              harap tidak menuliskan pada badan email disamping.
+                            </MDBCol>
+                          </MDBRow>
+                          <MDBBox className="form-group text-left mt-2">
+                          <p>
+                          Jika anda ingin mencantumkan
+                          <span style={{color:"rgb(241, 76, 89)"}} className="ml-1 mr-1">link</span>
+                          yang ingin bisa di lacak, tulis kalimat yang akan menjadi link dan cantumkan linknya.
+</p>
+                          <MDBRow>
+                          <MDBCol size="6">
+                          <label htmlFor="emailsubject">
+                            <p
+                              className="text-left mb-0"
+                              style={{ fontWeight: "400" }}
+                            >
+                              Kalimat
+                            </p>
+                          </label>
+                          <input
+                            defaultValue={
+                              this.props.match.params.draftId
+                                ? this.props.draft.subject
+                                : ""
+                            }
+                            type="text"
+                            className="form-control w-25"
+                            id="emailsubject"
+                            name="words"
+                            placeholder="email subject"
+                            onChange={(e) => this.props.changeInputMail(e)}
+                          />
+                          </MDBCol>
+                          <MDBCol  size="6">
+                          <label htmlFor="emailsubject">
+                            <p
+                              className="text-left mb-0"
+                              style={{ fontWeight: "400" }}
+                            >
+                              Link
+                            </p>
+                          </label>
+                          <input
+                            defaultValue={
+                              this.props.match.params.draftId
+                                ? this.props.draft.subject
+                                : ""
+                            }
+                            type="text"
+                            className="form-control w-25"
+                            id="emailsubject"
+                            name="link"
+                            placeholder="email subject"
+                            onChange={(e) => this.props.changeInputMail(e)}
+                          />
+                          </MDBCol>
+                          </MDBRow>
+                        </MDBBox>
                         </MDBBox>
                       </MDBBox>
                     </MDBCol>
-                    {/* <MDBCol
-                      size="4"
-                      className="d-flex justify-content-center align-items-center"
-                    >
-                      <MDBBox
-                        className="d-flex justify-content-center align-items-center"
-                        style={{
-                          height: "250px",
-                          width: "150px",
-                          border: "2px solid #c0c0c0",
-                        }}
-                      >
-                        <MDBBox>
-                          <i className="fas fa-envelope-open-text fa-2x"></i>{" "}
-                          <br />
-                          A/B <br /> testing
-                        </MDBBox>
-                      </MDBBox>
-                    </MDBCol> */}
                   </MDBRow>
                   <MDBRow
                     className="py-3 d-flex justify-content-center"
@@ -970,14 +1002,13 @@ const mapDispatchToProps = {
   doDraftToSend,
   changeInputMail,
   getDraft,
-  deleteLocalDraft,
   changeEditor,
   getListEmail,
   getCustomerGroupList,
   addNewEmail,
   sendMailNow,
-  changeDraft,
   sendMailScheduled,
   doDraftToScheduled,
+  deleteExistDraft,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NewBroadcast);

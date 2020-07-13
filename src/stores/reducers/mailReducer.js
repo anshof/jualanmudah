@@ -2,7 +2,8 @@ const initialState = {
   mailSendList: [],
   mailDraftList: [],
   draft : "",
-  contactChoice : "exist"
+  contactChoice : "exist",
+  editor: ""
 
 };
 
@@ -24,6 +25,12 @@ export default function mailReducer(mailState = initialState, action) {
           draft: action.payload,
           editor: action.editor,
         };
+        case "DELETE_EXIST_DRAFT":
+          return {
+            ...mailState,
+            draft: "",
+            editor: "",
+          };
     case "SUCCESS_DELETE_DRAFT_MAIL":
       return {
         ...mailState,

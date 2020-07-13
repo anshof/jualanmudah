@@ -50,12 +50,6 @@ class AllSegments extends Component {
               color: "pink",
             },
             {
-              label: "Jumlah customer",
-              field: "jumlahCustomer",
-              sort: "asc",
-              width: 200,
-            },
-            {
               label: "Tanggal Dibuat",
               field: "created_at",
               sort: "asc",
@@ -86,7 +80,6 @@ class AllSegments extends Component {
                   Detail
                 </p>
               ),
-              jumlahCustomer: 0,
               created_at: moment.utc(el.created_at).format("YYYY/MM/DD"),
               delete: (
                 <MDBBtn

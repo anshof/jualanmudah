@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "https://slytherin.perintiscerita.shop/";
+const baseUrl = "https://slytherin.perintiscerita.shop";
 // const baseUrl = "http://0.0.0.0:5050";
 
 export const getCustomerList = () => {

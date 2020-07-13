@@ -1,6 +1,5 @@
 import axios from "axios";
-// const baseUrl = process.env.REACT_APP_PUBLIC_URL;
-const baseUrl = "https://slytherin.perintiscerita.shop/";
+const baseUrl = "https://slytherin.perintiscerita.shop";
 // const baseUrl = "http://0.0.0.0:5050";
 
 export const addContactGroup = () => {
@@ -52,7 +51,6 @@ export const addNewEmail = () => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(async (response) => {
-        alert("succes")
         await dispatch({ type: "SUCCESS_ADD_EMAIL", payload: response.data });
       })
       .catch((error) => {

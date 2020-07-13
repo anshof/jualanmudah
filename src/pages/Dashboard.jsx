@@ -13,7 +13,7 @@ import {
   getUserBio,
   doRefershSignin,
 } from "../stores/actions/userAction";
-import { getSendList, deleteLocalDraft } from "../stores/actions/mailAction";
+import { getSendList } from "../stores/actions/mailAction";
 class Dashboard extends Component {
   state = {};
 
@@ -21,7 +21,6 @@ class Dashboard extends Component {
     await this.props.doRefershSignin();
     await this.props.getUserBio();
     await this.props.getSendList();
-    this.props.deleteLocalDraft();
     if (this.props.mailSendList) {
       this.setState({
         data: {
@@ -162,6 +161,5 @@ const mapDispatchToProps = {
   doLogOut,
   getSendList,
   doRefershSignin,
-  deleteLocalDraft,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
