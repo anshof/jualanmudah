@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MDBBox } from "mdbreact";
+import { MDBBox, MDBRow, MDBCol } from "mdbreact";
 
 import "../css/style.css";
 
@@ -8,167 +8,199 @@ const PictName = (props) => {
   return (
     <MDBBox
       style={{
-        borderRadius: "20px",
-        padding: "30px 20px",
-        boxShadow: "0 0 10px #e1e1e1",
-        backgroundColor: "white",
+        padding: "30px 0",
         margin: "0",
       }}
-      className="text-left"
     >
-      <MDBBox>
-        <MDBBox className="d-flex justify-content-center">
-          <MDBBox>
-            <img
-              src={
-                props.bio.user_image ===
-                "https://firebasestorage.googleapis.com/v0/b/personal-email-d3b3b.appspot.com/o/images%2Fuser_image%2F9ff2f2f01c4bd1b013.png?alt=media&token=272b7417-a9fa-4fde-99b1-e00fa6d377ee"
-                  ? props.bio.user_image
-                  : require("../images/deafult-profile.jpg")
-              }
-              alt="pict"
-              style={{
-                height: "80px",
-                width: "80px",
-                borderRadius: "50%",
-                objectFit: "cover",
-              }}
-              className="mx-auto"
-            />
-          </MDBBox>
-        </MDBBox>
-        <p
-          className="text-center mb-0 pt-2"
-          style={{ fontSize: "18px", fontWeight: "700", color: "#a13034" }}
+      <MDBBox className="my-4">
+        <Link
+          to={props.active !== "broadcasts" ? "/dashboard" : "#"}
+          className="mb-1"
+          style={{
+            fontSize: "20px",
+            fontWeight: "400",
+            color: props.active !== "broadcasts" ? "white" : "#f14c59",
+            cursor: props.active !== "broadcasts" ? "pointer" : "text",
+          }}
         >
-          {props.bio.full_name}
-        </p>
+          <MDBRow
+            style={{
+              minWidth: props.active !== "broadcasts" ? "100px" : "300px",
+              margin: "0",
+              padding: "10px 0",
+              backgroundColor:
+                props.active !== "broadcasts" ? "#f14c59" : "white",
+              borderRadius: "15px 0 0 15px",
+            }}
+          >
+            <MDBCol size="3" style={{ padding: "0" }}>
+              <i class="fas fa-envelope-open"></i>
+            </MDBCol>
+            <MDBCol size="9" className="text-left">
+              Broadcasts
+            </MDBCol>
+          </MDBRow>
+        </Link>
       </MDBBox>
-      <MDBBox
-        className="text-center"
-        style={{ margin: "0", padding: "0", marginTop: "10px" }}
-      >
+      <MDBBox className="my-4">
+        <Link
+          to={props.active === "segments" ? "#" : "/segment-list"}
+          className="mb-1"
+          style={{
+            fontSize: "20px",
+            fontWeight: "400",
+            color: props.active !== "segments" ? "white" : "#f14c59",
+            cursor: props.active !== "segments" ? "pointer" : "text",
+          }}
+        >
+          <MDBRow
+            style={{
+              minWidth: props.active !== "segments" ? "100px" : "300px",
+              margin: "0",
+              padding: "10px 0",
+              backgroundColor:
+                props.active !== "segments" ? "#f14c59" : "white",
+              borderRadius: "15px 0 0 15px",
+            }}
+          >
+            <MDBCol size="3" className="text-center" style={{ padding: "0" }}>
+              <i class="fas fa-users"></i>
+            </MDBCol>
+            <MDBCol size="9" className="text-left">
+              Semua grup
+            </MDBCol>
+          </MDBRow>
+        </Link>
+      </MDBBox>
+      <MDBBox className="my-4">
+        <Link
+          to={props.active !== "draft" ? "/draft" : "#"}
+          className="mb-1"
+          style={{
+            fontSize: "20px",
+            fontWeight: "400",
+            color: props.active !== "draft" ? "white" : "#f14c59",
+            cursor: props.active !== "draft" ? "pointer" : "text",
+          }}
+        >
+          <MDBRow
+            style={{
+              minWidth: props.active !== "draft" ? "100px" : "300px",
+              margin: "0",
+              padding: "10px 0",
+              backgroundColor: props.active !== "draft" ? "#f14c59" : "white",
+              borderRadius: "15px 0 0 15px",
+            }}
+          >
+            <MDBCol size="3" className="text-center" style={{ padding: "0" }}>
+              <i class="fas fa-file-alt"></i>
+            </MDBCol>
+            <MDBCol size="9" className="text-left">
+              Draft
+            </MDBCol>
+          </MDBRow>
+        </Link>
+      </MDBBox>
+      <MDBBox className="my-4">
+        <Link
+          to={props.active !== "database" ? "/database" : "#"}
+          className="mb-1"
+          style={{
+            fontSize: "20px",
+            fontWeight: "400",
+            color: props.active !== "database" ? "white" : "#f14c59",
+            cursor: props.active !== "database" ? "pointer" : "text",
+          }}
+        >
+          <MDBRow
+            style={{
+              minWidth: props.active !== "database" ? "100px" : "300px",
+              margin: "0",
+              padding: "10px 0",
+              backgroundColor:
+                props.active !== "database" ? "#f14c59" : "white",
+              borderRadius: "15px 0 0 15px",
+            }}
+          >
+            <MDBCol size="3" style={{ padding: "0" }}>
+              <i class="fas fa-database"></i>
+            </MDBCol>
+            <MDBCol size="9" className="text-left">
+              Database
+            </MDBCol>
+          </MDBRow>
+        </Link>
+      </MDBBox>
+      <MDBBox className="my-4">
+        <Link
+          to={props.active !== "profile" ? "/profile" : "#"}
+          className="mb-1"
+          style={{
+            fontSize: "20px",
+            fontWeight: "400",
+            color: props.active !== "profile" ? "white" : "#f14c59",
+            cursor: props.active !== "profile" ? "pointer" : "text",
+          }}
+        >
+          <MDBRow
+            style={{
+              minWidth: props.active !== "profile" ? "100px" : "300px",
+              margin: "0",
+              padding: "10px 0",
+              backgroundColor: props.active !== "profile" ? "#f14c59" : "white",
+              borderRadius: "15px 0 0 15px",
+            }}
+          >
+            <MDBCol size="3" className="text-center" style={{ padding: "0" }}>
+              <i class="fas fa-user"></i>
+            </MDBCol>
+            <MDBCol size="9" className="text-left">
+              Profile
+            </MDBCol>
+          </MDBRow>
+        </Link>
+      </MDBBox>
+      <MDBBox className="text-center my-4" style={{ padding: "0" }}>
         <Link to="/broadcast">
           <button
             color="transparent"
             style={{
-              backgroundColor: "#f14c59",
+              backgroundColor: "white",
               border: "1px solid #f14c59",
-              color: "white",
+              color: "#f14c59",
               boxShadow: "none",
               borderRadius: "40px",
-              fontSize: "14px",
+              fontSize: "18px",
               height: "40px",
               margin: "0",
-              padding: "0 13px",
             }}
-            className="text-capitalize"
+            className="text-capitalize w-100"
           >
             <i className="fas fa-plus mr-1"></i> Buat Broadcast
           </button>
         </Link>
       </MDBBox>
-      
-      <hr />
-      <MDBBox
-        className="text-center"
-        style={{ margin: "0", padding: "0", marginTop: "10px" }}
-      >
+      <MDBBox className="text-center my-4" style={{ padding: "0" }}>
         <Link to="/segment">
           <button
             color="transparent"
             style={{
-              backgroundColor: "#f14c59",
+              backgroundColor: "white",
               border: "1px solid #f14c59",
-              color: "white",
+              color: "#f14c59",
               boxShadow: "none",
               borderRadius: "40px",
-              fontSize: "14px",
+              fontSize: "18px",
               height: "40px",
               margin: "0",
               padding: "0 13px",
             }}
-            className="text-capitalize"
+            className="text-capitalize w-100"
           >
             <i className="fas fa-plus mr-1"></i> Buat Grup
           </button>
         </Link>
       </MDBBox>
-      
-      <hr />
-      <MDBBox className="pl-3">
-        <Link
-          to={props.active !== "broadcasts" ? "/dashboard" : "#"}
-          className="mb-1"
-          style={{
-            fontSize: "18px",
-            fontWeight: "600",
-            color: props.active !== "broadcasts" ? "rgb(241, 76, 89)" : "#192e35",
-            cursor : props.active !== "broadcasts" ? "pointer" : "text"
-          }}
-        >
-          Broadcasts
-        </Link>
-      </MDBBox>
-      <hr />
-      <MDBBox className="pl-3">
-      <Link
-          to={props.active === "segments" ? "#" : "/segment-list"}
-          className="mb-1"
-          style={{
-            fontSize: "18px",
-            fontWeight: "600",
-            color: props.active !== "segments" ? "rgb(241, 76, 89)" : "#192e35",
-            cursor : props.active !== "segments" ? "pointer" : "text"
-          }}
-        >
-          Semua grup
-        </Link>
-      </MDBBox>
-      <hr />
-      <MDBBox className="pl-3">
-        <Link
-          to={props.active !== "draft" ? "/draft" : "#"}
-          className="mb-1"
-          style={{
-            fontSize: "18px",
-            fontWeight: "600",
-            color: props.active !== "draft" ? "rgb(241, 76, 89)" : "#192e35",
-            cursor : props.active !== "draft" ? "pointer" : "text"
-          }}
-        >
-          Draft
-        </Link>
-      </MDBBox>
-      <hr />
-      <MDBBox className="pl-3">
-        <Link
-          to={props.active !== "database" ? "/database" : "#"}
-          className="mb-1"
-          style={{
-            fontSize: "18px",
-            fontWeight: "600",
-            color: props.active !== "database" ? "rgb(241, 76, 89)" : "#192e35",
-            cursor : props.active !== "database" ? "pointer" : "text"
-          }}
-        >
-          Database
-        </Link>
-      </MDBBox>
-      {/* <hr />
-      <MDBBox className="pl-3">
-        <Link
-        to="/staff"
-          className="mb-1"
-          style={{
-            fontSize: "18px",
-            fontWeight: "600",
-            color: "#192e35",
-          }}
-        >
-          Staff
-        </Link>
-      </MDBBox> */}
     </MDBBox>
   );
 };

@@ -84,7 +84,7 @@ class NewSegment extends Component {
               key: index,
               check: (
                 <form>
-                  <label class="checkbox-inline">
+                  <label className="checkbox-inline">
                     <input
                       type="checkbox"
                       value={el.id}
@@ -148,7 +148,7 @@ class NewSegment extends Component {
         return <h3 className="loading">Loading...</h3>;
       }
       return (
-        <MDBBox style={{ backgroundColor: "#f7f7f7" }}>
+        <MDBBox >
           <Navbar
             isLogin={this.state.isLogin}
             fontColor={"white"}
@@ -159,7 +159,7 @@ class NewSegment extends Component {
           />
           <MDBBox
             style={{
-              padding: "100px 0 1px 0",
+              padding: "30px 0 1px 0",
             }}
           >
             {/* judul */}
@@ -249,7 +249,7 @@ class NewSegment extends Component {
                           id="radio2"
                         />
                         <select
-                          class="browser-default custom-select w-75 ml-3 mt-2"
+                          className="browser-default custom-select w-75 ml-3 mt-2"
                           disabled={this.state.radio1 !== 2 ? true : false}
                           selected
                           name="groupIdSelect"
@@ -318,7 +318,7 @@ class NewSegment extends Component {
                         />
                       </MDBBox>
                       <select
-                        class="browser-default custom-select w-75 ml-3"
+                        className="browser-default custom-select w-75 ml-3"
                         disabled={this.state.radio2 !== 2 ? true : false}
                         selected
                         name="groupListSelect"

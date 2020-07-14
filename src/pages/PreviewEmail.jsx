@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import moment from "moment";
 import { connect } from "react-redux";
 import { MDBDataTable, MDBBox, MDBRow, MDBCol } from "mdbreact";
 import { Editor } from "react-draft-wysiwyg";
 import { Redirect } from "react-router-dom";
 
+import PictName from "../components/PictName";
 import Navbar from "../components/Navbar";
 import {
   doLogOut,
@@ -37,6 +39,12 @@ class PreviewEmail extends Component {
               sort: "asc",
               width: 200,
             },
+            // {
+            //   label: "Click",
+            //   field: "click",
+            //   sort: "asc",
+            //   width: 200,
+            // },
             {
               label: "Email",
               field: "email",
@@ -51,15 +59,30 @@ class PreviewEmail extends Component {
               email: el.customer.email,
               open: el.status_open ? (
                 <i
-                  class="fas fa-check"
+                  className="fas fa-check"
                   style={{ color: "rgb(241, 76, 89)" }}
                 ></i>
               ) : (
                 <i
-                  class="fas fa-times"
+                  className="fas fa-times"
                   style={{ color: "rgb(241, 76, 89)" }}
                 ></i>
               ),
+              // click: this.props.draft.link ? (
+              //   el.status_click ? (
+              //     <i
+              //       className="fas fa-check"
+              //       style={{ color: "rgb(241, 76, 89)" }}
+              //     ></i>
+              //   ) : (
+              //     <i
+              //       className="fas fa-times"
+              //       style={{ color: "rgb(241, 76, 89)" }}
+              //     ></i>
+              //   )
+              // ) : (
+              //   false
+              // ),
             })),
           ],
         },
@@ -81,7 +104,7 @@ class PreviewEmail extends Component {
       const editorState = this.props.editor;
       const data = this.state.data;
       return (
-        <MDBBox style={{ backgroundColor: "#f7f7f7" }}>
+        <MDBBox >
           <Navbar
             fontColor={"white"}
             backNav={"rgb(241, 76, 89)"}
@@ -91,61 +114,142 @@ class PreviewEmail extends Component {
           />
           <MDBBox
             style={{
-              padding: "100px 0 1px 0",
+              padding: "0 0 1px 0",
             }}
           >
-            {/* judul */}
-            <MDBBox className="d-flex justify-content-between align-items-center mx-5 pb-3">
-              <span
-                className="text-left"
-                style={{
-                  fontWeight: "600",
-                  color: "#192e35",
-                  fontSize: "28px",
-                }}
-              >
-                {this.props.draft ? this.props.draft.subject : "Nama Broadcast"}
-              </span>
-            </MDBBox>
             {/* tabel */}
             <MDBRow
               style={{
-                margin: "20px",
+                margin: "0",
               }}
             >
-              {/* create new segment */}
-              <MDBCol size="6" className="text-left">
-                <MDBBox
-                  className="py-4 pl-3"
-                  style={{
-                    backgroundColor: "white",
-                    borderRadius: "20px",
-                  }}
-                >
-                  <MDBBox className="form-group text-left mr-3">
-                    <MDBBox
-                      style={{
-                        border: "1px solid #ced4da",
-                        minHeight: "240px",
-                      }}
-                    >
-                      <Editor
-                        editorState={editorState}
-                        readOnly={true}
-                        toolbarHidden={true}
-                      />
-                    </MDBBox>
-                  </MDBBox>
-                </MDBBox>
+            {/* side bar */}
+            <MDBCol size="2" style={{ backgroundColor: "#f14c59" }}>
+                <PictName bio={this.props.bio} active={"broadcasts"} />
               </MDBCol>
-              {/* end create new segment */}
-              {/* table */}
-              <MDBCol size="6">
-                <p style={{ fontWeight: "500" }}>
-                  {this.props.draft
-                    ? this.props.draft.group_customer.name
-                    : "nama segment"}
-                </p>
+              {/* end side bar */}
+              {/* create new segment */}
+              <MDBCol size="10" className="text-left">
+                <MDBBox className="py-3 px-3">
+                  <MDBRow>
+                    <MDBCol size="9">
+                      <MDBBox className="form-group text-left">
+                        <label htmlFor="emailsubject">
+                          <p
+                            className="text-left mb-0"
+                            style={{ fontWeight: "400" }}
+                          >
+                            Subjek Email
+                          </p>
+                        </label>
+                        <input
+                          value={this.props.draft.subject}
+                          type="text"
+                          className="form-control w-100"
+                          id="emailsubject"
+                          name="subject"
+                          placeholder="email subject"
+                          disabled
+                        />
+                      </MDBBox>
+                    </MDBCol>
+                  </MDBRow>
+                  <MDBBox className="form-group text-left">
+                    <label htmlFor="emailcontent">
+                      <p
+                        className="text-left mb-0"
+                        style={{ fontWeight: "400" }}
+                      >
+                        Konten Email
+                      </p>
+                    </label>
+                    <MDBRow>
+                      <MDBCol size="9">
+                        <MDBBox
+                          style={{
+                            border: "1px solid #ced4da",
+                            minHeight: "240px",
+                          }}
+                        >
+                          <Editor
+                            editorState={editorState}
+                            readOnly={true}
+                            toolbarHidden={true}
+                          />
+                        </MDBBox>
+                        {/* <MDBBox className="form-group text-left mt-2">
+                            <MDBRow>
+                              <MDBCol size="6">
+                                <label htmlFor="emailsubject">
+                                  <p
+                                    className="text-left mb-0"
+                                    style={{ fontWeight: "400" }}
+                                  >
+                                    Kalimat
+                                  </p>
+                                </label>
+                                <input
+                                  value={
+                                    this.props.draft.words
+                                  }
+                                  type="text"
+                                  className="form-control w-100"
+                                  id="emailsubject"
+                                  name="words"
+                                  disabled
+                                />
+                              </MDBCol>
+                              <MDBCol size="6">
+                                <label htmlFor="emailsubject">
+                                  <p
+                                    className="text-left mb-0"
+                                    style={{ fontWeight: "400" }}
+                                  >
+                                    Link
+                                  </p>
+                                </label>
+                                <input
+                                  value={
+                                    this.props.draft.link
+                                  }
+                                  type="text"
+                                  className="form-control w-100"
+                                  id="emailsubject"
+                                  name="link"
+                                  disabled
+                                />
+                              </MDBCol>
+                            </MDBRow>
+                          </MDBBox> */}
+                      </MDBCol>
+                      <MDBCol>
+                        <MDBBox className="d-flex align-items-center mt-3 ml-1">
+                          <i className="fas fa-users mr-2"></i>Grup :{" "}
+                          {this.props.draft
+                            ? this.props.draft.group_customer.name
+                            : ""}
+                        </MDBBox>
+                        <MDBBox className="d-flex align-items-center mt-3 ml-1">
+                          <i className="far fa-calendar mr-2"></i> Tanggal :{" "}
+                          {this.props.draft
+                            ? moment
+                                .utc(this.props.draft.send_date)
+                                .format("YYYY-MM-DD")
+                            : ""}
+                        </MDBBox>
+
+                        <MDBBox className="d-flex align-items-center mt-3 ml-1">
+                          <i className="far fa-clock mr-2"></i> Pukul :
+                          {this.props.draft
+                            ? moment
+                                .utc(this.props.draft.send_date)
+                                .format("HH:mm")
+                            : ""}
+                        </MDBBox>
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBBox>
+                {/* table */}
                 <MDBDataTable
                   hover
                   btn
@@ -155,6 +259,7 @@ class PreviewEmail extends Component {
                     backgroundColor: "white",
                   }}
                 />
+                </MDBBox>
               </MDBCol>
               {/* end table */}
             </MDBRow>

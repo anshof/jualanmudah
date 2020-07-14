@@ -8,7 +8,6 @@ import {
   MDBRow,
   MDBCol,
   MDBIcon,
-  MDBFormInline,
   MDBModal,
   MDBLink,
   MDBDataTable,
@@ -51,6 +50,7 @@ class Database extends Component {
     this.setState({
       [modalKey]: !this.state[modalKey],
     });
+    console.log(key)
   };
 
   handleOnDrop = (data) => {
@@ -112,7 +112,7 @@ class Database extends Component {
 
   postUpload = async () => {
     await this.props.addCustomer();
-    await alert("Database telah update");
+    await alert("Database telah diupdate");
     this.callCustomerData();
   };
 
@@ -151,23 +151,29 @@ class Database extends Component {
           />
           <MDBBox
             style={{
-              backgroundColor: "#f7f7f7",
-              padding: "100px 0 1px 0",
+              padding: "0 0 1px 0",
             }}
           >
-            {/* first row */}
-            <MDBBox className="d-flex justify-content-between align-items-center mx-5 pb-3">
-              <span
-                className="text-left"
-                style={{
-                  fontWeight: "600",
-                  color: "#192e35",
-                  fontSize: "28px",
-                }}
-              >
-                Database
-              </span>
-              <MDBBox className="d-flex">
+          {/* main row */}
+            <MDBRow
+              style={{
+                margin: "0",
+              }}
+            >
+              {/* side bar */}
+              <MDBCol size="2" style={{ backgroundColor: "#f14c59" }}>
+                <PictName bio={this.props.bio} active={"database"} />
+              </MDBCol>
+              {/* end side bar */}
+              {/* table */}
+              <MDBCol size="10">
+              <MDBBox
+              style={{
+                  padding: "30px 15px",
+                  minHeight: "100vmin",
+                }}>
+                <MDBBox className="d-flex justify-content-end align-items-center mx-5 pb-3">
+                           <MDBBox className="d-flex">
                 <button
                   color="transparent"
                   style={{
@@ -183,7 +189,7 @@ class Database extends Component {
                   className="text-capitalize px-3"
                   onClick={this.toggle("NewDatabase")}
                 >
-                  <i className="fas fa-plus-circle mr-1"></i> New Database
+                  <i className="fas fa-plus-circle mr-1"></i> Unggah Database
                 </button>
                 <MDBModal
                   isOpen={this.state.modalNewDatabase}
@@ -210,7 +216,7 @@ class Database extends Component {
                           className="dark-grey-text mb-5"
                           style={{ fontWeight: "600" }}
                         >
-                          New Database
+                          Unggah Database
                         </h3>
                       </div>
                       <div className="parse">
@@ -221,7 +227,7 @@ class Database extends Component {
                           onRemoveFile={this.handleOnRemoveFile}
                           config={{ header: true, skipEmptyLines: true }}
                         >
-                          <span>Drop CSV disini atau klik untuk upload.</span>
+                          <span>Drop CSV disini atau klik untuk unggah.</span>
                         </CSVReader>
                       </div>
                       <MDBRow
@@ -243,9 +249,10 @@ class Database extends Component {
                             // padding: ".50rem 1rem",
                           }}
                           onClick={this.postUpload}
-                          className="text-capitalize mt-3"
+                          onMouseDown={this.toggle("NewDatabase")}
+className="text-capitalize mt-3"
                         >
-                          <i className="fas fa-upload mr-1"></i> Upload Database
+                          <i className="fas fa-upload mr-1"></i> Unggah Database
                         </MDBBtn>
                       </MDBRow>
                     </MDBModalBody>
@@ -261,7 +268,7 @@ class Database extends Component {
                     </MDBModalFooter>
                   </div>
                 </MDBModal>
-                <MDBLink to="../components/JMForm.csv" target="_blank" download>
+                <MDBLink to="/public/JMForm.csv" target="_blank" download>
                   <button
                     color="transparent"
                     style={{
@@ -275,7 +282,7 @@ class Database extends Component {
                     }}
                     className="text-capitalize px-3 mx-3"
                   >
-                    <i className="fas fa-download mr-1"></i> Download Form
+                    <i className="fas fa-download mr-1"></i> Unduh Formulir
                   </button>
                 </MDBLink>
                 <MDBModal
@@ -285,35 +292,8 @@ class Database extends Component {
                 >
                   <DownloadFormDatabase toggle={this.toggle} />
                 </MDBModal>
-
-                <MDBFormInline className="md-form" style={{ margin: "0px" }}>
-                  <MDBIcon
-                    style={{ cursor: "pointer", color: "#f14c59" }}
-                    icon="search"
-                  />
-                  <input
-                    className="form-control form-control-sm ml-2 w-75"
-                    type="text"
-                    placeholder="Search"
-                    aria-label="Search"
-                  />
-                </MDBFormInline>
               </MDBBox>
             </MDBBox>
-            {/* end first row */}
-            {/* main row */}
-            <MDBRow
-              style={{
-                margin: "20px",
-              }}
-            >
-              {/* side bar */}
-              <MDBCol size="2">
-                <PictName bio={this.props.bio} active={"database"} />
-              </MDBCol>
-              {/* end side bar */}
-              {/* table */}
-              <MDBCol size="10">
                 <MDBDataTable
                   hover
                   data={data}
@@ -321,6 +301,7 @@ class Database extends Component {
                     backgroundColor: "white",
                   }}
                 />
+              </MDBBox>
               </MDBCol>
               {/* end table */}
             </MDBRow>
