@@ -22,15 +22,15 @@ class HowToUse extends Component {
     return (
       <MDBBox>
         <Navbar
-          backNav={"white"}
-          fontColor={"rgb(241, 76, 89)"}
-          logout={() => this.props.doLogOut()}
-          bio={this.props.bio}
-        />
+            fontColor={"white"}
+            backNav={"rgb(241, 76, 89)"}
+            style={{ position: "fixed" }}
+            logout={() => this.props.doLogOut()}
+            bio={this.props.bio}
+          />
         <MDBBox
           style={{
-            backgroundColor: "#f7f7f7",
-            padding: "100px 0 1px 0",
+            padding: "20px 0 1px 0",
           }}
         >
           <h3

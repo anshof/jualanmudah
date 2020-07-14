@@ -13,7 +13,7 @@ import {
   getUserBio,
   doRefershSignin,
 } from "../stores/actions/userAction";
-import { getSendList, deleteLocalDraft } from "../stores/actions/mailAction";
+import { getSendList, deleteExistDraft } from "../stores/actions/mailAction";
 class Dashboard extends Component {
   state = {};
 
@@ -21,7 +21,7 @@ class Dashboard extends Component {
     await this.props.doRefershSignin();
     await this.props.getUserBio();
     await this.props.getSendList();
-    this.props.deleteLocalDraft();
+    this.props.deleteExistDraft()
     if (this.props.mailSendList) {
       this.setState({
         data: {
@@ -103,37 +103,28 @@ class Dashboard extends Component {
           />
           <MDBBox
             style={{
-              backgroundColor: "#f7f7f7",
-              padding: "100px 0 1px 0",
+              padding: "0 0 1px 0",
             }}
           >
-            {/* title */}
-            <MDBBox className="d-flex align-items-center mx-5 pb-3">
-              <span
-                className="text-left"
-                style={{
-                  fontWeight: "600",
-                  color: "#192e35",
-                  fontSize: "28px",
-                }}
-              >
-                Broadcast
-              </span>
-            </MDBBox>
-            {/* end title */}
-            {/* main row */}
+           {/* main row */}
             <MDBRow
               style={{
-                margin: "20px",
+                margin: "0",
               }}
             >
               {/* side bar */}
-              <MDBCol size="2">
+              <MDBCol size="2" style={{ backgroundColor: "#f14c59" }}>
                 <PictName bio={this.props.bio} active={"broadcasts"} />
               </MDBCol>
               {/* end side bar */}
               {/* table */}
               <MDBCol size="10">
+              <MDBBox
+              style={{
+                  padding: "30px 15px",
+                  minHeight: "100vmin",
+                }}>
+
                 <MDBDataTable
                   hover
                   data={data}
@@ -141,6 +132,7 @@ class Dashboard extends Component {
                     backgroundColor: "white",
                   }}
                 />
+                </MDBBox>
               </MDBCol>
               {/* end table */}
             </MDBRow>
@@ -162,6 +154,6 @@ const mapDispatchToProps = {
   doLogOut,
   getSendList,
   doRefershSignin,
-  deleteLocalDraft,
+  deleteExistDraft
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

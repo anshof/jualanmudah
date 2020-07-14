@@ -134,37 +134,27 @@ class DashboardDraft extends Component {
           />
           <MDBBox
             style={{
-              backgroundColor: "#f7f7f7",
-              padding: "100px 0 1px 0",
+              padding: "0 0 1px 0",
             }}
           >
-            {/* title */}
-            <MDBBox className="d-flex align-items-center mx-5 pb-3">
-              <span
-                className="text-left"
-                style={{
-                  fontWeight: "600",
-                  color: "#192e35",
-                  fontSize: "28px",
-                }}
-              >
-                Manage Draft
-              </span>
-            </MDBBox>
-            {/* end title */}
-            {/* main row */}
+          {/* main row */}
             <MDBRow
               style={{
-                margin: "20px",
+                margin: "0",
               }}
             >
               {/* side bar */}
-              <MDBCol size="2">
+              <MDBCol size="2"  style={{ backgroundColor: "#f14c59" }}>
                 <PictName bio={this.props.bio} active={"draft"} />
               </MDBCol>
               {/* end side bar */}
               {/* table */}
               <MDBCol size="10">
+              <MDBBox
+              style={{
+                  padding: "30px 15px",
+                  minHeight: "100vmin",
+                }}>
                 <MDBDataTable
                   hover
                   data={data}
@@ -172,6 +162,7 @@ class DashboardDraft extends Component {
                     backgroundColor: "white",
                   }}
                 />
+                </MDBBox>
               </MDBCol>
               {/* end table */}
             </MDBRow>

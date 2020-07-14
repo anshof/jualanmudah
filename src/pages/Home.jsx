@@ -430,8 +430,6 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   return {
     bio: state.userState.bio,
-    username: state.userState.username,
-    password: state.userState.password,
   };
 };
 const mapDispatchToProps = {
