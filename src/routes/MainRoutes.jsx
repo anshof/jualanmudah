@@ -16,6 +16,8 @@ import NewSegment from "../pages/NewSegment"
 import AllSegments from "../pages/AllSegments"
 import PreviewEmail from "../pages/PreviewEmail"
 import HowToUse from "../pages/HowToUse"
+import EmailBuilder from "../pages/EmailBuilder"
+import Profile from "../pages/Profile"
 const MainRoutes = () => {
   return (
     <Provider store={store}>
@@ -34,6 +36,8 @@ const MainRoutes = () => {
           <Route exact path="/segment/:segmentId" component={AllSegments} />
           <Route exact path="/segment-list" component={AllSegments} />
           <Route exact path="/how-to-use" component={HowToUse} />
+          <Route exact path="/build" component={EmailBuilder} />
+          <Route exact path="/profile" component={Profile} />
           <Route component={NotFound} />
         </Switch>
       </Router>

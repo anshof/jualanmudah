@@ -30,8 +30,7 @@ class HowToUse extends Component {
           />
         <MDBBox
           style={{
-            backgroundColor: "#f7f7f7",
-            padding: "100px 0 1px 0",
+            padding: "20px 0 1px 0",
           }}
         >
           <h3

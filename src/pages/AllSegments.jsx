@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { MDBDataTable, MDBBox, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -211,9 +211,25 @@ class AllSegments extends Component {
         />
       );
     } else {
+      let groupName = "";
       const data = this.state.data;
+      if (this.props.match.params.segmentId) {
+        console.log("masuk");
+        if (this.props.customerGroups) {
+          console.log("masuk2");
+          for (let i = 0; i < this.props.customerGroups.length; i++) {
+            if (
+              String(this.props.customerGroups[i].id) ===
+              String(this.props.match.params.segmentId)
+            ) {
+              groupName = this.props.customerGroups[i].name;
+            }
+          }
+        }
+      }
+      // console.log(groupName)
       return (
-        <MDBBox style={{ backgroundColor: "#f7f7f7" }}>
+        <MDBBox>
           <Navbar
             fontColor={"white"}
             backNav={"rgb(241, 76, 89)"}
@@ -223,59 +239,68 @@ class AllSegments extends Component {
           />
           <MDBBox
             style={{
-              padding: "100px 0 1px 0",
+              padding: "0 0 1px 0",
             }}
           >
-            {/* judul */}
-            <MDBBox className="d-flex justify-content-between align-items-center mx-5 pb-3">
-              <span
-                className="text-left"
-                style={{
-                  fontWeight: "600",
-                  color: "#192e35",
-                  fontSize: "28px",
-                }}
-              >
-                All Segments
-              </span>
-              {this.props.match.params.segmentId ? (
-                <Link
-                  to="/segment-list"
-                  onClick={this.handleBacktoList}
-                  color="transparent"
-                  style={{
-                    color: "#f14c59",
-                    fontSize: "16px",
-                    fontWeight: "500",
-                    height: "40px",
-                    marginTop: "8px",
-                    cursor: "pointer",
-                  }}
-                  className="text-capitalize px-3"
-                >
-                  Back to All Segment
-                </Link>
-              ) : (
-                false
-              )}
-            </MDBBox>
             {/* tabel */}
             <MDBRow
               style={{
-                margin: "20px",
+                margin: "0",
               }}
             >
-              <MDBCol size="2">
+              <MDBCol size="2" style={{ backgroundColor: "#f14c59" }}>
                 <PictName bio={this.props.bio} active={"segments"} />
               </MDBCol>
               <MDBCol size="10">
-                <MDBDataTable
-                  hover
-                  data={data}
+                <MDBBox
                   style={{
-                    backgroundColor: "white",
+                    padding: "30px 15px",
+                    minHeight: "100vmin",
                   }}
-                />
+                >
+                  {/* judul */}
+                  <MDBBox className="d-flex justify-content-between align-items-center my-3 pb-3">
+                    {this.props.match.params.segmentId ? (
+                      <Fragment>
+                        <span
+                          className="text-left"
+                          style={{
+                            fontWeight: "600",
+                            color: "#192e35",
+                            fontSize: "28px",
+                          }}
+                        >
+                          {groupName}
+                        </span>
+                        <Link
+                          to="/segment-list"
+                          onClick={this.handleBacktoList}
+                          color="transparent"
+                          style={{
+                            color: "#f14c59",
+                            fontSize: "16px",
+                            fontWeight: "500",
+                            height: "40px",
+                            marginTop: "8px",
+                            cursor: "pointer",
+                          }}
+                          className="text-capitalize px-3"
+                        >
+                          Back to All Segment
+                        </Link>
+                      </Fragment>
+                    ) : (
+                      false
+                    )}
+                  </MDBBox>
+                  <MDBDataTable
+                    hover
+                    data={data}
+                    style={{
+                      backgroundColor: "white",
+                    }}
+                  />
+                </MDBBox>
               </MDBCol>
             </MDBRow>
           </MDBBox>

@@ -20,8 +20,40 @@ export const sendMailNow = (content, contactId) => {
         device: "email",
         contact_id: contactId,
         group_id: getState().mailState.groupIdSelect,
-        words : getState().mailState.words,
-        link : getState().mailState.link
+        words : "",
+        link : ""
+        // words : getState().mailState.words ? getState().mailState.words : "",
+        // link : getState().mailState.link ? getState().mailState.link : ""
+      },
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(async () => {
+        await dispatch({ type: "SUCCESS_SEND_MAIL" });
+        alert("Kirim sekarang sukses");
+      })
+      .catch((error) => {
+        alert("Kirim sekarang error");
+        console.error(error);
+      });
+  };
+};
+
+export const sendBuilderNow = (content) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    await axios({
+      method: "POST",
+      url: baseUrl + "/sent/direct",
+      data: {
+        status: "sent",
+        send_date: "now",
+        subject: "Builder",
+        content: content,
+        device: "email",
+        contact_id: 2,
+        group_id: 3,
+        words : "",
+        link : ""
       },
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -45,6 +77,9 @@ export const sendMailScheduled = (content, contactId) => {
     if (String(time[0]) === "0") {
       time = time.slice(1).replace(/,0/g, ",");
     }
+    if (String(time[3]) === "0") {
+      time = time.slice(0,3) + time.slice(4)
+    }
     await axios({
       method: "POST",
       url: baseUrl + "/sent/direct",
@@ -56,8 +91,10 @@ export const sendMailScheduled = (content, contactId) => {
         device: "email",
         contact_id: contactId,
         group_id: getState().mailState.groupIdSelect,
-        // words : "",
-        // link : ""
+        words : "",
+        link : ""
+        // words : getState().mailState.words ? getState().mailState.words : "",
+        // link : getState().mailState.link ? getState().mailState.link : ""
       },
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -73,19 +110,27 @@ export const sendMailScheduled = (content, contactId) => {
 export const addDraft = (content, contactId) => {
   return async (dispatch, getState) => {
     const token = localStorage.getItem("token");
+    let date = getState().mailState.sendDate.replace(/-/g, ",");
+    let time = getState().mailState.sendTime.replace(/:/g, ",");
+    date = date.replace(/,0/g, ",");
+    if (String(time[0]) === "0") {
+      time = time.slice(1).replace(/,0/g, ",");
+    }
     await axios({
       method: "POST",
       url: baseUrl + "/sent",
       data: {
         status: "draft",
-        // send_date: "now",
+        send_date: date + "," + time + ",0",
         subject: getState().mailState.subject,
         content: content,
         device: "email",
         contact_id: contactId,
         group_id: getState().mailState.groupIdSelect,
-        // words : "",
-        // link : ""
+        words : "",
+        link : ""
+        // words : getState().mailState.words ? getState().mailState.words : "",
+        // link : getState().mailState.link ? getState().mailState.link : ""
       },
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -321,8 +366,8 @@ export const doDraftToScheduled = (content, contactId) => {
         group_id: getState().mailState.groupIdSelect
           ? getState().mailState.groupIdSelect
           : getState().mailState.draft.group_id,
-        // words : "",
-        // link : ""
+        words : "",
+        link : ""
       },
       headers: { Authorization: `Bearer ${token}` },
     })
