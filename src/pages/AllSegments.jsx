@@ -237,7 +237,7 @@ class AllSegments extends Component {
             </MDBCol>
             <MDBCol size="10">
               {/* judul */}
-              <MDBBox className="d-flex justify-content-between align-items-center pb-3">
+              <MDBBox className="d-flex justify-content-between align-items-center py-3">
                 <span
                   className="text-left"
                   style={{

@@ -20,7 +20,7 @@ class NotFound extends Component {
           bio={this.props.bio}
         />
         <div className="d-flex justify-content-center">
-          <img src={require("../images/404.webp")} alt="notfound" />
+          <img src={require("../images/404.jpg")} alt="notfound" />
         </div>
         {/* <div className="d-flex justify-content-center">
           <Link to="/">
