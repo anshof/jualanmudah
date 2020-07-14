@@ -6,7 +6,7 @@ RUN mkdir -p /home/deploy/log/nginx
 
 
 COPY default.conf /etc/nginx/conf.d/
-COPY build/. /home/deploy/www/build
+COPY build/. /home/deploy/build
 
 
 WORKDIR /home/deploy/build
