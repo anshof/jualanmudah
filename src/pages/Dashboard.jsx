@@ -7,6 +7,7 @@ import "../css/style.css";
 
 import Navbar from "../components/Navbar";
 import PictName from "../components/PictName";
+import Loading from "../components/Loading";
 
 import {
   doLogOut,
@@ -15,15 +16,17 @@ import {
 } from "../stores/actions/userAction";
 import { getSendList, deleteExistDraft } from "../stores/actions/mailAction";
 class Dashboard extends Component {
-  state = {};
+  state = {
+    isLoadingTable: true,
+  };
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
     await this.props.getUserBio();
     await this.props.getSendList();
-    this.props.deleteExistDraft()
+    this.props.deleteExistDraft();
     if (this.props.mailSendList) {
-      this.setState({
+      await this.setState({
         data: {
           columns: [
             {
@@ -74,6 +77,7 @@ class Dashboard extends Component {
         },
       });
     }
+    this.setState({ isLoadingTable: false });
   };
 
   changeRouter = async (mailId) => {
@@ -106,7 +110,7 @@ class Dashboard extends Component {
               padding: "0 0 1px 0",
             }}
           >
-           {/* main row */}
+            {/* main row */}
             <MDBRow
               style={{
                 margin: "0",
@@ -119,19 +123,23 @@ class Dashboard extends Component {
               {/* end side bar */}
               {/* table */}
               <MDBCol size="10">
-              <MDBBox
-              style={{
-                  padding: "30px 15px",
-                  minHeight: "100vmin",
-                }}>
-
-                <MDBDataTable
-                  hover
-                  data={data}
+                <MDBBox
                   style={{
-                    backgroundColor: "white",
+                    padding: "30px 15px",
+                    minHeight: "100vmin",
                   }}
-                />
+                >
+                  {this.state.isLoadingTable ? (
+                    <Loading />
+                  ) : (
+                    <MDBDataTable
+                      hover
+                      data={data}
+                      style={{
+                        backgroundColor: "white",
+                      }}
+                    />
+                  )}
                 </MDBBox>
               </MDBCol>
               {/* end table */}
@@ -154,6 +162,6 @@ const mapDispatchToProps = {
   doLogOut,
   getSendList,
   doRefershSignin,
-  deleteExistDraft
+  deleteExistDraft,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

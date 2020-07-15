@@ -112,7 +112,7 @@ class SignIn extends Component {
                   to="/signup"
                   style={{ cursor: "pointer" }}
                 >
-                  daftar disini.
+                  Dafter disini.
                 </Link>
               </p>
             </MDBModalFooter>

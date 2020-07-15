@@ -163,13 +163,13 @@ class SignUp extends Component {
               style={{ margin: "15px 20px 0 20px" }}
             >
               <p className="font-small grey-text ">
-                Have an account?
+                Sudah punya akun ?
                 <Link
                   to="/signin"
                   className="red-text ml-1"
                   style={{ cursor: "pointer" }}
                 >
-                  Sign in
+                  Masuk disini.
                 </Link>
               </p>
             </MDBModalFooter>

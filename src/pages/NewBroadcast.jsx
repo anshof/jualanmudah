@@ -14,6 +14,8 @@ import {
   MDBRow,
   MDBContainer,
   MDBInput,
+  MDBModal,
+  MDBModalBody
 } from "mdbreact";
 import { convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
@@ -21,6 +23,8 @@ import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import Navbar from "../components/Navbar";
+import Loading from "../components/Loading";
+import RocketLoad from "../components/RocketLoad";
 
 import {
   doLogOut,
@@ -46,6 +50,8 @@ class NewBroadcast extends Component {
     editorState: {},
     radio1: 1,
     activeItem: this.props.match.params.draftId ? "3" : "1",
+    isLoading: true,
+    modal: false,
   };
 
   componentDidMount = async () => {
@@ -57,7 +63,8 @@ class NewBroadcast extends Component {
       await this.props.deleteExistDraft();
     }
     await this.props.getListEmail();
-    this.props.getCustomerGroupList();
+    await this.props.getCustomerGroupList();
+    this.setState({ isLoading: false });
   };
 
   toggle = (tab) => (e) => {
@@ -101,6 +108,7 @@ class NewBroadcast extends Component {
   };
 
   handleSendNow = async (content) => {
+    await this.toggleModal()
     if (this.props.mailState.contactChoice === "new") {
       if (this.props.match.params.draftId) {
         await this.props.doDraftToSend(
@@ -128,9 +136,15 @@ class NewBroadcast extends Component {
           this.props.mailState.contactIdSelect
         );
       }
-      this.props.history.push("/broadcast");
     }
-    window.location.reload();
+    await this.toggleModal()
+    this.props.history.push("/dashboard")
+  };
+
+  toggleModal = () => {
+      this.setState({
+        modal: !this.state.modal,
+      });
   };
 
   handleSendScheduled = async (content) => {
@@ -162,8 +176,8 @@ class NewBroadcast extends Component {
         );
       }
     }
-    alert("Pengiriman terjadwal sukses");
-    window.location.reload();
+    // alert("Pengiriman terjadwal sukses");
+    // window.location.reload();
   };
 
   render() {
@@ -177,9 +191,12 @@ class NewBroadcast extends Component {
         />
       );
     } else {
+      if (this.state.isLoading) {
+        return <Loading />;
+      }
       const editorState = this.props.editor;
       if (this.props.match.draftId && !editorState) {
-        return <h3 className="loading">Loading...</h3>;
+        return <Loading />;
       }
       let selectedSegment = this.props.mailState.groupIdSelect
         ? this.props.customerGroups.filter(
@@ -197,6 +214,7 @@ class NewBroadcast extends Component {
       }
       return (
         <MDBBox>
+        
           <Navbar
             isLogin={this.state.isLogin}
             fontColor={"white"}
@@ -230,102 +248,107 @@ class NewBroadcast extends Component {
                 className="d-flex justify-content-around"
                 style={{ backgroundColor: "#f14c59" }}
               >
-              <MDBRow style={{margin:"0"}} className="w-100">
-<MDBCol size="4" className="d-flex justify-content-center"
-style={{
-                    backgroundColor:
-                      this.state.activeItem !== "1" ? "#bdbdcb" : "#f14c59",
-                  }}>
-
-                <MDBNavItem>
-                  <MDBNavLink
-                    link
-                    to="#"
-                    active={this.state.activeItem === "1"}
-                    onClick={this.toggle("1")}
-                    role="tab"
-                    className="d-flex"
-                    style={{cursor:"text"}}
+                <MDBRow style={{ margin: "0" }} className="w-100">
+                  <MDBCol
+                    size="4"
+                    className="d-flex justify-content-center"
+                    style={{
+                      backgroundColor:
+                        this.state.activeItem !== "1" ? "#bdbdcb" : "#f14c59",
+                    }}
                   >
-                    <MDBBox
-                      style={{
-                        backgroundColor: "white",
-                        color: "#f14c59",
-                      }}
-                      className="d-flex justify-content-center align-items-center mr-3 circleNewBro font-weight-bold"
-                    >
-                      1
-                    </MDBBox>
-                    <MDBBox className="text-uppercase text-white">
-                      Penerima
-                    </MDBBox>
-                  </MDBNavLink>
-                </MDBNavItem>
-</MDBCol>
-<MDBCol size="4" className="d-flex justify-content-center"
-style={{
-                    backgroundColor:
-                      this.state.activeItem !== "2" ? "#bdbdcb" : "#f14c59",
-                  }}>
-<MDBNavItem>
-                  <MDBNavLink
-                    link
-                    to="#"
-                    active={this.state.activeItem === "2"}
-                    onClick={this.toggle("2")}
-                    role="tab"
-                    className="d-flex"
-                    style={{cursor:"text"}}
+                    <MDBNavItem>
+                      <MDBNavLink
+                        link
+                        to="#"
+                        active={this.state.activeItem === "1"}
+                        onClick={this.toggle("1")}
+                        role="tab"
+                        className="d-flex"
+                        style={{ cursor: "text" }}
+                      >
+                        <MDBBox
+                          style={{
+                            backgroundColor: "white",
+                            color: "#f14c59",
+                          }}
+                          className="d-flex justify-content-center align-items-center mr-3 circleNewBro font-weight-bold"
+                        >
+                          1
+                        </MDBBox>
+                        <MDBBox className="text-uppercase text-white">
+                          Penerima
+                        </MDBBox>
+                      </MDBNavLink>
+                    </MDBNavItem>
+                  </MDBCol>
+                  <MDBCol
+                    size="4"
+                    className="d-flex justify-content-center"
+                    style={{
+                      backgroundColor:
+                        this.state.activeItem !== "2" ? "#bdbdcb" : "#f14c59",
+                    }}
                   >
-                    <MDBBox
-                      style={{
-                        backgroundColor: "white",
-                        color: "#f14c59",
-                      }}
-                      className="d-flex justify-content-center align-items-center mr-3 circleNewBro font-weight-bold"
-                    >
-                      2
-                    </MDBBox>
-                    <MDBBox className="text-uppercase text-white">
-                      Konten
-                    </MDBBox>
-                  </MDBNavLink>
-                </MDBNavItem>
-</MDBCol>
-<MDBCol size="4" className="d-flex justify-content-center"
-style={{
-                    backgroundColor:
-                      this.state.activeItem !== "3" ? "#bdbdcb" : "#f14c59",
-                  }}>
-<MDBNavItem>
-                  <MDBNavLink
-                    link
-                    to="#"
-                    active={this.state.activeItem === "3"}
-                    onClick={this.toggle("3")}
-                    role="tab"
-                    className="d-flex"
-                    style={{cursor:"text"}}
+                    <MDBNavItem>
+                      <MDBNavLink
+                        link
+                        to="#"
+                        active={this.state.activeItem === "2"}
+                        onClick={this.toggle("2")}
+                        role="tab"
+                        className="d-flex"
+                        style={{ cursor: "text" }}
+                      >
+                        <MDBBox
+                          style={{
+                            backgroundColor: "white",
+                            color: "#f14c59",
+                          }}
+                          className="d-flex justify-content-center align-items-center mr-3 circleNewBro font-weight-bold"
+                        >
+                          2
+                        </MDBBox>
+                        <MDBBox className="text-uppercase text-white">
+                          Konten
+                        </MDBBox>
+                      </MDBNavLink>
+                    </MDBNavItem>
+                  </MDBCol>
+                  <MDBCol
+                    size="4"
+                    className="d-flex justify-content-center"
+                    style={{
+                      backgroundColor:
+                        this.state.activeItem !== "3" ? "#bdbdcb" : "#f14c59",
+                    }}
                   >
-                    <MDBBox
-                      style={{
-                        backgroundColor: "white",
-                        color: "#f14c59",
-                      }}
-                      className="d-flex justify-content-center align-items-center mr-3 circleNewBro font-weight-bold"
-                    >
-                      3
-                    </MDBBox>
-                    <MDBBox className="text-uppercase text-white">
-                      Pratinjau
-                    </MDBBox>
-                  </MDBNavLink>
-                </MDBNavItem>
-</MDBCol>
-              </MDBRow>
-
-                
-                
+                    <MDBNavItem>
+                      <MDBNavLink
+                        link
+                        to="#"
+                        active={this.state.activeItem === "3"}
+                        onClick={this.toggle("3")}
+                        role="tab"
+                        className="d-flex"
+                        style={{ cursor: "text" }}
+                      >
+                        <MDBBox
+                          style={{
+                            backgroundColor: "white",
+                            color: "#f14c59",
+                          }}
+                          className="d-flex justify-content-center align-items-center mr-3 circleNewBro font-weight-bold"
+                        >
+                          3
+                        </MDBBox>
+                        <MDBBox className="text-uppercase text-white">
+                          Pratinjau
+                        </MDBBox>
+                      </MDBNavLink>
+                    </MDBNavItem>
+                  </MDBCol>
+                </MDBRow>
               </MDBNav>
               <MDBTabContent
                 className="card"
@@ -616,7 +639,7 @@ style={{
                                   placeholder="Klik disini untuk mulai mengetik"
                                 />
                               </MDBBox>
-                              {/* <MDBBox className="form-group text-left mt-2">
+                              <MDBBox className="form-group text-left mt-2">
                             <p>
                               Jika anda ingin mencantumkan
                               <span
@@ -680,7 +703,7 @@ style={{
                                 />
                               </MDBCol>
                             </MDBRow>
-                          </MDBBox> */}
+                          </MDBBox>
                             </MDBCol>
                             <MDBCol size="3">
                               Salam pembuka : <br />
@@ -699,7 +722,6 @@ style={{
                               disamping.
                             </MDBCol>
                           </MDBRow>
-                          
                         </MDBBox>
                       </MDBBox>
                     </MDBCol>
@@ -804,7 +826,7 @@ style={{
                               toolbarHidden={true}
                             />
                           </MDBBox>
-                          {/* <MDBBox className="form-group text-left mt-2">
+                          <MDBBox className="form-group text-left mt-2">
                             <MDBRow>
                               <MDBCol size="6">
                                 <label htmlFor="emailsubject">
@@ -851,7 +873,7 @@ style={{
                                 />
                               </MDBCol>
                             </MDBRow>
-                          </MDBBox> */}
+                          </MDBBox>
                         </MDBBox>
                       </MDBBox>
                     </MDBCol>
@@ -907,7 +929,7 @@ style={{
                                 width: "250px",
                               }}
                               color="transparent"
-                              onClick={() =>
+                              onClick={() => 
                                 this.handleSendNow(
                                   draftToHtml(
                                     convertToRaw(
@@ -920,6 +942,16 @@ style={{
                               <i className="far fa-envelope mr-2"></i>
                               Kirim Sekarang
                             </MDBBtn>
+                            <MDBModal
+                              isOpen={this.state.modal}
+                              // toggle={this.handleClick}
+                              centered
+                            >
+                              <MDBModalBody>
+                                <RocketLoad />
+                                Email anda sedang dikirim...
+                              </MDBModalBody>
+                            </MDBModal>
                           </MDBBox>
                           <hr />
                           {/* date */}
@@ -958,25 +990,7 @@ style={{
                               />
                             </form>
                           </MDBBox>
-                          {/* akhir date */}
-                          {/* tracking email */}
-                          {/* <MDBBox className="d-flex align-items-center my-3 ml-1">
-                            <i className="fas fa-envelope-open-text mr-2"></i>
-                            Track open :
-                            <div className="ml-2 custom-control custom-switch">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customSwitches"
-                                readOnly
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="customSwitches"
-                              ></label>
-                            </div>
-                          </MDBBox> */}
-                          {/* akhir tracking email */}
+
                         </MDBBox>
                       </MDBBox>
                       <MDBBox>
