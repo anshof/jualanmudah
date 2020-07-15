@@ -166,7 +166,7 @@ class AllSegments extends Component {
                   <i
                     className="fa fa-trash"
                     aria-hidden="true"
-                    // onClick={(id) => this.handleDeleteGroup(el.id)}
+                    onClick={(id) => this.handleDeleteGroup(el.id)}
                     style={{ cursor: "pointer" }}
                   ></i>
                 </MDBBtn>

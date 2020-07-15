@@ -41,12 +41,12 @@ class PreviewEmail extends Component {
               sort: "asc",
               width: 200,
             },
-            // {
-            //   label: "Click",
-            //   field: "click",
-            //   sort: "asc",
-            //   width: 200,
-            // },
+            {
+              label: "Click",
+              field: "click",
+              sort: "asc",
+              width: 200,
+            },
             {
               label: "Email",
               field: "email",
@@ -70,21 +70,21 @@ class PreviewEmail extends Component {
                   style={{ color: "rgb(241, 76, 89)" }}
                 ></i>
               ),
-              // click: this.props.draft.link ? (
-              //   el.status_click ? (
-              //     <i
-              //       className="fas fa-check"
-              //       style={{ color: "rgb(241, 76, 89)" }}
-              //     ></i>
-              //   ) : (
-              //     <i
-              //       className="fas fa-times"
-              //       style={{ color: "rgb(241, 76, 89)" }}
-              //     ></i>
-              //   )
-              // ) : (
-              //   false
-              // ),
+              click: this.props.draft.link ? (
+                el.status_click ? (
+                  <i
+                    className="fas fa-check"
+                    style={{ color: "rgb(241, 76, 89)" }}
+                  ></i>
+                ) : (
+                  <i
+                    className="fas fa-times"
+                    style={{ color: "rgb(241, 76, 89)" }}
+                  ></i>
+                )
+              ) : (
+                false
+              ),
             })),
           ],
         },

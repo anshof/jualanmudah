@@ -718,7 +718,7 @@ class NewBroadcast extends Component {
                               <br />
                               akan otomatis tertulis. <br /> <br />
                               Untuk mengantisipasi penulisan berulang dari
-                              salam, harap tidak menuliskan pada badan email
+                              salam, harap tidak menuliskan pada konten email
                               disamping.
                             </MDBCol>
                           </MDBRow>

@@ -139,10 +139,8 @@ export const addDraft = (content, contactId) => {
         device: "email",
         contact_id: contactId,
         group_id: getState().mailState.groupIdSelect,
-        words : "",
-        link : ""
-        // words : getState().mailState.words ? getState().mailState.words : "",
-        // link : getState().mailState.link ? getState().mailState.link.replace("https://","") : ""
+        words : getState().mailState.words ? getState().mailState.words : "",
+        link : getState().mailState.link ? getState().mailState.link.replace("https://","") : ""
       },
       headers: { Authorization: `Bearer ${token}` },
     })

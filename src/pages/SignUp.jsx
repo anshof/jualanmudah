@@ -97,7 +97,7 @@ class SignUp extends Component {
                   className="dark-grey-text mb-3"
                   style={{ fontWeight: "600" }}
                 >
-                  Get your free Jualanmudah <br /> account now!
+                  Dapatkan akun Jualanmudah-mu <br /> sekarang!
                 </h3>
               </div>
 
@@ -154,7 +154,7 @@ class SignUp extends Component {
                   style={{ maxWidth: "200px", borderRadius: "20px" }}
                   onClick={this.postSignUp}
                 >
-                  Sign up
+                  Daftar
                 </MDBBtn>
               </div>
             </MDBCardBody>
