@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "https://slytherin.perintiscerita.shop";
+const baseUrl = "https://be.jualanmudah.com";
 // const baseUrl = "http://0.0.0.0:5050";
 
 export const doSignin = () => {

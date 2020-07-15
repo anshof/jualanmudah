@@ -20,8 +20,15 @@ class NotFound extends Component {
           bio={this.props.bio}
         />
         <div className="d-flex justify-content-center">
-          <img src={require("../images/404.webp")} alt="notfound" />
+          <img
+            src={require("../images/404.jpg")}
+            alt="notfound"
+            style={{ width: "800px" }}
+          />
         </div>
+        <h1 style={{ color: "rgb(241, 76, 89)", fontWeight: "500" }}>
+          Halaman yang anda cari tidak ada
+        </h1>
         {/* <div className="d-flex justify-content-center">
           <Link to="/">
             <button

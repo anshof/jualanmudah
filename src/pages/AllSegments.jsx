@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 import Navbar from "../components/Navbar";
 import PictName from "../components/PictName";
+import Loading from "../components/Loading";
 
 import {
   doLogOut,
@@ -20,6 +21,7 @@ class AllSegments extends Component {
   state = {
     modalFormDatabase: false,
     modalNewDatabase: false,
+    isLoadingTable: true,
   };
 
   componentDidMount = async () => {
@@ -30,11 +32,12 @@ class AllSegments extends Component {
     if (this.props.match.params.segmentId) {
       await this.props.getCustomerMember(this.props.match.params.segmentId);
       groupData = await this.props.customerState.customerList;
-      this.callSegment(groupData);
+      await this.callSegment(groupData);
     } else {
       groupData = await this.props.customerGroups;
-      this.callAllSegment(groupData);
+      await this.callAllSegment(groupData);
     }
+    this.setState({ isLoadingTable: false });
   };
 
   callAllSegment = (groupData) => {
@@ -176,28 +179,34 @@ class AllSegments extends Component {
   };
 
   handleBacktoList = async () => {
+    this.setState({ isLoadingTable: true });
     await this.props.getCustomerGroupList();
     let groupData = await this.props.customerGroups;
-    this.callAllSegment(groupData);
+    await this.callAllSegment(groupData);
+    this.setState({ isLoadingTable: false });
   };
 
   handleDeleteGroup = async (id) => {
-    var result = window.confirm("Are you sure to delete?");
+    var result = await window.confirm("Are you sure to delete?");
+    await this.setState({ isLoadingTable: true });
     if (result) {
       await this.props.deleteGroup(id);
     }
     await this.props.getCustomerGroupList();
     let groupData = await this.props.customerGroups;
-    this.callAllSegment(groupData);
+    await this.callAllSegment(groupData);
+    this.setState({ isLoadingTable: false });
   };
 
   changeRouter = async (segmentId) => {
+    await this.setState({ isLoadingTable: true });
     await this.props.getCustomerMember(segmentId);
     await this.props.history.push("/segment/" + segmentId, {
       ...this.props.draft,
     });
-    let groupData = this.props.customerState.customerList;
-    this.callSegment(groupData);
+    let groupData = await this.props.customerState.customerList;
+    await this.callSegment(groupData);
+    this.setState({ isLoadingTable: false });
   };
 
   render() {
@@ -259,47 +268,54 @@ class AllSegments extends Component {
                   }}
                 >
                   {/* judul */}
-                  <MDBBox className="d-flex justify-content-between align-items-center my-3 pb-3">
-                    {this.props.match.params.segmentId ? (
-                      <Fragment>
-                        <span
-                          className="text-left"
-                          style={{
-                            fontWeight: "600",
-                            color: "#192e35",
-                            fontSize: "28px",
-                          }}
-                        >
-                          {groupName}
-                        </span>
-                        <Link
-                          to="/segment-list"
-                          onClick={this.handleBacktoList}
-                          color="transparent"
-                          style={{
-                            color: "#f14c59",
-                            fontSize: "16px",
-                            fontWeight: "500",
-                            height: "40px",
-                            marginTop: "8px",
-                            cursor: "pointer",
-                          }}
-                          className="text-capitalize px-3"
-                        >
-                          Back to All Segment
-                        </Link>
-                      </Fragment>
-                    ) : (
-                      false
-                    )}
-                  </MDBBox>
-                  <MDBDataTable
-                    hover
-                    data={data}
-                    style={{
-                      backgroundColor: "white",
-                    }}
-                  />
+                  {this.state.isLoadingTable ? (
+                    <Loading />
+                  ) : (
+                    <Fragment>
+                      <MDBBox className="d-flex justify-content-between align-items-center my-3 pb-3">
+                        {this.props.match.params.segmentId ? (
+                          <Fragment>
+                            <span
+                              className="text-left"
+                              style={{
+                                fontWeight: "600",
+                                color: "#192e35",
+                                fontSize: "28px",
+                              }}
+                            >
+                              {groupName}
+                            </span>
+                            <Link
+                              to="/segment-list"
+                              onClick={this.handleBacktoList}
+                              color="transparent"
+                              style={{
+                                color: "#f14c59",
+                                fontSize: "16px",
+                                fontWeight: "500",
+                                height: "40px",
+                                marginTop: "8px",
+                                cursor: "pointer",
+                              }}
+                              className="text-capitalize px-3"
+                            >
+                              Back to All Segment
+                            </Link>
+                          </Fragment>
+                        ) : (
+                          false
+                        )}
+                      </MDBBox>
+
+                      <MDBDataTable
+                        hover
+                        data={data}
+                        style={{
+                          backgroundColor: "white",
+                        }}
+                      />
+                    </Fragment>
+                  )}
                 </MDBBox>
               </MDBCol>
             </MDBRow>

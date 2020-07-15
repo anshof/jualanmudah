@@ -6,21 +6,27 @@ import { Link } from "react-router-dom";
 
 import "../css/style.css";
 import Navbar from "../components/Navbar";
-
+import Loading from "../components/Loading";
 import {
   doLogOut,
   doRefershSignin,
   getUserBio,
 } from "../stores/actions/userAction";
 class Home extends Component {
-  state = {};
+  state = {
+    isLoading: true,
+  };
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
-    this.props.getUserBio();
+    await this.props.getUserBio();
+    this.setState({ isLoading: false });
   };
 
   render() {
+    if (this.state.isLoading) {
+      return <Loading />;
+    }
     return (
       <Fragment>
         <Navbar
