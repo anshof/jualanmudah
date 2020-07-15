@@ -34,7 +34,7 @@ const PictName = (props) => {
             }}
           >
             <MDBCol size="3" style={{ padding: "0" }}>
-              <i class="fas fa-envelope-open"></i>
+              <i className="fas fa-envelope-open"></i>
             </MDBCol>
             <MDBCol size="9" className="text-left">
               Broadcasts
@@ -64,7 +64,7 @@ const PictName = (props) => {
             }}
           >
             <MDBCol size="3" className="text-center" style={{ padding: "0" }}>
-              <i class="fas fa-users"></i>
+              <i className="fas fa-users"></i>
             </MDBCol>
             <MDBCol size="9" className="text-left">
               Semua grup
@@ -93,7 +93,7 @@ const PictName = (props) => {
             }}
           >
             <MDBCol size="3" className="text-center" style={{ padding: "0" }}>
-              <i class="fas fa-file-alt"></i>
+              <i className="fas fa-file-alt"></i>
             </MDBCol>
             <MDBCol size="9" className="text-left">
               Draft
@@ -123,7 +123,7 @@ const PictName = (props) => {
             }}
           >
             <MDBCol size="3" style={{ padding: "0" }}>
-              <i class="fas fa-database"></i>
+              <i className="fas fa-database"></i>
             </MDBCol>
             <MDBCol size="9" className="text-left">
               Database
@@ -152,7 +152,7 @@ const PictName = (props) => {
             }}
           >
             <MDBCol size="3" className="text-center" style={{ padding: "0" }}>
-              <i class="fas fa-user"></i>
+              <i className="fas fa-user"></i>
             </MDBCol>
             <MDBCol size="9" className="text-left">
               Profile

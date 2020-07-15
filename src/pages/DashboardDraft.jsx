@@ -7,6 +7,7 @@ import "../css/style.css";
 
 import Navbar from "../components/Navbar";
 import PictName from "../components/PictName";
+import Loading from "../components/Loading";
 
 import {
   doLogOut,
@@ -20,13 +21,16 @@ import {
 } from "../stores/actions/mailAction";
 
 class DashboardDraft extends Component {
-  state = {};
+  state = {
+    isLoadingTable: true,
+  };
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
     await this.props.getDraftList();
     this.props.getUserBio();
-    this.callDraftList();
+    await this.callDraftList();
+    this.setState({ isLoadingTable: false });
   };
 
   callDraftList = () => {
@@ -137,31 +141,36 @@ class DashboardDraft extends Component {
               padding: "0 0 1px 0",
             }}
           >
-          {/* main row */}
+            {/* main row */}
             <MDBRow
               style={{
                 margin: "0",
               }}
             >
               {/* side bar */}
-              <MDBCol size="2"  style={{ backgroundColor: "#f14c59" }}>
+              <MDBCol size="2" style={{ backgroundColor: "#f14c59" }}>
                 <PictName bio={this.props.bio} active={"draft"} />
               </MDBCol>
               {/* end side bar */}
               {/* table */}
               <MDBCol size="10">
-              <MDBBox
-              style={{
-                  padding: "30px 15px",
-                  minHeight: "100vmin",
-                }}>
-                <MDBDataTable
-                  hover
-                  data={data}
+                <MDBBox
                   style={{
-                    backgroundColor: "white",
+                    padding: "30px 15px",
+                    minHeight: "100vmin",
                   }}
-                />
+                >
+                  {this.state.isLoadingTable ? (
+                    <Loading />
+                  ) : (
+                    <MDBDataTable
+                      hover
+                      data={data}
+                      style={{
+                        backgroundColor: "white",
+                      }}
+                    />
+                  )}
                 </MDBBox>
               </MDBCol>
               {/* end table */}

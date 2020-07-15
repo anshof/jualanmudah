@@ -10,6 +10,7 @@ import {
   MDBBtn,
 } from "mdbreact";
 import Navbar from "../components/Navbar";
+import Loading from "../components/Loading";
 import {
   doLogOut,
   getUserBio,
@@ -29,6 +30,7 @@ class NewSegment extends Component {
   state = {
     radio1: 1,
     radio2: 1,
+    isLoadingTable: true,
   };
 
   componentDidMount = async () => {
@@ -36,7 +38,8 @@ class NewSegment extends Component {
     await this.props.getCustomerGroupList();
     await this.props.doRefershSignin();
     await this.props.getUserBio();
-    this.callCustomerData();
+    await this.callCustomerData();
+    this.setState({ isLoadingTable: false });
   };
 
   onClickChoice1 = (nr) => () => {
@@ -105,6 +108,7 @@ class NewSegment extends Component {
   };
 
   onChangeGroupMember = async (e) => {
+    this.setState({ isLoadingTable: true });
     await this.props.changeInputCustomer(e);
     if (this.props.customerState.groupListSelect === "all") {
       await this.props.getCustomerList();
@@ -113,7 +117,8 @@ class NewSegment extends Component {
         this.props.customerState.groupListSelect
       );
     }
-    this.callCustomerData();
+    await this.callCustomerData();
+    this.setState({ isLoadingTable: false });
   };
 
   doneCreateGroup = async () => {
@@ -129,7 +134,7 @@ class NewSegment extends Component {
       await this.props.addCustomerMember(customersId[i], groupId);
     }
     await alert("Sukses!");
-    window.location.reload();
+    this.props.history.push("/segment-list")
   };
 
   render() {
@@ -148,7 +153,7 @@ class NewSegment extends Component {
         return <h3 className="loading">Loading...</h3>;
       }
       return (
-        <MDBBox >
+        <MDBBox>
           <Navbar
             isLogin={this.state.isLogin}
             fontColor={"white"}
@@ -357,15 +362,17 @@ class NewSegment extends Component {
               {/* end create new segment */}
               {/* table */}
               <MDBCol size="6">
-                <MDBDataTable
-                  hover
-                  btn
-                  fixed
-                  data={data}
-                  style={{
-                    backgroundColor: "white",
-                  }}
-                />
+                {this.state.isLoadingTable ? (
+                  <Loading />
+                ) : (
+                  <MDBDataTable
+                    hover
+                    data={data}
+                    style={{
+                      backgroundColor: "white",
+                    }}
+                  />
+                )}
               </MDBCol>
               {/* end table */}
             </MDBRow>
