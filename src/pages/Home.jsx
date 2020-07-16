@@ -172,21 +172,20 @@ class Home extends Component {
                 size="4"
                 className="d-flex justify-content-center align-items-center"
               >
-                <MDBBox className="feature py-5">
+                <MDBBox className="feature">
                   <img
-                    src={require("../images/wa.jpg")}
+                    src={require("../images/personalized.png")}
                     alt="email"
-                    style={{ width: "300px" }}
+                    style={{ width: "250px" }}
                   />
                   <h5
                     className="noPadMar"
                     style={{ fontWeight: "600", color: "#1b2e35" }}
                   >
-                    Jadwal pengiriman email
+                    Personalized email
                   </h5>
                   <p>
-                    Kamu bisa menjadwalkan kirim email untuk waktu yang akan
-                    datang.
+                    Kirim email dengan lebih personal <br/> ke pelangganmu.
                   </p>
                 </MDBBox>
               </MDBCol>
@@ -261,8 +260,8 @@ class Home extends Component {
         {/* security */}
         <MDBBox
           style={{
-            margin: "100px auto",
-            padding: "20px 0",
+            margin: "80px 0 0 0",
+            padding: "0",
             position: "relative",
           }}
         >

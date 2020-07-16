@@ -13,7 +13,6 @@ import {
   MDBCol,
   MDBRow,
   MDBContainer,
-  MDBInput,
   MDBModal,
   MDBModalBody,
 } from "mdbreact";
@@ -112,7 +111,7 @@ class NewBroadcast extends Component {
     } else if (this.props.mailState.contactChoice === "exist") {
       await this.props.addDraft(content, this.props.mailState.contactIdSelect);
     }
-    await this.props.history.push("/draft")
+    await this.props.history.push("/draft");
   };
 
   handleSendNow = async (content) => {
@@ -338,11 +337,14 @@ class NewBroadcast extends Component {
                           >
                             Kirim broadcast menggunakan :
                           </p>
-                          <MDBBox className="mt-2 mb-3">
-                            <MDBInput
+                          <br/>
+                          <MDBBox className="mt-2 mx-3">
+                            <label for="radio1"
+                              className="pr-3"
+                            >Email yang sudah ada</label>
+                            <input
                               onClick={this.onClickChoice1(1)}
                               checked={this.state.radio1 === 1 ? true : false}
-                              label="Email yang sudah ada"
                               type="radio"
                               id="radio1"
                               name="contactChoice"
@@ -350,8 +352,9 @@ class NewBroadcast extends Component {
                               disabled={this.props.emailList ? false : true}
                               onChange={(e) => this.props.changeInputMail(e)}
                             />
+                            <br/>
                             <select
-                              className="browser-default custom-select w-75 ml-3 mt-2 mb-3"
+                              className="browser-default custom-select w-75 mt-2 mb-3"
                               disabled={
                                 (this.state.radio1 !== 1 ? true : false) ||
                                 (this.props.emailList ? false : true)
@@ -385,7 +388,11 @@ class NewBroadcast extends Component {
                                   ))
                                 : false}
                             </select>
-                            <MDBInput
+                            <br/>
+                            <label for="radio2"
+                              className="pr-3"
+                            >Email baru</label>
+                            <input
                               onClick={this.onClickChoice1(2)}
                               checked={this.state.radio1 === 2 ? true : false}
                               label="Email baru"
@@ -398,7 +405,7 @@ class NewBroadcast extends Component {
                             <input
                               name="newContact"
                               type="text"
-                              className="form-control w-75 ml-3 mt-1"
+                              className="form-control w-75 mt-1"
                               id="formGroupExampleInput"
                               placeholder="Masukkan email"
                               disabled={this.state.radio1 !== 2 ? true : false}
@@ -407,7 +414,7 @@ class NewBroadcast extends Component {
                             <input
                               name="password"
                               type="password"
-                              className="form-control w-75 ml-3 mt-1"
+                              className="form-control w-75 mt-1"
                               id="formGroupExampleInput"
                               placeholder="Masukkan Password email"
                               disabled={this.state.radio1 !== 2 ? true : false}
@@ -845,9 +852,13 @@ class NewBroadcast extends Component {
                                 <input
                                   value={
                                     this.props.match.params.draftId
-                                      ? "https://www." + this.props.draft.link
-                                      : "https://www." +
+                                      ? this.props.draft.link
+                                        ? "https://www." + this.props.draft.link
+                                        : ""
+                                      : this.props.mailState.link
+                                      ? "https://www." +
                                         this.props.mailState.link
+                                      : ""
                                   }
                                   type="text"
                                   className="form-control w-100"

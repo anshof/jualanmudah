@@ -6,7 +6,6 @@ import {
   MDBBox,
   MDBRow,
   MDBCol,
-  MDBInput,
   MDBBtn,
 } from "mdbreact";
 import Navbar from "../components/Navbar";
@@ -226,18 +225,19 @@ class NewSegment extends Component {
                         Apa yang ingin anda lakukan ?
                       </span>
                       <br />
-                      <MDBBox className="mt-2 mb-3">
-                        <MDBInput
+                      <MDBBox className="mt-3 mx-3">
+                      <label for="radio1" className="pr-3"
+                      > Membuat grup baru</label>
+                        <input
                           onClick={this.onClickChoice1(1)}
                           checked={this.state.radio1 === 1 ? true : false}
-                          label="Membuat grup baru"
                           type="radio"
                           id="radio1"
                           name="groupSelectChoice1"
                           value="all"
                           onChange={(e) => this.props.changeInputCustomer(e)}
                         />
-                        <MDBCol size="10" className="ml-1">
+                        <MDBBox>
                           <div className="input-group mb-3 mt-2 w-75">
                             <div className="input-group-prepend"></div>
                             <input
@@ -253,16 +253,16 @@ class NewSegment extends Component {
                               }
                             />
                           </div>
-                        </MDBCol>
-                        <MDBInput
+                        </MDBBox>
+                        <label for="radio2" className="pr-3">Menambahkan anggota pada grup</label>
+                        <input
                           onClick={this.onClickChoice1(2)}
                           checked={this.state.radio1 === 2 ? true : false}
-                          label="Menambahkan anggota pada grup"
                           type="radio"
                           id="radio2"
                         />
                         <select
-                          className="browser-default custom-select w-75 ml-3 mt-2"
+                          className="browser-default custom-select w-75 mt-2"
                           disabled={this.state.radio1 !== 2 ? true : false}
                           selected
                           name="groupIdSelect"
@@ -311,18 +311,20 @@ class NewSegment extends Component {
                         Pilih data pelanggan dari :
                       </span>
                       <br />
-                      <MDBBox className="mt-2 mb-3">
-                        <MDBInput
+                      <MDBBox className="mt-3 mx-3">
+                      <label for="radio3" className="pr-3"> Semua kontak</label>
+                        <input
                           onClick={this.onClickChoice2(1)}
                           checked={this.state.radio2 === 1 ? true : false}
-                          label="Semua kontak"
                           type="radio"
                           id="radio3"
                           name="groupListSelect"
                           value="all"
                           onChange={(e) => this.onChangeGroupMember(e)}
                         />
-                        <MDBInput
+                        <br/>
+                        <label for="radio4" className="pr-3"> Grup kontak yang sudah ada</label>
+                        <input
                           onClick={this.onClickChoice2(2)}
                           checked={this.state.radio2 === 2 ? true : false}
                           label="Grup kontak yang sudah ada"
