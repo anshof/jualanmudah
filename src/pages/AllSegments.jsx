@@ -188,14 +188,14 @@ class AllSegments extends Component {
 
   handleDeleteGroup = async (id) => {
     var result = await window.confirm("Are you sure to delete?");
-    await this.setState({ isLoadingTable: true });
+    // await this.setState({ isLoadingTable: true });
     if (result) {
       await this.props.deleteGroup(id);
     }
     await this.props.getCustomerGroupList();
     let groupData = await this.props.customerGroups;
     await this.callAllSegment(groupData);
-    this.setState({ isLoadingTable: false });
+    // this.setState({ isLoadingTable: false });
   };
 
   changeRouter = async (segmentId) => {

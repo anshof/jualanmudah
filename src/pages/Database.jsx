@@ -262,7 +262,7 @@ class Database extends Component {
                                     // padding: ".50rem 1rem",
                                   }}
                                   onClick={this.postUpload}
-                                  onMouseDown={this.toggle("NewDatabase")}
+                                  // onMouseDown={this.toggle("NewDatabase")}
                                   className="text-capitalize mt-3"
                                 >
                                   <i className="fas fa-upload mr-1"></i> Unggah
