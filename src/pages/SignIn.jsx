@@ -14,7 +14,12 @@ import { doSignin, changeInputUser } from "../stores/actions/userAction";
 import { connect } from "react-redux";
 
 class SignIn extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.postSignIn = this.postSignIn.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
 
   postSignIn = async () => {
     await this.props.doSignin();

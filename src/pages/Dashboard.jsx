@@ -16,9 +16,13 @@ import {
 } from "../stores/actions/userAction";
 import { getSendList, deleteExistDraft } from "../stores/actions/mailAction";
 class Dashboard extends Component {
-  state = {
-    isLoadingTable: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoadingTable: true,
+    };
+    this.changeRouter = this.changeRouter.bind(this);
+  }
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
@@ -30,28 +34,28 @@ class Dashboard extends Component {
         data: {
           columns: [
             {
-              label: "Subject",
+              label: "Subjek",
               field: "title",
               width: 150,
             },
             {
-              label: "Open rate",
+              label: "Status Terbuka",
               field: "open_rate",
               width: 270,
             },
             {
-              label: "Segment",
+              label: "Grup",
               field: "segment",
               width: 150,
             },
             {
-              label: "Created At",
+              label: "Tanggal Dikirim",
               field: "created_at",
               sort: "asc",
               width: 200,
             },
             {
-              label: "Details",
+              label: "Rincian",
               field: "details",
               sort: "asc",
               width: 200,
@@ -62,14 +66,14 @@ class Dashboard extends Component {
               key: index,
               title: el.subject,
               details: (
-                <p
+                <i
+                  class="fa fa-search-plus"
+                  aria-hidden="true"
                   style={{ color: "rgb(241, 76, 89)", cursor: "pointer" }}
                   onClick={() => this.changeRouter(el.id)}
-                >
-                  Details
-                </p>
+                ></i>
               ),
-              created_at: moment.utc(el.created_at).format("YYYY/MM/DD"),
+              created_at: moment.utc(el.created_at).format("YYYY/MM/DD HH:mm"),
               open_rate: el.open_rate + "/" + el.total_sent,
               segment: el.group_customer.name,
             })),

@@ -1,2 +1,0 @@
-First_name,last_name,email,phone,bod,address,gender,company
-(text),(text),(text),(num),YYY-MM-DD,(text),(male/female),(text)

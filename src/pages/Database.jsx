@@ -9,7 +9,6 @@ import {
   MDBCol,
   MDBIcon,
   MDBModal,
-  MDBLink,
   MDBDataTable,
   MDBModalBody,
   MDBModalFooter,
@@ -19,7 +18,6 @@ import "../css/style.css";
 
 import Navbar from "../components/Navbar";
 import PictName from "../components/PictName";
-import DownloadFormDatabase from "../components/DownloadFormModal";
 import Loading from "../components/Loading";
 
 import {
@@ -32,13 +30,23 @@ import {
   addCustomer,
   uploadDataCustomer,
 } from "../stores/actions/customerAction";
-
+import { saveAs } from "file-saver";
 class Database extends Component {
-  state = {
-    modalFormDatabase: false,
-    modalNewDatabase: false,
-    isLoadingTable: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalFormDatabase: false,
+      modalNewDatabase: false,
+      isLoadingTable: true,
+    };
+    this.toggle = this.toggle.bind(this);
+    this.handleOnDrop = this.handleOnDrop.bind(this);
+    this.callCustomerData = this.callCustomerData.bind(this);
+    this.postUpload = this.postUpload.bind(this);
+    this.handleOnError = this.handleOnError.bind(this);
+    this.handleOnRemoveFile = this.handleOnRemoveFile.bind(this);
+    this.onDownload = this.onDownload.bind(this);
+  }
 
   componentDidMount = async () => {
     await this.props.getCustomerList();
@@ -66,33 +74,33 @@ class Database extends Component {
         data: {
           columns: [
             {
-              label: "Name",
+              label: "Nama",
               field: "name",
               width: 150,
               color: "pink",
             },
             {
-              label: "Email",
+              label: "Email (Valid)",
               field: "email",
               width: 200,
             },
             {
-              label: "BOD",
+              label: "BoD",
               field: "bod",
               width: 270,
             },
             {
-              label: "Address",
+              label: "Alamat",
               field: "address",
               width: 100,
             },
             {
-              label: "Phone",
+              label: "No. Telepon",
               field: "phone",
               width: 150,
             },
             {
-              label: "Company",
+              label: "Perusahaan",
               field: "company",
               width: 100,
             },
@@ -101,7 +109,22 @@ class Database extends Component {
             ...this.props.customerList.map((el, index) => ({
               key: index,
               name: el.First_name + " " + el.last_name,
-              email: el.email,
+              email: (
+                <p>
+                  {el.email}
+                  {el.validation === "valid" ? (
+                    <i
+                      className="fas fa-check ml-2"
+                      style={{ color: "#4CAF50" }}
+                    ></i>
+                  ) : (
+                    <i
+                      className="fas fa-times ml-2"
+                      style={{ color: "rgb(241, 76, 89)" }}
+                    ></i>
+                  )}
+                </p>
+              ),
               bod: moment.utc(el.bod).format("YYYY/MM/DD"),
               address: el.address,
               phone: el.phone[0] !== "0" ? "0" + el.phone : el.phone,
@@ -125,6 +148,17 @@ class Database extends Component {
 
   handleOnRemoveFile = (data) => {
     console.log(data);
+  };
+
+  onDownload = async () => {
+    const blob = new Blob(
+      [
+        `First_name,last_name,email,phone,bod,address,gender, company
+    (text),(text),(text),(num),(YYYY-MM-DD),(text),(male/female),(text)`,
+      ],
+      { type: "text/plain;charset=utf-8" }
+    );
+    saveAs(blob, "JMForm.csv");
   };
 
   render() {
@@ -181,7 +215,7 @@ class Database extends Component {
                   >
                     <MDBBox className="d-flex justify-content-end align-items-center mx-5 pb-3">
                       <MDBBox className="d-flex">
-                        <button
+                        <MDBBtn
                           color="transparent"
                           style={{
                             backgroundColor: "white",
@@ -190,15 +224,15 @@ class Database extends Component {
                             boxShadow: "none",
                             borderRadius: "40px",
                             fontSize: "16px",
-                            height: "40px",
-                            marginTop: "8px",
+                            width: "200px",
+                            height: "50px",
                           }}
                           className="text-capitalize px-3"
                           onClick={this.toggle("NewDatabase")}
                         >
                           <i className="fas fa-plus-circle mr-1"></i> Unggah
                           Database
-                        </button>
+                        </MDBBtn>
                         <MDBModal
                           isOpen={this.state.modalNewDatabase}
                           toggle={this.toggle("NewDatabase")}
@@ -262,7 +296,6 @@ class Database extends Component {
                                     // padding: ".50rem 1rem",
                                   }}
                                   onClick={this.postUpload}
-                                  // onMouseDown={this.toggle("NewDatabase")}
                                   className="text-capitalize mt-3"
                                 >
                                   <i className="fas fa-upload mr-1"></i> Unggah
@@ -283,35 +316,25 @@ class Database extends Component {
                             </MDBModalFooter>
                           </div>
                         </MDBModal>
-                        <MDBLink
-                          to="/public/JMForm.csv"
-                          target="_blank"
-                          download
+                        <MDBBtn
+                          color="transparent"
+                          style={{
+                            backgroundColor: "white",
+                            border: "1px solid #f14c59",
+                            color: "#f14c59",
+                            boxShadow: "none",
+                            borderRadius: "40px",
+                            fontSize: "16px",
+                            width: "200px",
+                            height: "50px",
+                            // padding: ".50rem 1rem",
+                          }}
+                          className="text-capitalize"
+                          onClick={this.onDownload}
                         >
-                          <button
-                            color="transparent"
-                            style={{
-                              backgroundColor: "white",
-                              border: "1px solid #f14c59",
-                              color: "#f14c59",
-                              boxShadow: "none",
-                              borderRadius: "40px",
-                              fontSize: "16px",
-                              height: "40px",
-                            }}
-                            className="text-capitalize px-3 mx-3"
-                          >
-                            <i className="fas fa-download mr-1"></i> Unduh
-                            Formulir
-                          </button>
-                        </MDBLink>
-                        <MDBModal
-                          isOpen={this.state.modalFormDatabase}
-                          toggle={this.toggle("FormDatabase")}
-                          size="md"
-                        >
-                          <DownloadFormDatabase toggle={this.toggle} />
-                        </MDBModal>
+                          <i className="fas fa-download mr-1"></i> Unduh
+                          Formulir
+                        </MDBBtn>
                       </MDBBox>
                     </MDBBox>
 

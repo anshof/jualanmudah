@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { MDBDataTable, MDBBox, MDBRow, MDBCol } from "mdbreact";
 import { Editor } from "react-draft-wysiwyg";
@@ -15,10 +16,13 @@ import {
 } from "../stores/actions/userAction";
 import { getSent } from "../stores/actions/mailAction";
 class PreviewEmail extends Component {
-  state = {
-    editorState: {},
-    isLoadingTable: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorState: {},
+      isLoadingTable: true,
+    };
+  }
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
@@ -29,20 +33,20 @@ class PreviewEmail extends Component {
         data: {
           columns: [
             {
-              label: "Name",
+              label: "Nama",
               field: "name",
               sort: "asc",
               width: 150,
               color: "pink",
             },
             {
-              label: "Open",
+              label: "Status Terbuka",
               field: "open",
               sort: "asc",
               width: 200,
             },
             {
-              label: "Click",
+              label: "Status Klik",
               field: "click",
               sort: "asc",
               width: 200,
@@ -60,10 +64,7 @@ class PreviewEmail extends Component {
               name: el.customer.First_name + " " + el.customer.last_name,
               email: el.customer.email,
               open: el.status_open ? (
-                <i
-                  className="fas fa-check"
-                  style={{ color: "rgb(241, 76, 89)" }}
-                ></i>
+                <i className="fas fa-check" style={{ color: "#4CAF50" }}></i>
               ) : (
                 <i
                   className="fas fa-times"
@@ -72,10 +73,7 @@ class PreviewEmail extends Component {
               ),
               click: this.props.draft.link ? (
                 el.status_click ? (
-                  <i
-                    className="fas fa-check"
-                    style={{ color: "rgb(241, 76, 89)" }}
-                  ></i>
+                  <i className="fas fa-check" style={{ color: "#4CAF50" }}></i>
                 ) : (
                   <i
                     className="fas fa-times"
@@ -136,7 +134,28 @@ class PreviewEmail extends Component {
                 {this.state.isLoadingTable ? (
                   <Loading />
                 ) : (
-                  <MDBBox className="py-3 px-3">
+                  <MDBBox className="py-3 px-3 mt-3 mb-3">
+                    <MDBRow>
+                      <MDBCol size="9"></MDBCol>
+                      <MDBCol size="3">
+                        <Link
+                          to="/dashboard"
+                          onClick={this.handleBacktoList}
+                          color="transparent"
+                          style={{
+                            color: "#f14c59",
+                            fontSize: "16px",
+                            fontWeight: "500",
+                            height: "40px",
+                            marginTop: "8px",
+                            cursor: "pointer",
+                          }}
+                          className="text-capitalize px-3"
+                        >
+                          Kembali ke Semua Broadcast
+                        </Link>
+                      </MDBCol>
+                    </MDBRow>
                     <MDBRow>
                       <MDBCol size="9">
                         <MDBBox className="form-group text-left">

@@ -27,10 +27,9 @@ export const sendMailNow = (content, contactId) => {
     })
       .then(async () => {
         await dispatch({ type: "SUCCESS_SEND_MAIL" });
-        alert("Kirim email sukses");
       })
       .catch((error) => {
-        alert("Kirim sekarang error");
+        alert("Kirim email mengalami kesalahan. Silahkan coba lagi.");
         console.error(error);
       });
   };
@@ -57,10 +56,10 @@ export const sendBuilderNow = (content) => {
     })
       .then(async () => {
         await dispatch({ type: "SUCCESS_SEND_MAIL" });
-        alert("Kirim sekarang sukses");
+        // alert("Kirim sekarang sukses");
       })
       .catch((error) => {
-        alert("Kirim sekarang error");
+        alert("Pengiriman terjadi kesalahan. Silahkan coba lagi.");
         console.error(error);
       });
   };
@@ -167,7 +166,7 @@ export const deleteDraft = (id) => {
         dispatch({ type: "SUCCESS_DELETE_DRAFT_MAIL", payload: id });
       })
       .catch((error) => {
-        console.error("Delete draft error", error);
+        console.error("Delete draf mengalami kesalahan. Silahkan coba lagi.", error);
       });
   };
 };
@@ -342,7 +341,6 @@ export const doDraftToSend = (content, contactId) => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(async () => {
-        await alert("Kirim sekarang sukses");
         dispatch({ type: "SUCCESS_SEND_MAIL" });
       })
       .catch((error) => {

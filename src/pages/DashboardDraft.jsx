@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import moment from "moment";
-import { MDBBox, MDBRow, MDBCol, MDBBtn, MDBDataTable } from "mdbreact";
+import { MDBBox, MDBRow, MDBCol, MDBDataTable } from "mdbreact";
 import "../css/style.css";
 
 import Navbar from "../components/Navbar";
@@ -21,9 +21,15 @@ import {
 } from "../stores/actions/mailAction";
 
 class DashboardDraft extends Component {
-  state = {
-    isLoadingTable: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoadingTable: true,
+    };
+    this.callDraftList = this.callDraftList.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.changeRouter = this.changeRouter.bind(this);
+  }
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
@@ -39,29 +45,29 @@ class DashboardDraft extends Component {
         data: {
           columns: [
             {
-              label: "Title",
+              label: "Subjek",
               field: "title",
               width: 150,
               color: "pink",
             },
             {
-              label: "Created At",
+              label: "Tanggal Dibuat",
               field: "created_at",
               width: 200,
             },
             {
-              label: "Segments",
+              label: "Grup",
               field: "segment",
               width: 270,
             },
             {
-              label: "Edit",
+              label: "Ubah",
               field: "edit",
               sort: "asc",
               width: 200,
             },
             {
-              label: "Delete",
+              label: "Hapus",
               field: "delete",
               width: 150,
             },
@@ -71,29 +77,22 @@ class DashboardDraft extends Component {
               key: index,
               title: el.subject ? el.subject : "Unsubjected",
               edit: (
-                <p
+                <i
+                  class="fas fa-pen-fancy"
                   style={{ color: "rgb(241, 76, 89)", cursor: "pointer" }}
                   onClick={() => this.changeRouter(el.id)}
-                >
-                  Edit
-                </p>
+                ></i>
               ),
               created_at: moment.utc(el.created_at).format("YYYY/MM/DD"),
               segment:
                 el.group_id !== 0 ? el.group_customer.name : "Unsegmented",
               delete: (
-                <MDBBtn
-                  color="transparent"
-                  size="xs"
-                  style={{ boxShadow: "none", padding: "0", margin: "0" }}
-                >
-                  <i
-                    className="fa fa-trash"
-                    aria-hidden="true"
-                    onClick={(id) => this.handleDelete(el.id)}
-                    style={{ cursor: "pointer" }}
-                  ></i>
-                </MDBBtn>
+                <i
+                  className="fa fa-trash"
+                  aria-hidden="true"
+                  onClick={(id) => this.handleDelete(el.id)}
+                  style={{ color: "rgb(241, 76, 89)", cursor: "pointer" }}
+                ></i>
               ),
             })),
           ],
@@ -103,7 +102,7 @@ class DashboardDraft extends Component {
   };
 
   handleDelete = async (id) => {
-    var result = window.confirm("Are you sure to delete?");
+    var result = window.confirm("Apakah anda yakin akan menghapus draf ini?");
     if (result) {
       await this.props.deleteDraft(id);
     }

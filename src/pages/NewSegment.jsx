@@ -27,11 +27,19 @@ import {
 } from "../stores/actions/customerAction.js";
 
 class NewSegment extends Component {
-  state = {
-    radio1: 1,
-    radio2: 1,
-    isLoadingTable: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      radio1: 1,
+      radio2: 1,
+      isLoadingTable: true,
+    };
+    this.onClickChoice1 = this.onClickChoice1.bind(this);
+    this.onClickChoice2 = this.onClickChoice2.bind(this);
+    this.callCustomerData = this.callCustomerData.bind(this);
+    this.onChangeGroupMember = this.onChangeGroupMember.bind(this);
+    this.doneCreateGroup = this.doneCreateGroup.bind(this);
+  }
 
   componentDidMount = async () => {
     await this.props.getCustomerList();
@@ -60,13 +68,13 @@ class NewSegment extends Component {
         data: {
           columns: [
             {
-              label: "Check",
+              label: "Pilih",
               field: "check",
               sort: "asc",
               width: 150,
             },
             {
-              label: "Name",
+              label: "Nama",
               field: "name",
               width: 150,
               color: "pink",
@@ -77,7 +85,7 @@ class NewSegment extends Component {
               width: 270,
             },
             {
-              label: "Company",
+              label: "Perusahaan",
               field: "company",
               width: 100,
             },
@@ -134,7 +142,7 @@ class NewSegment extends Component {
       await this.props.addCustomerMember(customersId[i], groupId);
     }
     await alert("Sukses!");
-    this.props.history.push("/segment-list")
+    this.props.history.push("/segment-list");
   };
 
   render() {

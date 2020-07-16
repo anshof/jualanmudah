@@ -12,12 +12,12 @@ import {
   getUserBio,
 } from "../stores/actions/userAction";
 class HowToUse extends Component {
-  state = {};
-
+  
   componentDidMount = async () => {
     await this.props.doRefershSignin();
     this.props.getUserBio();
   };
+
   render() {
     return (
       <MDBBox>

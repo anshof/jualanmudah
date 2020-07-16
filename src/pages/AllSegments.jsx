@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { MDBDataTable, MDBBox, MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import { MDBDataTable, MDBBox, MDBRow, MDBCol } from "mdbreact";
 import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import moment from "moment";
@@ -18,11 +18,19 @@ import {
   deleteGroup,
 } from "../stores/actions/customerAction";
 class AllSegments extends Component {
-  state = {
-    modalFormDatabase: false,
-    modalNewDatabase: false,
-    isLoadingTable: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalFormDatabase: false,
+      modalNewDatabase: false,
+      isLoadingTable: true,
+    };
+    this.callAllSegment = this.callAllSegment.bind(this);
+    this.callSegment = this.callSegment.bind(this);
+    this.handleBacktoList = this.handleBacktoList.bind(this);
+    this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
+    this.changeRouter = this.changeRouter.bind(this);
+  }
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
@@ -46,7 +54,7 @@ class AllSegments extends Component {
         data: {
           columns: [
             {
-              label: "Segment",
+              label: "Grup",
               field: "segment",
               sort: "asc",
               width: 150,
@@ -59,7 +67,7 @@ class AllSegments extends Component {
               width: 270,
             },
             {
-              label: "Detail",
+              label: "Rincian",
               field: "detail",
               sort: "asc",
               width: 270,
@@ -76,27 +84,21 @@ class AllSegments extends Component {
               key: index,
               segment: el.name,
               detail: (
-                <p
+                <i
+                  class="fa fa-search-plus"
+                  aria-hidden="true"
                   style={{ color: "rgb(241, 76, 89)", cursor: "pointer" }}
                   onClick={() => this.changeRouter(el.id)}
-                >
-                  Detail
-                </p>
+                ></i>
               ),
               created_at: moment.utc(el.created_at).format("YYYY/MM/DD"),
               delete: (
-                <MDBBtn
-                  color="transparent"
-                  size="xs"
-                  style={{ boxShadow: "none", padding: "0", margin: "0" }}
-                >
-                  <i
-                    className="fa fa-trash"
-                    aria-hidden="true"
-                    onClick={(id) => this.handleDeleteGroup(el.id)}
-                    style={{ cursor: "pointer" }}
-                  ></i>
-                </MDBBtn>
+                <i
+                  className="fa fa-trash"
+                  aria-hidden="true"
+                  onClick={(id) => this.handleDeleteGroup(el.id)}
+                  style={{ color: "rgb(241, 76, 89)", cursor: "pointer" }}
+                ></i>
               ),
             })),
           ],
@@ -111,7 +113,7 @@ class AllSegments extends Component {
         data: {
           columns: [
             {
-              label: "Name",
+              label: "Nama",
               field: "name",
               width: 150,
               color: "pink",
@@ -122,30 +124,24 @@ class AllSegments extends Component {
               width: 200,
             },
             {
-              label: "BOD",
+              label: "BoD",
               field: "bod",
               width: 270,
             },
             {
-              label: "Address",
+              label: "Alamat",
               field: "address",
               width: 100,
             },
             {
-              label: "Phone",
+              label: "No. Telepon",
               field: "phone",
               width: 150,
             },
             {
-              label: "Company",
+              label: "Perusahaan",
               field: "company",
               width: 100,
-            },
-            {
-              label: "Hapus",
-              field: "delete",
-              sort: "asc",
-              width: 270,
             },
           ],
           rows: [
@@ -157,20 +153,6 @@ class AllSegments extends Component {
               address: el.address,
               phone: el.phone[0] !== "0" ? "0" + el.phone : el.phone,
               company: el.company,
-              delete: (
-                <MDBBtn
-                  color="transparent"
-                  size="xs"
-                  style={{ boxShadow: "none", padding: "0", margin: "0" }}
-                >
-                  <i
-                    className="fa fa-trash"
-                    aria-hidden="true"
-                    onClick={(id) => this.handleDeleteGroup(el.id)}
-                    style={{ cursor: "pointer" }}
-                  ></i>
-                </MDBBtn>
-              ),
             })),
           ],
         },
@@ -299,7 +281,7 @@ class AllSegments extends Component {
                               }}
                               className="text-capitalize px-3"
                             >
-                              Back to All Segment
+                              Kembali ke Semua Grup
                             </Link>
                           </Fragment>
                         ) : (

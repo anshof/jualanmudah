@@ -14,18 +14,16 @@ import "../css/style.css";
 import { doSignup, changeInputUser } from "../stores/actions/userAction";
 
 class SignUp extends Component {
-  state = {
-    isOpen: false,
-    passVal: false,
-    messagePass: "",
-  };
-
-  toggle = (key) => () => {
-    let modalKey = "modal" + key;
-    this.setState({
-      [modalKey]: !this.state[modalKey],
-    });
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+      passVal: false,
+      messagePass: "",
+    };
+    this.checkPwd = this.checkPwd.bind(this);
+    this.postSignUp = this.postSignUp.bind(this);
+  }
 
   checkPwd = async (e) => {
     await this.props.changeInputUser(e);
@@ -50,6 +48,7 @@ class SignUp extends Component {
 
   postSignUp = async () => {
     await this.props.doSignup();
+    this.props.match.history.push("/signin");
   };
 
   render() {
@@ -97,7 +96,7 @@ class SignUp extends Component {
                   className="dark-grey-text mb-3"
                   style={{ fontWeight: "600" }}
                 >
-                  Dapatkan akun Jualanmudah-mu <br /> sekarang!
+                  Dapatkan akun Jualanmudah-mu sekarang!
                 </h3>
               </div>
 

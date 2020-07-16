@@ -8,6 +8,7 @@ class NotFound extends Component {
   componentDidMount = () => {
     this.props.getUserBio();
   };
+
   render() {
     return (
       <div>

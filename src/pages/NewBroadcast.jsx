@@ -15,7 +15,7 @@ import {
   MDBContainer,
   MDBInput,
   MDBModal,
-  MDBModalBody
+  MDBModalBody,
 } from "mdbreact";
 import { convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
@@ -46,13 +46,23 @@ import {
 } from "../stores/actions/mailAction";
 
 class NewBroadcast extends Component {
-  state = {
-    editorState: {},
-    radio1: 1,
-    activeItem: this.props.match.params.draftId ? "3" : "1",
-    isLoading: true,
-    modal: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorState: {},
+      radio1: 1,
+      activeItem: this.props.match.params.draftId ? "3" : "1",
+      isLoading: true,
+      modal: false,
+    };
+    this.toggle = this.toggle.bind(this);
+    this.onClickChoice1 = this.onClickChoice1.bind(this);
+    this.handleDraft = this.handleDraft.bind(this);
+    this.onEditorStateChange = this.onEditorStateChange.bind(this);
+    this.handleSaveToDraft = this.handleSaveToDraft.bind(this);
+    this.handleSendNow = this.handleSendNow.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+  }
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
@@ -102,13 +112,11 @@ class NewBroadcast extends Component {
     } else if (this.props.mailState.contactChoice === "exist") {
       await this.props.addDraft(content, this.props.mailState.contactIdSelect);
     }
-    await this.props.history.push(
-      "/draft/" + String(localStorage.getItem("savedId"))
-    );
+    await this.props.history.push("/draft")
   };
 
   handleSendNow = async (content) => {
-    await this.toggleModal()
+    await this.toggleModal();
     if (this.props.mailState.contactChoice === "new") {
       if (this.props.match.params.draftId) {
         await this.props.doDraftToSend(
@@ -137,47 +145,14 @@ class NewBroadcast extends Component {
         );
       }
     }
-    await this.toggleModal()
-    this.props.history.push("/dashboard")
+    await this.toggleModal();
+    this.props.history.push("/dashboard");
   };
 
   toggleModal = () => {
-      this.setState({
-        modal: !this.state.modal,
-      });
-  };
-
-  handleSendScheduled = async (content) => {
-    if (this.props.mailState.contactChoice === "new") {
-      await this.props.addNewEmail();
-      if (this.props.match.params.draftId) {
-        await this.props.doDraftToScheduled(
-          content,
-          this.props.contactState.newEmail.id
-        );
-      } else {
-        await this.props.sendMailScheduled(
-          content,
-          this.props.contactState.newEmail.id
-        );
-      }
-    } else if (this.props.mailState.contactChoice === "exist") {
-      if (this.props.match.params.draftId) {
-        await this.props.doDraftToScheduled(
-          content,
-          this.props.mailState.contactIdSelect
-            ? this.props.mailState.contactIdSelect
-            : this.props.draft.contact_id
-        );
-      } else {
-        this.props.sendMailScheduled(
-          content,
-          this.props.mailState.contactIdSelect
-        );
-      }
-    }
-    // alert("Pengiriman terjadwal sukses");
-    // window.location.reload();
+    this.setState({
+      modal: !this.state.modal,
+    });
   };
 
   render() {
@@ -204,17 +179,8 @@ class NewBroadcast extends Component {
               String(item.id) === String(this.props.mailState.groupIdSelect)
           )[0].name
         : false;
-      let validScheduled = false;
-      if (this.props.mailState) {
-        if (this.props.mailState.sendDate && this.props.mailState.sendTime) {
-          validScheduled = true;
-        } else {
-          validScheduled = false;
-        }
-      }
       return (
         <MDBBox>
-        
           <Navbar
             isLogin={this.state.isLogin}
             fontColor={"white"}
@@ -233,7 +199,7 @@ class NewBroadcast extends Component {
               className="text-left ml-5 mb-4"
               style={{ fontWeight: "600", color: "#192e35" }}
             >
-              Buat Siaran Baru
+              Buat Broadcast Baru
             </h3>
             <MDBContainer
               style={{
@@ -370,7 +336,7 @@ class NewBroadcast extends Component {
                             className="text-left mt-3 mb-0"
                             style={{ fontWeight: "400" }}
                           >
-                            Kirim siaran menggunakan :
+                            Kirim broadcast menggunakan :
                           </p>
                           <MDBBox className="mt-2 mb-3">
                             <MDBInput
@@ -640,70 +606,87 @@ class NewBroadcast extends Component {
                                 />
                               </MDBBox>
                               <MDBBox className="form-group text-left mt-2">
-                            <p>
-                              Jika anda ingin mencantumkan
-                              <span
-                                style={{ color: "rgb(241, 76, 89)" }}
-                                className="ml-1 mr-1"
-                              >
-                                link
-                              </span>
-                              yang ingin bisa di lacak, tulis kalimat yang akan
-                              menjadi link dan cantumkan linknya.
-                            </p>
-                            <MDBRow>
-                              <MDBCol size="6">
-                                <label htmlFor="emailsubject">
-                                  <p
-                                    className="text-left mb-0"
-                                    style={{ fontWeight: "400" }}
+                                <p>
+                                  Jika anda ingin mencantumkan
+                                  <span
+                                    style={{ color: "rgb(241, 76, 89)" }}
+                                    className="ml-1 mr-1"
                                   >
-                                    Kalimat
-                                  </p>
-                                </label>
-                                <input
-                                  defaultValue={
-                                    this.props.match.params.draftId
-                                      ? this.props.draft.words
-                                      : ""
-                                  }
-                                  type="text"
-                                  className="form-control w-100"
-                                  id="emailsubject"
-                                  name="words"
-                                  placeholder="Kalimat dari link"
-                                  onChange={(e) =>
-                                    this.props.changeInputMail(e)
-                                  }
-                                />
-                              </MDBCol>
-                              <MDBCol size="6">
-                                <label htmlFor="emailsubject">
-                                  <p
-                                    className="text-left mb-0"
-                                    style={{ fontWeight: "400" }}
-                                  >
-                                    Link
-                                  </p>
-                                </label>
-                                <input
-                                  defaultValue={
-                                    this.props.match.params.draftId
-                                      ? this.props.draft.link
-                                      : ""
-                                  }
-                                  type="text"
-                                  className="form-control w-100"
-                                  id="Link yang ingin di track"
-                                  name="link"
-                                  placeholder="Link yang ingin di track"
-                                  onChange={(e) =>
-                                    this.props.changeInputMail(e)
-                                  }
-                                />
-                              </MDBCol>
-                            </MDBRow>
-                          </MDBBox>
+                                    link
+                                  </span>
+                                  yang ingin bisa di lacak, tulis kalimat yang
+                                  akan menjadi link dan cantumkan linknya.
+                                </p>
+                                <MDBRow>
+                                  <MDBCol size="6">
+                                    <label htmlFor="emailsubject">
+                                      <p
+                                        className="text-left mb-0"
+                                        style={{ fontWeight: "400" }}
+                                      >
+                                        Kalimat
+                                      </p>
+                                    </label>
+                                    <input
+                                      defaultValue={
+                                        this.props.match.params.draftId
+                                          ? this.props.draft.words
+                                          : ""
+                                      }
+                                      type="text"
+                                      className="form-control w-100"
+                                      id="emailsubject"
+                                      name="words"
+                                      placeholder="Kalimat dari link"
+                                      onChange={(e) =>
+                                        this.props.changeInputMail(e)
+                                      }
+                                    />
+                                  </MDBCol>
+                                  <MDBCol size="6">
+                                    <label htmlFor="emailsubject">
+                                      <p
+                                        className="text-left mb-0"
+                                        style={{ fontWeight: "400" }}
+                                      >
+                                        Link
+                                      </p>
+                                    </label>
+                                    <br />
+                                    <MDBRow>
+                                      <input
+                                        defaultValue={
+                                          this.props.match.params.draftId
+                                            ? this.props.draft.link
+                                            : ""
+                                        }
+                                        type="text"
+                                        className="form-control"
+                                        id="Link yang ingin di track"
+                                        name="link"
+                                        placeholder="https://www."
+                                        disabled
+                                        style={{ maxWidth: "120px" }}
+                                      />
+                                      <input
+                                        defaultValue={
+                                          this.props.match.params.draftId
+                                            ? this.props.draft.link
+                                            : ""
+                                        }
+                                        type="text"
+                                        className="form-control w-75"
+                                        id="Link yang ingin di track"
+                                        name="link"
+                                        placeholder="Link yang ingin di lacak"
+                                        onChange={(e) =>
+                                          this.props.changeInputMail(e)
+                                        }
+                                      />
+                                    </MDBRow>
+                                  </MDBCol>
+                                </MDBRow>
+                              </MDBBox>
                             </MDBCol>
                             <MDBCol size="3">
                               Salam pembuka : <br />
@@ -862,8 +845,9 @@ class NewBroadcast extends Component {
                                 <input
                                   value={
                                     this.props.match.params.draftId
-                                      ? this.props.draft.link
-                                      : this.props.mailState.link
+                                      ? "https://www." + this.props.draft.link
+                                      : "https://www." +
+                                        this.props.mailState.link
                                   }
                                   type="text"
                                   className="form-control w-100"
@@ -898,7 +882,10 @@ class NewBroadcast extends Component {
                           )}
                           {/* akhir status */}
                           {/* recipients */}
-                          <MDBBox className="d-flex align-items-center mt-3 ml-1">
+                          <MDBBox
+                            className="d-flex align-items-center ml-1"
+                            style={{ marginTop: "50px" }}
+                          >
                             {this.props.match.params.draftId ? (
                               <React.Fragment>
                                 <i className="fas fa-users mr-2"></i>Grup :{" "}
@@ -929,7 +916,7 @@ class NewBroadcast extends Component {
                                 width: "250px",
                               }}
                               color="transparent"
-                              onClick={() => 
+                              onClick={() =>
                                 this.handleSendNow(
                                   draftToHtml(
                                     convertToRaw(
@@ -954,72 +941,9 @@ class NewBroadcast extends Component {
                             </MDBModal>
                           </MDBBox>
                           <hr />
-                          {/* date */}
-                          <MDBBox className="d-flex align-items-center mt-3 ml-1">
-                            <form>
-                              <label htmlFor="sendDate" className="mr-2">
-                                <i className="far fa-calendar mr-2"></i> Tanggal
-                              </label>
-                              <input
-                                type="date"
-                                id="sendDate"
-                                name="sendDate"
-                                className="px-2 py-1 mr-2"
-                                style={{
-                                  width: "200px",
-                                  border: "1px solid rgb(241, 76, 89)",
-                                  borderRadius: "40px",
-                                }}
-                                onChange={(e) => this.props.changeInputMail(e)}
-                              />
-                              <br />
-                              <label htmlFor="sendTime" className="mr-2">
-                                <i className="far fa-clock mr-2"></i> Pukul
-                              </label>
-                              <input
-                                type="time"
-                                id="sendTime"
-                                name="sendTime"
-                                className="px-2 py-1 mr-2"
-                                style={{
-                                  width: "200px",
-                                  border: "1px solid rgb(241, 76, 89)",
-                                  borderRadius: "40px",
-                                }}
-                                onChange={(e) => this.props.changeInputMail(e)}
-                              />
-                            </form>
-                          </MDBBox>
-
                         </MDBBox>
                       </MDBBox>
                       <MDBBox>
-                        <MDBBox className="d-flex align-items-center justify-content-center mt-2">
-                          <MDBBtn
-                            className="my-2 py-2 text-capitalize"
-                            style={{
-                              boxShadow: "none",
-                              borderRadius: "40px",
-                              backgroundColor: "#f14c59",
-                              color: "white",
-                              fontSize: "18px",
-                              fontWeight: "400",
-                              width: "auto",
-                            }}
-                            color="transparent"
-                            onClick={() =>
-                              this.handleSendScheduled(
-                                draftToHtml(
-                                  convertToRaw(editorState.getCurrentContent())
-                                )
-                              )
-                            }
-                            disabled={!validScheduled}
-                          >
-                            <i className="far fa-envelope mr-2"></i>
-                            Jadwalkan Pengiriman
-                          </MDBBtn>
-                        </MDBBox>
                         <MDBBox className="d-flex align-items-center justify-content-center">
                           {!this.props.match.params.draftId ? (
                             <MDBBtn

@@ -67,7 +67,7 @@ const PictName = (props) => {
               <i className="fas fa-users"></i>
             </MDBCol>
             <MDBCol size="9" className="text-left">
-              Semua kelompok
+              Semua Grup
             </MDBCol>
           </MDBRow>
         </Link>
@@ -96,7 +96,7 @@ const PictName = (props) => {
               <i className="fas fa-file-alt"></i>
             </MDBCol>
             <MDBCol size="9" className="text-left">
-              Draft
+              Draf
             </MDBCol>
           </MDBRow>
         </Link>

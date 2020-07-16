@@ -13,9 +13,12 @@ import {
   getUserBio,
 } from "../stores/actions/userAction";
 class Home extends Component {
-  state = {
-    isLoading: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+    };
+  }
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
