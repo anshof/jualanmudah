@@ -337,11 +337,11 @@ class NewBroadcast extends Component {
                           >
                             Kirim broadcast menggunakan :
                           </p>
-                          <br/>
+                          <br />
                           <MDBBox className="mt-2 mx-3">
-                            <label for="radio1"
-                              className="pr-3"
-                            >Email yang sudah ada</label>
+                            <label for="radio1" className="pr-3">
+                              Email yang sudah ada
+                            </label>
                             <input
                               onClick={this.onClickChoice1(1)}
                               checked={this.state.radio1 === 1 ? true : false}
@@ -352,7 +352,7 @@ class NewBroadcast extends Component {
                               disabled={this.props.emailList ? false : true}
                               onChange={(e) => this.props.changeInputMail(e)}
                             />
-                            <br/>
+                            <br />
                             <select
                               className="browser-default custom-select w-75 mt-2 mb-3"
                               disabled={
@@ -388,10 +388,10 @@ class NewBroadcast extends Component {
                                   ))
                                 : false}
                             </select>
-                            <br/>
-                            <label for="radio2"
-                              className="pr-3"
-                            >Email baru</label>
+                            <br />
+                            <label for="radio2" className="pr-3">
+                              Email baru
+                            </label>
                             <input
                               onClick={this.onClickChoice1(2)}
                               checked={this.state.radio1 === 2 ? true : false}
@@ -601,7 +601,8 @@ class NewBroadcast extends Component {
                               <MDBBox
                                 style={{
                                   border: "1px solid #ced4da",
-                                  minHeight: "240px",
+                                  padding: "10px",
+                                  minHeight: "300px",
                                 }}
                               >
                                 <Editor

@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import axios from "axios";
 const baseUrl = "https://be.jualanmudah.com";
 // const baseUrl = "http://0.0.0.0:5050";
@@ -19,8 +20,13 @@ export const doSignin = () => {
           localStorage.setItem("isSignin", true);
         }
       })
-      .catch(() => {
-        alert("Username or Password is not match!");
+      .catch(async(error) => {
+        await Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Username dan password salah atau belum terdaftar",
+        });
+        console.error(error)
       });
   };
 };
@@ -64,14 +70,22 @@ export const doSignup = () => {
       url: baseUrl + "/user/leader",
       data: formData,
     })
-      .then(() => {
+      .then(async() => {
         dispatch({ type: "SUCCESS_SIGNUP" });
         console.warn("data request : ",formData)
-        alert("Success!");
+        await Swal.fire(
+          'Sukses!',
+          'Sukses terdaftar!',
+          'success'
+        );;
       })
-      .catch(() => {
+      .catch(async() => {
         console.warn("data request : ",formData)
-        alert("Make sure you fill all the data!");
+        await Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Pendaftaran terjadi kesalahan! Pastikan data telah terisi dengan benar atau gunakan username lain!",
+        });;
       });
   };
 };

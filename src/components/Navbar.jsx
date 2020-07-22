@@ -91,7 +91,7 @@ const Navbar = (props) => {
                   logout
                 </div>
               </MDBNavItem>
-              <MDBNavItem>
+              {/* <MDBNavItem>
                 <Link to="/profile" className="ml-3 ">
                   <img
                     src={
@@ -106,7 +106,7 @@ const Navbar = (props) => {
                     }}
                   />
                 </Link>
-              </MDBNavItem>
+              </MDBNavItem> */}
             </Fragment>
           ) : (
             <MDBNavItem>

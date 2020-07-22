@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Swal from 'sweetalert2'
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import moment from "moment";
@@ -102,7 +103,22 @@ class DashboardDraft extends Component {
   };
 
   handleDelete = async (id) => {
-    var result = window.confirm("Apakah anda yakin akan menghapus draf ini?");
+    let result = Swal.fire({
+      title: 'Yakin akan menghapus draf?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yakin!'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Terhapus!',
+          'Draf telah terhapus.',
+          'success'
+        )
+      }
+    });
     if (result) {
       await this.props.deleteDraft(id);
     }

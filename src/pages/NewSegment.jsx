@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Swal from 'sweetalert2'
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {
@@ -140,7 +141,11 @@ class NewSegment extends Component {
     for (let i = 0; i < customersId.length; i++) {
       await this.props.addCustomerMember(customersId[i], groupId);
     }
-    await alert("Sukses!");
+    await Swal.fire(
+      'Sukses!',
+      'Grup Telah Dibuat!',
+      'success'
+    );
     this.props.history.push("/segment-list");
   };
 

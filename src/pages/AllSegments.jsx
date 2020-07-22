@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import Swal from "sweetalert2";
 import { MDBDataTable, MDBBox, MDBRow, MDBCol } from "mdbreact";
 import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -17,6 +18,7 @@ import {
   getCustomerMember,
   deleteGroup,
 } from "../stores/actions/customerAction";
+
 class AllSegments extends Component {
   constructor(props) {
     super(props);
@@ -48,6 +50,13 @@ class AllSegments extends Component {
     this.setState({ isLoadingTable: false });
   };
 
+  /**
+   * Returns map of groupData become column and rows to insert in Group List Table data property.
+   *
+   * @param {object} groupData that will be mapped
+   * @return {object} data that consist of column and rows for MDBTable property.
+   */
+
   callAllSegment = (groupData) => {
     if (groupData) {
       this.setState({
@@ -72,12 +81,12 @@ class AllSegments extends Component {
               sort: "asc",
               width: 270,
             },
-            {
-              label: "Hapus",
-              field: "delete",
-              sort: "asc",
-              width: 270,
-            },
+            // {
+            //   label: "Hapus",
+            //   field: "delete",
+            //   sort: "asc",
+            //   width: 270,
+            // },
           ],
           rows: [
             ...groupData.map((el, index) => ({
@@ -106,6 +115,13 @@ class AllSegments extends Component {
       });
     }
   };
+
+  /**
+   * Returns map of groupData become column and rows to insert in Group Member Table data property.
+   *
+   * @param {object} groupData that will be mapped
+   * @return {object} data that consist of column and rows for MDBTable property.
+   */
 
   callSegment = (groupData) => {
     if (groupData) {
@@ -160,6 +176,10 @@ class AllSegments extends Component {
     }
   };
 
+  /**
+   * Change router back to group list and change table to group list table by calling callAllSegment.
+   */
+
   handleBacktoList = async () => {
     this.setState({ isLoadingTable: true });
     await this.props.getCustomerGroupList();
@@ -168,17 +188,41 @@ class AllSegments extends Component {
     this.setState({ isLoadingTable: false });
   };
 
+  /**
+   * Delete group based on group Id and return exist group.
+   *
+   * @param {id} id that of group that will be deleted
+   * @return {object} return list of group and mapped with calling callAllSegment.
+   */
+
   handleDeleteGroup = async (id) => {
-    var result = await window.confirm("Are you sure to delete?");
-    // await this.setState({ isLoadingTable: true });
+    let result = Swal.fire({
+      title: "Yakin akan menghapus grup?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yakin!",
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire("Terhapus!", "Grup telah terhapus.", "success");
+      }
+    });
+
     if (result) {
       await this.props.deleteGroup(id);
     }
     await this.props.getCustomerGroupList();
     let groupData = await this.props.customerGroups;
     await this.callAllSegment(groupData);
-    // this.setState({ isLoadingTable: false });
   };
+
+  /**
+   * Change router to all-segment/id and return table that show group member data.
+   *
+   * @param {segmentId} segmentId of group that will be seen the details
+   * @return {object} return list of group member and mapped with calling callSegment.
+   */
 
   changeRouter = async (segmentId) => {
     await this.setState({ isLoadingTable: true });

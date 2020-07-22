@@ -48,7 +48,7 @@ class SignUp extends Component {
 
   postSignUp = async () => {
     await this.props.doSignup();
-    this.props.match.history.push("/signin");
+    this.props.history.push("/signin");
   };
 
   render() {

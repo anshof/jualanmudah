@@ -1,16 +1,14 @@
 import React, { Component } from "react";
-
 import { MDBBox, MDBContainer } from "mdbreact";
 import { connect } from "react-redux";
-
 import Navbar from "../components/Navbar";
-
 import "../css/style.css";
 import {
   doLogOut,
   doRefershSignin,
   getUserBio,
 } from "../stores/actions/userAction";
+
 class HowToUse extends Component {
   
   componentDidMount = async () => {

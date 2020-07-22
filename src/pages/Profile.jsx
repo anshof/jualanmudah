@@ -55,7 +55,9 @@ class Profile extends Component {
                 <MDBBox
                   style={{
                     padding: "30px 0",
-                    minHeight: "100vmin",
+                    minHeight: "90vmin",
+                    marginTop:"50px",
+                    marginBottom : "50px"
                   }}
                   className="text-left"
                 >
@@ -101,7 +103,7 @@ class Profile extends Component {
                           </p>
                           {/* end nama lengkap */}
                           {/* email */}
-                          <p className="mb-2 mt-3 text-muted">Email</p>
+                          {/* <p className="mb-2 mt-3 text-muted">Email</p>
                           <p
                             className="my-0 ml-3 py-2 text-center"
                             style={{
@@ -113,10 +115,10 @@ class Profile extends Component {
                             }}
                           >
                             fazlur0504@gmail.com
-                          </p>
+                          </p> */}
                           {/* end email */}
                           {/* wa */}
-                          <p className="mb-2 mt-3 text-muted">Phone number</p>
+                          <p className="mb-2 mt-3 text-muted">Jabatan</p>
                           <p
                             className="my-0 ml-3 py-2 text-center"
                             style={{
@@ -127,7 +129,7 @@ class Profile extends Component {
                               fontWeight: "500",
                             }}
                           >
-                            08123456789
+                            {this.props.bio.position}
                           </p>
                           {/* end wa */}
                         </MDBCol>
@@ -148,7 +150,7 @@ class Profile extends Component {
                           </p>
                           {/* end nama lengkap */}
                           {/* email */}
-                          <p className="mb-2 mt-3 text-muted">Password</p>
+                          <p className="mb-2 mt-3 text-muted">Alamat</p>
                           <p
                             className="my-0 ml-3 py-2 text-center"
                             style={{
@@ -159,13 +161,13 @@ class Profile extends Component {
                               fontWeight: "500",
                             }}
                           >
-                            ********
+                            {this.props.bio.address}
                           </p>
                           {/* end email */}
                         </MDBCol>
                       </MDBRow>
                       {/* end nama dll */}
-                      <MDBBox className="d-flex justify-content-center">
+                      {/* <MDBBox className="d-flex justify-content-center">
                         <button
                           color="transparent"
                           style={{
@@ -183,7 +185,7 @@ class Profile extends Component {
                         >
                           Edit profile
                         </button>
-                      </MDBBox>
+                      </MDBBox> */}
                     </MDBContainer>
                   )}
                 </MDBBox>

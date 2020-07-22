@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import Swal from 'sweetalert2'
 import moment from "moment";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
@@ -138,7 +139,11 @@ class Database extends Component {
 
   postUpload = async () => {
     await this.props.addCustomer();
-    await alert("Database telah diupdate");
+    await Swal.fire(
+      'Sukses!',
+      'Data telah diunggah!',
+      'success'
+    );;
     this.callCustomerData();
   };
 
@@ -204,15 +209,16 @@ class Database extends Component {
               {/* end side bar */}
               {/* table */}
               <MDBCol size="10">
-                {this.state.isLoadingTable ? (
-                  <Loading />
-                ) : (
                   <MDBBox
                     style={{
                       padding: "30px 15px",
                       minHeight: "100vmin",
                     }}
                   >
+                {this.state.isLoadingTable ? (
+                  <Loading />
+                ) : (
+                  <Fragment>
                     <MDBBox className="d-flex justify-content-end align-items-center mx-5 pb-3">
                       <MDBBox className="d-flex">
                         <MDBBtn
@@ -345,8 +351,9 @@ class Database extends Component {
                         backgroundColor: "white",
                       }}
                     />
-                  </MDBBox>
+                    </Fragment>
                 )}
+                  </MDBBox>
               </MDBCol>
               {/* end table */}
             </MDBRow>

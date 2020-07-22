@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 import { EditorState, ContentState } from "draft-js";
 import htmlToDraft from "html-to-draftjs";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -20,16 +21,22 @@ export const sendMailNow = (content, contactId) => {
         device: "email",
         contact_id: contactId,
         group_id: getState().mailState.groupIdSelect,
-        words : getState().mailState.words ? getState().mailState.words : "",
-        link : getState().mailState.link ? getState().mailState.link.replace("https://","") : ""
+        words: getState().mailState.words ? getState().mailState.words : "",
+        link: getState().mailState.link
+          ? getState().mailState.link.replace("https://", "")
+          : "",
       },
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(async () => {
         await dispatch({ type: "SUCCESS_SEND_MAIL" });
       })
-      .catch((error) => {
-        alert("Kirim email mengalami kesalahan. Silahkan coba lagi.");
+      .catch(async (error) => {
+        await Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Kirim email mengalami kesalahan. Silahkan coba lagi! Pastikan gmail dan password telah benar!",
+        });
         console.error(error);
       });
   };
@@ -49,17 +56,20 @@ export const sendBuilderNow = (content) => {
         device: "email",
         contact_id: 2,
         group_id: 3,
-        words : "",
-        link : ""
+        words: "",
+        link: "",
       },
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(async () => {
         await dispatch({ type: "SUCCESS_SEND_MAIL" });
-        // alert("Kirim sekarang sukses");
       })
-      .catch((error) => {
-        alert("Pengiriman terjadi kesalahan. Silahkan coba lagi.");
+      .catch(async(error) => {
+        await Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Kirim email mengalami kesalahan. Silahkan coba lagi! Pastikan gmail dan password telah benar!",
+        });;
         console.error(error);
       });
   };
@@ -75,20 +85,22 @@ export const sendMailScheduled = (content, contactId) => {
       time = time.slice(1).replace(/,0/g, ",");
     }
     if (String(time[3]) === "0") {
-      time = time.slice(0,3) + time.slice(4)
+      time = time.slice(0, 3) + time.slice(4);
     }
     const data = {
       status: "sent",
-        send_date: date + "," + time + ",0",
-        subject: getState().mailState.subject,
-        content: content,
-        device: "email",
-        contact_id: contactId,
-        group_id: getState().mailState.groupIdSelect,
-        words : getState().mailState.words ? getState().mailState.words : "",
-        link : getState().mailState.link ? getState().mailState.link.replace("https://","") : ""
-    }
-    console.log(data)
+      send_date: date + "," + time + ",0",
+      subject: getState().mailState.subject,
+      content: content,
+      device: "email",
+      contact_id: contactId,
+      group_id: getState().mailState.groupIdSelect,
+      words: getState().mailState.words ? getState().mailState.words : "",
+      link: getState().mailState.link
+        ? getState().mailState.link.replace("https://", "")
+        : "",
+    };
+    console.log(data);
     await axios({
       method: "POST",
       url: baseUrl + "/sent/direct",
@@ -100,14 +112,15 @@ export const sendMailScheduled = (content, contactId) => {
         device: "email",
         contact_id: contactId,
         group_id: getState().mailState.groupIdSelect,
-        words : getState().mailState.words ? getState().mailState.words : "",
-        link : getState().mailState.link ? getState().mailState.link.replace("https://","") : ""
+        words: getState().mailState.words ? getState().mailState.words : "",
+        link: getState().mailState.link
+          ? getState().mailState.link.replace("https://", "")
+          : "",
       },
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(async () => {
-    alert("Pengiriman terjadwal sukses");
-    dispatch({ type: "SUCCESS_SEND_MAIL" });
+        dispatch({ type: "SUCCESS_SEND_MAIL" });
       })
       .catch((error) => {
         console.error(error);
@@ -118,35 +131,45 @@ export const sendMailScheduled = (content, contactId) => {
 export const addDraft = (content, contactId) => {
   return async (dispatch, getState) => {
     const token = localStorage.getItem("token");
-    let date
-    let time
-    if (getState().mailState.sendDate && getState().mailState.sendTime)
-    {date = getState().mailState.sendDate.replace(/-/g, ",");
-    time = getState().mailState.sendTime.replace(/:/g, ",");
-    date = date.replace(/,0/g, ",");
-    if (String(time[0]) === "0") {
-      time = time.slice(1).replace(/,0/g, ",");
-    }}
+    let date;
+    let time;
+    if (getState().mailState.sendDate && getState().mailState.sendTime) {
+      date = getState().mailState.sendDate.replace(/-/g, ",");
+      time = getState().mailState.sendTime.replace(/:/g, ",");
+      date = date.replace(/,0/g, ",");
+      if (String(time[0]) === "0") {
+        time = time.slice(1).replace(/,0/g, ",");
+      }
+    }
     await axios({
       method: "POST",
       url: baseUrl + "/sent",
       data: {
         status: "draft",
-        send_date: getState().mailState.sendDate && getState().mailState.sendTime ? date + "," + time + ",0" : "",
+        send_date:
+          getState().mailState.sendDate && getState().mailState.sendTime
+            ? date + "," + time + ",0"
+            : "",
         subject: getState().mailState.subject,
         content: content,
         device: "email",
         contact_id: contactId,
         group_id: getState().mailState.groupIdSelect,
-        words : getState().mailState.words ? getState().mailState.words : "",
-        link : getState().mailState.link ? getState().mailState.link.replace("https://","") : ""
+        words: getState().mailState.words ? getState().mailState.words : "",
+        link: getState().mailState.link
+          ? getState().mailState.link.replace("https://", "")
+          : "",
       },
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(async (response) => {
         dispatch({ type: "SUCCESS_ADD_DRAFT", payload: response.data });
         await localStorage.setItem("savedId", response.data.id);
-        alert("Disimpan di draft");
+        await Swal.fire(
+          'Sukses!',
+          'Telah tersimpan di Draf',
+          'success'
+        );
       })
       .catch((error) => {
         console.error(error);
@@ -166,7 +189,10 @@ export const deleteDraft = (id) => {
         dispatch({ type: "SUCCESS_DELETE_DRAFT_MAIL", payload: id });
       })
       .catch((error) => {
-        console.error("Delete draf mengalami kesalahan. Silahkan coba lagi.", error);
+        console.error(
+          "Delete draf mengalami kesalahan. Silahkan coba lagi.",
+          error
+        );
       });
   };
 };
@@ -335,15 +361,24 @@ export const doDraftToSend = (content, contactId) => {
         group_id: getState().mailState.groupIdSelect
           ? getState().mailState.groupIdSelect
           : getState().mailState.draft.group_id,
-        words : getState().mailState.words ? getState().mailState.words : getState().mailState.draft.words,
-        link : getState().mailState.link ? getState().mailState.link.replace("https://","") : getState().mailState.draft.link.replace("https://","")
+        words: getState().mailState.words
+          ? getState().mailState.words
+          : getState().mailState.draft.words,
+        link: getState().mailState.link
+          ? getState().mailState.link.replace("https://", "")
+          : getState().mailState.draft.link.replace("https://", ""),
       },
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(async () => {
         dispatch({ type: "SUCCESS_SEND_MAIL" });
       })
-      .catch((error) => {
+      .catch(async(error) => {
+        await Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Kirim email mengalami kesalahan. Silahkan coba lagi! Pastikan gmail dan password telah benar!",
+        });
         console.error(error);
       });
   };
@@ -374,13 +409,16 @@ export const doDraftToScheduled = (content, contactId) => {
         group_id: getState().mailState.groupIdSelect
           ? getState().mailState.groupIdSelect
           : getState().mailState.draft.group_id,
-       words : getState().mailState.words ? getState().mailState.words : getState().mailState.draft.words,
-        link : getState().mailState.link ? getState().mailState.link.replace("https://","") : getState().mailState.draft.link
+        words: getState().mailState.words
+          ? getState().mailState.words
+          : getState().mailState.draft.words,
+        link: getState().mailState.link
+          ? getState().mailState.link.replace("https://", "")
+          : getState().mailState.draft.link,
       },
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(() => {
-        alert("Kirim sekarang sukses");
         dispatch({ type: "SUCCESS_SEND_MAIL" });
       })
       .catch((error) => {
@@ -395,16 +433,16 @@ export const getClickTrack = (sentId, customerId) => {
       method: "GET",
       url: baseUrl + "/track/click",
       params: {
-        sent_id : sentId,
-        customer_id : customerId
-      }
+        sent_id: sentId,
+        customer_id: customerId,
+      },
     })
-    .then(() => {})
-    .catch((error) => {
-      console.error(error);
-    });
-  }
-}
+      .then(() => {})
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
 
 export const changeInputMail = (e) => {
   return {
