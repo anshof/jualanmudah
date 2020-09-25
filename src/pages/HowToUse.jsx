@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { MDBBox, MDBContainer } from "mdbreact";
+import { MDBBox, MDBContainer, MDBBtn, MDBModal, MDBModalBody } from "mdbreact";
 import { connect } from "react-redux";
 
 import Navbar from "../components/Navbar";
@@ -11,8 +11,27 @@ import {
   doRefershSignin,
   getUserBio,
 } from "../stores/actions/userAction";
+import Test from "../components/Test";
 class HowToUse extends Component {
-  state = {};
+  // state = {};
+  state = {
+    modal: false,
+  };
+
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  };
+
+  handleClick = async () => {
+    await this.setState({ modal: !this.state.modal });
+    // await alert("Modal terbuka");
+    await window.confirm();
+    // this.setState({
+    //   modal: !this.state.modal,
+    // });
+  };
 
   componentDidMount = async () => {
     await this.props.doRefershSignin();
@@ -126,6 +145,18 @@ class HowToUse extends Component {
             </p>
           </MDBContainer>
         </MDBBox>
+        <MDBContainer>
+          <MDBBtn onClick={this.handleClick}>Modal</MDBBtn>
+          <MDBModal isOpen={this.state.modal} toggle={this.handleClick}>
+            {/* <MDBModalHeader toggle={this.toggle}>MDBModal title</MDBModalHeader> */}
+            <MDBModalBody>
+              <Test />
+              <MDBBtn color="secondary" onClick={this.handleClick}>
+                Close
+              </MDBBtn>
+            </MDBModalBody>
+          </MDBModal>
+        </MDBContainer>
       </MDBBox>
     );
   }

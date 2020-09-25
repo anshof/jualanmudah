@@ -36,7 +36,7 @@ class Home extends Component {
           }}
         >
           <MDBCol size="4" className="d-flex align-items-center pl-5 mt-5">
-            <MDBBox style={{ color: "#1b2e35" }} className="box text-left pl-5">
+            <MDBBox style={{ color: "#1b2e35" }} className="text-left pl-5">
               <h1
                 style={{
                   fontFamily: "Source Sans Pro",
@@ -53,9 +53,8 @@ class Home extends Component {
                   color: "#385a66",
                 }}
               >
-                Tingkatkan penghasilanmu. Hubungi
-                pelangganmu dengan cara yang lebih baik, mudah, dan
-                cepat.
+                Tingkatkan penghasilanmu. Hubungi pelangganmu dengan cara yang
+                lebih baik, mudah, dan cepat.
               </p>
               <Link to="/dashboard">
                 <MDBBox
@@ -92,7 +91,8 @@ class Home extends Component {
           }}
         >
           <h2>
-            “Sales is not about selling anymore but building trust and educating”
+            “Sales is not about selling anymore but building trust and
+            educating”
           </h2>
           <p style={{ fontSize: "18px", color: "#385a66" }}>- Siva Devaki -</p>
         </MDBBox>
@@ -134,7 +134,7 @@ class Home extends Component {
                     Broadcast email
                   </h5>
                   <p className="noPadMar">
-                  Kirim email dengan cepat hingga ke ribuan kontak atau lebih.
+                    Kirim email dengan cepat hingga ke ribuan kontak atau lebih.
                   </p>
                 </MDBBox>
               </MDBCol>
@@ -155,7 +155,7 @@ class Home extends Component {
                     Email tracker
                   </h5>
                   <p>
-                  Sekarang kamu akan tahu apakah emailmu dibaca atau tidak.
+                    Sekarang kamu akan tahu apakah emailmu dibaca atau tidak.
                   </p>
                 </MDBBox>
               </MDBCol>
@@ -173,10 +173,11 @@ class Home extends Component {
                     className="noPadMar"
                     style={{ fontWeight: "600", color: "#1b2e35" }}
                   >
-                    Jadwal pengiriman email 
+                    Jadwal pengiriman email
                   </h5>
                   <p>
-                   Kamu bisa menjadwalkan kirim email untuk waktu yang akan datang.
+                    Kamu bisa menjadwalkan kirim email untuk waktu yang akan
+                    datang.
                   </p>
                 </MDBBox>
               </MDBCol>
@@ -206,10 +207,10 @@ class Home extends Component {
             </p>
             <MDBRow
               style={{
-                margin: "0px 15px",
+                margin: "0",
               }}
             >
-              <MDBCol size="7" className="pictTeam">
+              <MDBCol size="7">
                 <img
                   src={require("../images/pana.png")}
                   alt="profile"
@@ -228,16 +229,18 @@ class Home extends Component {
                     Jualan Mudah
                   </p>
                   <p style={{ fontSize: "18px" }}>
-                    Pelanggan dapat didekati dengan banyak cara. 
+                    Pelanggan dapat didekati dengan banyak cara.
                     <br />
-                    Mengirim email salah satunya. 
-                    <br />
-                    <br />
-                    Kami menyediakan layanan broadcast email, dimana kamu bisa mengirim email tanpa batas.
-                    Kirim email dengan jumlah banyak kini tidak lagi sulit. 
+                    Mengirim email salah satunya.
                     <br />
                     <br />
-                    Kamu bisa membuat grup dari data pelangganmu untuk membuat target pembeli yang lebih spesifik.
+                    Kami menyediakan layanan broadcast email, dimana kamu bisa
+                    mengirim email tanpa batas. Kirim email dengan jumlah banyak
+                    kini tidak lagi sulit.
+                    <br />
+                    <br />
+                    Kamu bisa membuat grup dari data pelangganmu untuk membuat
+                    target pembeli yang lebih spesifik.
                     <br />
                   </p>
                 </MDBBox>
@@ -263,14 +266,14 @@ class Home extends Component {
           >
             <MDBRow
               style={{
-                margin: "0px 15px",
+                margin: "0",
               }}
             >
               <MDBCol
                 size="5"
-                className="d-flex justify-content-end align-items-center"
+                className="d-flex justify-content-center align-items-center"
               >
-                <MDBBox className="text-left ml-5">
+                <MDBBox className="text-left ml-0">
                   <p
                     style={{
                       fontSize: "32px",
@@ -278,14 +281,14 @@ class Home extends Component {
                       color: "#1b2e35",
                     }}
                   >
-                   Privasi terjamin
+                    Privasi terjamin
                   </p>
                   <p style={{ fontSize: "18px" }}>
                     Jangan khawatir kami jamin datamu aman.
                   </p>
                 </MDBBox>
               </MDBCol>
-              <MDBCol size="7" className="text-left box">
+              <MDBCol size="7" className="text-left">
                 <img
                   src={require("../images/security.png")}
                   alt="profile"
@@ -298,10 +301,12 @@ class Home extends Component {
         {/* akhir security */}
         {/* started */}
         <MDBBox
+          // className="bg-primary"
           style={{
             margin: "100px auto 0 auto",
             padding: "20px 0 0 0",
             position: "relative",
+            backgroundColor: "#fef8f8",
           }}
         >
           <MDBBox
@@ -312,12 +317,10 @@ class Home extends Component {
           >
             <MDBRow
               style={{
-                borderRadius: "50px",
-                backgroundColor: "#fef8f8",
-                margin: "25px 25px",
+                margin: "0",
               }}
             >
-              <MDBCol size="7" className="text-right box">
+              <MDBCol size="7" className="text-right">
                 <img
                   src={require("../images/launch.png")}
                   alt="profile"
@@ -325,7 +328,7 @@ class Home extends Component {
                 />
               </MDBCol>
               <MDBCol size="5" className="text-left d-flex align-items-center">
-                <MDBBox className="box">
+                <MDBBox className="">
                   <p
                     style={{
                       fontSize: "32px",
@@ -336,7 +339,8 @@ class Home extends Component {
                     Ayo
                   </p>
                   <p style={{ fontSize: "18px" }}>
-                    Tingkatkan penjualanmu<br />
+                    Tingkatkan penjualanmu
+                    <br />
                     sekarang!!!
                   </p>
                   <MDBLink

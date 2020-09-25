@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { MDBDataTable, MDBBox, MDBRow, MDBCol } from "mdbreact";
 import { Editor } from "react-draft-wysiwyg";
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
 import {

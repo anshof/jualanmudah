@@ -8,7 +8,7 @@ import {
   MDBRow,
   MDBCol,
   MDBIcon,
-  MDBFormInline,
+  // MDBFormInline,
   MDBModal,
   MDBLink,
   MDBDataTable,

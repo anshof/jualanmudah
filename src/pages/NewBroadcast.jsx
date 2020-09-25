@@ -221,73 +221,117 @@ class NewBroadcast extends Component {
             <MDBNav
               tabs
               className="d-flex justify-content-around"
-              style={{ backgroundColor: "#f14c59" }}
+              // style={{ backgroundColor: "pink" }}
             >
-              <MDBNavItem>
-                <MDBNavLink
-                  link
-                  to="#"
-                  active={this.state.activeItem === "1"}
-                  onClick={this.toggle("1")}
-                  role="tab"
-                  className="d-flex"
+              <MDBRow style={{ margin: "0" }} className="bg-info w-100">
+                <MDBCol
+                  size="4"
+                  className="d-flex justify-content-center"
+                  style={{
+                    backgroundColor:
+                      this.state.activeItem !== "1" ? "#bdbdcb" : "#f14c59",
+                  }}
                 >
-                  <MDBBox
-                    style={{
-                      backgroundColor: "white",
-                      color: "#f14c59",
-                    }}
-                    className="d-flex justify-content-center align-items-center mr-3 circleNewBro font-weight-bold"
-                  >
-                    1
-                  </MDBBox>
-                  <MDBBox className="text-uppercase text-white">
-                    recipient
-                  </MDBBox>
-                </MDBNavLink>
-              </MDBNavItem>
-              <MDBNavItem>
-                <MDBNavLink
-                  link
-                  to="#"
-                  active={this.state.activeItem === "2"}
-                  onClick={this.toggle("2")}
-                  role="tab"
-                  className="d-flex"
+                  <MDBNavItem>
+                    <MDBNavLink
+                      link
+                      to="#"
+                      active={this.state.activeItem === "1"}
+                      onClick={this.toggle("1")}
+                      role="tab"
+                      className="d-flex"
+                      style={{
+                        cursor:
+                          this.state.activeItem !== "1" ? "pointer" : "text",
+                      }}
+                    >
+                      <MDBBox
+                        style={{
+                          backgroundColor: "white",
+                          color: "#f14c59",
+                        }}
+                        className="d-flex justify-content-center align-items-center mr-3 circleNewBro font-weight-bold"
+                      >
+                        1
+                      </MDBBox>
+                      <MDBBox className="text-uppercase text-white">
+                        recipient
+                      </MDBBox>
+                    </MDBNavLink>
+                  </MDBNavItem>
+                </MDBCol>
+                <MDBCol
+                  size="4"
+                  className="d-flex justify-content-center"
+                  style={{
+                    backgroundColor:
+                      this.state.activeItem !== "2" ? "#bdbdcb" : "#f14c59",
+                  }}
                 >
-                  <MDBBox
-                    style={{
-                      backgroundColor: "white",
-                      color: "#f14c59",
-                    }}
-                    className="d-flex justify-content-center align-items-center mr-3 circleNewBro font-weight-bold"
-                  >
-                    2
-                  </MDBBox>
-                  <MDBBox className="text-uppercase text-white">content</MDBBox>
-                </MDBNavLink>
-              </MDBNavItem>
-              <MDBNavItem>
-                <MDBNavLink
-                  link
-                  to="#"
-                  active={this.state.activeItem === "3"}
-                  onClick={this.toggle("3")}
-                  role="tab"
-                  className="d-flex"
+                  <MDBNavItem>
+                    <MDBNavLink
+                      link
+                      to="#"
+                      active={this.state.activeItem === "2"}
+                      onClick={this.toggle("2")}
+                      role="tab"
+                      className="d-flex"
+                      style={{
+                        cursor:
+                          this.state.activeItem !== "2" ? "pointer" : "text",
+                      }}
+                    >
+                      <MDBBox
+                        style={{
+                          backgroundColor: "white",
+                          color: "#f14c59",
+                        }}
+                        className="d-flex justify-content-center align-items-center mr-3 circleNewBro font-weight-bold"
+                      >
+                        2
+                      </MDBBox>
+                      <MDBBox className="text-uppercase text-white">
+                        content
+                      </MDBBox>
+                    </MDBNavLink>
+                  </MDBNavItem>
+                </MDBCol>
+                <MDBCol
+                  size="4"
+                  className="d-flex justify-content-center"
+                  style={{
+                    backgroundColor:
+                      this.state.activeItem !== "3" ? "#bdbdcb" : "#f14c59",
+                  }}
                 >
-                  <MDBBox
-                    style={{
-                      backgroundColor: "white",
-                      color: "#f14c59",
-                    }}
-                    className="d-flex justify-content-center align-items-center mr-3 circleNewBro font-weight-bold"
-                  >
-                    3
-                  </MDBBox>
-                  <MDBBox className="text-uppercase text-white">preview</MDBBox>
-                </MDBNavLink>
-              </MDBNavItem>
+                  <MDBNavItem>
+                    <MDBNavLink
+                      link
+                      to="#"
+                      active={this.state.activeItem === "3"}
+                      onClick={this.toggle("3")}
+                      role="tab"
+                      className="d-flex"
+                      style={{
+                        cursor: "text",
+                      }}
+                    >
+                      <MDBBox
+                        style={{
+                          backgroundColor: "white",
+                          color: "#f14c59",
+                        }}
+                        className="d-flex justify-content-center align-items-center mr-3 circleNewBro font-weight-bold"
+                      >
+                        3
+                      </MDBBox>
+                      <MDBBox className="text-uppercase text-white">
+                        preview
+                      </MDBBox>
+                    </MDBNavLink>
+                  </MDBNavItem>
+                </MDBCol>
+              </MDBRow>
             </MDBNav>
             <MDBTabContent className="card" activeItem={this.state.activeItem}>
               <MDBTabPane tabId="1" role="tabpanel">

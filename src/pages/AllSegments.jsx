@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { MDBDataTable, MDBBox, MDBRow, MDBCol, MDBBtn } from "mdbreact";
-import { Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import moment from "moment";
 import Navbar from "../components/Navbar";

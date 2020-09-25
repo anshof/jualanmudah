@@ -11,10 +11,6 @@ body {
 .nav:hover {
   color: #f68c95;
 }
-.pictTeam {
-  position: absolute;
-  z-index: 2;
-}
 .logo {
   font-family: "Cinzel", serif;
   font-size: 32px;
@@ -45,10 +41,6 @@ body {
   background-color: #da444f;
   border-radius: 0 0 40px 0;
 }
-.box {
-  position: absolute;
-  z-index: 2;
-}
 .feature {
   display: inline-block;
   vertical-align: middle;
@@ -72,7 +64,7 @@ body {
 }
 .profile {
   position: absolute;
-  z-index: 1;
+  z-index: 0;
   width: 500px;
   height: 450px;
   margin-top: 30px;
@@ -81,7 +73,7 @@ body {
 }
 .secure {
   position: absolute;
-  z-index: 1;
+  z-index: 0;
   width: 683px;
   height: 400px;
   background-color: #fef8f8;
